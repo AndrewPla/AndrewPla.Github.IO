@@ -103,9 +103,9 @@ url: "https://andrewpla.tech" # Site url, also used in jekyll-seo-tag
 baseurl: ""
 repo: "https://github.com/daviddarnes/alembic"
 email: "andrewpla@outlook.com"
-# disqus: "alembic-1" # Blog post comments, uncomment the option and set the site ID from your Disqus account
+disqus: "andrewpla-github-io" # Blog post comments, uncomment the option and set the site ID from your Disqus account
 # date_format: "%-d %B %Y" # Blog post date formatting using placeholder formatting
-# google_analytics: ""
+google_analytics: "UA-119538689-1"
 # google_analytics_anonymize_ip: ""
 # service_worker: false # Will turn off the service worker if set to false
 # short_name: "Al" # The web application short name, defaults to the site title
