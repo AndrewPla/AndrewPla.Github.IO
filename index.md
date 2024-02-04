@@ -1,5 +1,6 @@
 # Hi there! 👋
 
+## whoami
 I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus on PowerShell, SysAdmin, and hosting the [PowerShell Podcast](https://powershellpodcast.podbean.com/). I find joy in simplifying device management, making it secure, and, of course, pretty damn quick!
 
 ## 🌐 Professional Background
@@ -21,7 +22,7 @@ I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus
 ## ⚡ Fun Facts
 
 - 🌐 Occasionally update my personal site.
-- Love playing whiffle ball
+- Love playing pickleball
 - I have 2 kids (Caden and Ava), 1 wife (Reanne), and 1 dog (Dolly)
 
 Thanks for stopping by! 🚀
