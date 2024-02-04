@@ -9,6 +9,8 @@
 # 8. Site favicons & manifest icons
 # 9. Site navigation
 
+remote_theme: daviddarnes/alembic@main
+
 # 1. Files excluded from Jekyll builds
 exclude:
 - README.md
@@ -33,6 +35,7 @@ plugins:
 - jekyll-commonmark
 - jekyll-include-cache
 - jemoji
+- jekyll-remote-theme
 
 # 3. Gem settings
 paginate: 2 # jekyll-paginate > items per page
@@ -93,10 +96,10 @@ defaults:
 # 7. Site settings
 encoding: utf-8 # Make sure the encoding is right
 lang: en-GB # Set the site language
-title: "Alembic" # Site name or title, also used in jekyll-seo-tag
+title: "Andrew Pla" # Site name or title, also used in jekyll-seo-tag
 logo: "/assets/logos/logo.svg" # Site logo, also used in jekyll-seo-tag
-description: "Alembic is a starting point for Jekyll projects. Rather than starting from scratch, this boilerplate is designed to get the ball rolling immediately" # Site description and default description, also used in jekyll-seo-tag
-url: "https://alembic.darn.es" # Site url, also used in jekyll-seo-tag
+description: "My site where I talk about things. Stay in touch!" # Site description and default description, also used in jekyll-seo-tag
+url: "https://andrewpla.tech" # Site url, also used in jekyll-seo-tag
 baseurl: ""
 repo: "https://github.com/daviddarnes/alembic"
 email: "andrewpla@outlook.com"
