@@ -1,5 +1,3 @@
-# Hi there! 👋
-
 ## whoami
 I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus on PowerShell, SysAdmin, and hosting the [PowerShell Podcast](https://powershellpodcast.podbean.com/). I find joy in simplifying device management, making it secure, and, of course, pretty damn quick!
 
