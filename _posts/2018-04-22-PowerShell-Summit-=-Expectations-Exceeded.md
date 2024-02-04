@@ -1,6 +1,7 @@
 ---
-tags:
+categories:
 - Personal
+- PowerShell Summit
 ---
 
 Holy cow, that was one of the best weeks of my life. This is more of a story than a direct event recap, but I hope that you will follow along. I was fortunate enough to attend the [PowerShell + DevOps Global Summit](https://powershell.org/summit/) after becoming their first [scholarship](https://powershell.org/2017/11/10/powershell-devops-global-summit-2018-scholarship-recipient/) recipient. I could preface things more, but let's just jump in.
