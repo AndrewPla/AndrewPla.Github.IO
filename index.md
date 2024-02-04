@@ -1,9 +1,16 @@
+---
+layout: home
+title: Andrew Pla Tech
+image: /assets/mainphotodevopsyvr.jpg
+---
+
 #### whoami
-I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus on PowerShell, SysAdmin, and hosting the [PowerShell Podcast](https://powershellpodcast.podbean.com/). I find joy in simplifying device management, making it secure, and, of course, pretty damn quick!
+I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus on PowerShell, SysAdmin, and hosting the [PowerShell Podcast](https://powershellpodcast.podbean.com/).
 
 #### 🌐 Professional Background
 
 - 🔭 SysAdmin now working at PDQ helping sysadmins automate their problems away.
+- 10 + years working in IT
 - 🎙️ Proud host of the [PowerShell Podcast](https://powershellpodcast.podbean.com/)
 - Speaker at various conferences, including PowerShell + DevOps Global Summit
   
