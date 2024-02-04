@@ -1,0 +1,27 @@
+# Hi there! 👋
+
+I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus on PowerShell, SysAdmin, and hosting the [PowerShell Podcast](https://powershellpodcast.podbean.com/). I find joy in simplifying device management, making it secure, and, of course, pretty damn quick!
+
+## 🌐 Professional Background
+
+- 🔭 SysAdmin now working at PDQ helping sysadmins automate their problems away.
+- 🎙️ Proud host of the [PowerShell Podcast](https://powershellpodcast.podbean.com/)
+- Speaker at various conferences, including PowerShell + DevOps Global Summit
+  
+## 🚀 Expertise
+
+- 💻 Passionate about PowerShell, System Administration, and everything tech.
+- 🌐 Community-driven: Love being part of the PowerShell community and collaborating with like-minded individuals.
+
+## 💬 Let's Chat!
+
+- 🤝 Ask me about PowerShell, collaboration, or anything else really.
+- 📫 Reach me [@AndrewPlaTech](https://twitter.com/AndrewPlaTech) on Twitter or drop me a message on [LinkedIn](https://www.linkedin.com/in/andrewplatech/).
+
+## ⚡ Fun Facts
+
+- 🌐 Occasionally update my personal site.
+- Love playing whiffle ball
+- I have 2 kids (Caden and Ava), 1 wife (Reanne), and 1 dog (Dolly)
+
+Thanks for stopping by! 🚀
