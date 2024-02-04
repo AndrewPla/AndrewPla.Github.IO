@@ -1,6 +1,6 @@
 ---
 title: Andrew Pla Tech
-image: /assets/mainphotodevopsyvr.jpg
+feature_image: /assets/mainphotodevopsyvr.jpg
 ---
 
 #### whoami
