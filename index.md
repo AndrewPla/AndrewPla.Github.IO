@@ -1,5 +1,4 @@
 ---
-layout: home
 title: Andrew Pla Tech
 image: /assets/mainphotodevopsyvr.jpg
 ---
