@@ -9,7 +9,7 @@ I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus
 
 #### 🌐 Professional Background
 
-- 🔭 SysAdmin now working at PDQ helping sysadmins automate their problems away.
+- 🔭 SysAdmin now working at [PDQ](https://pdq.com) helping sysadmins automate their problems away.
 - 10 + years working in IT
 - 🎙️ Proud host of the [PowerShell Podcast](https://powershellpodcast.podbean.com/)
 - Speaker at various conferences, including PowerShell + DevOps Global Summit
