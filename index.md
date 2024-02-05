@@ -1,5 +1,5 @@
 ---
-title: Andrew Pla Tech
+#title: Andrew Pla Tech
 #feature_image: /assets/logos/RetroHeaderImagething.png
 feature_image: /assets/blogsandblurbs.png
 ---
