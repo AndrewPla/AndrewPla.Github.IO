@@ -13,16 +13,14 @@ I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus
 - 10 + years working in IT
 - 🎙️ Proud host of the [PowerShell Podcast](https://powershellpodcast.podbean.com/)
 - Speaker at various conferences, including PowerShell + DevOps Global Summit
-  
-#### 🚀 Expertise
 
-- 💻 Passionate about PowerShell, System Administration, and everything tech.
-- 🌐 Community-driven: Love being part of the PowerShell community and collaborating with like-minded individuals.
-
-#### 💬 Let's Chat!
+#### Links
 
 - 🤝 Ask me about PowerShell, collaboration, or anything else really.
-- 📫 Reach me [@AndrewPlaTech](https://twitter.com/AndrewPlaTech) on Twitter or drop me a message on [LinkedIn](https://www.linkedin.com/in/andrewplatech/).
+- [Twitter](https://twitter.com/AndrewPlaTech)
+- [LinkedIn](https://www.linkedin.com/in/andrewplatech/).
+- [Instagram](https://www.instagram.com/andrewplatech)
+- [Facebook](https://www.facebook.com/andrewplatech)
 
 #### ⚡ Fun Facts
 
