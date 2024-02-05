@@ -1,7 +1,7 @@
 ---
 title: "Adventures in Leetcode: PowerShell + Leetcode"
 excerpt: "Selection of problems and solutions from leetcode and interviewbit."
-tags:
+categories:
 - PowerShell
 - Leetcode
 classes: wide

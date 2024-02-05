@@ -1,11 +1,9 @@
 ---
 title: Iterate Over PSCustomObject Properties by Using THIS Hidden Property
 excerpt: "Got a pscustomobject that you want to iterate through? Use the .psobject hidden property!"
-tags:
+categories:
 - PowerShell
 - pscustomobject
-- Get-Member
-classes: wide
 
 image: /assets/freaking-pegasus-or-something.jpg
 thumbnail: /assets/freaking-pegasus-or-something.jpg

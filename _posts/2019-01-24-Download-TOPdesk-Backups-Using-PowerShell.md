@@ -1,6 +1,6 @@
 ---
 title: Downloading TOPdesk Database Backups with PowerShell
-tags:
+categories:
 - PowerShell
 - Invoke-WebRequest
 - PSDrive

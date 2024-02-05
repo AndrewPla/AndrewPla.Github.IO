@@ -1,7 +1,7 @@
 ---
 title: "Regex and PowerShell Recap"
 excerpt: "Quick start or reference for Regex with PowerShell"
-tags:
+categories:
 - PowerShell
 - Regex
 classes: wide

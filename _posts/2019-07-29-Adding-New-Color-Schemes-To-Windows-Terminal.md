@@ -1,7 +1,7 @@
 ---
 title: Adding New Color Schemes to Windows Terminal
 excerpt: "Use PowerShell to download 200+ color schemes and add them to Windows Terminal."
-tags:
+categories:
 - PowerShell
 - Windows Terminal
 classes: wide

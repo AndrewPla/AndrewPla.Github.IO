@@ -1,7 +1,7 @@
 ---
 title: "JavaScript Basics"
 excerpt: "Notes that I've taken as I've been learning JavaScript."
-tags:
+categories:
 - JavaScript
 classes: wide
 toc: true
