@@ -1,6 +1,6 @@
 ---
 title: Andrew Pla Tech
-feature_image: /assets/greenwaves.png
+feature_image: /assets/logos/RetroHeaderImageThing.png
 ---
 
 #### whoami
