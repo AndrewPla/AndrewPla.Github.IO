@@ -26,8 +26,7 @@ I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus
 
 #### ⚡ Fun Facts
 
-- 🌐 Occasionally update my personal site.
-- Love playing pickleball
+- Love playing [pickleball](/pickleball.md)
 - I have 2 kids (Caden and Ava), 1 wife (Reanne), and 1 dog (Dolly)
 
 Thanks for stopping by! 🚀
