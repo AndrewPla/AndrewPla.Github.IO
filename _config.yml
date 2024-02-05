@@ -70,7 +70,7 @@ collections:
     output: true
     description: "My thoughts, ideas, and lessons learned" # The post list page content
     feature_text: |
-      Blogs + blurbs
+      Blogs + blurbss
     feature_image: "assets/blogsandblurbs.png"
 
 # 6. Jekyll collections settings
