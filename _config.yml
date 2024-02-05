@@ -71,7 +71,7 @@ collections:
     description: "My thoughts, ideas, and lessons learned" # The post list page content
     feature_text: |
       Blogs + blurbss
-    feature_image: "./assets/blogsandblurbs.png"
+    feature_image: "https://picsum.photos/2560/600?image=866"
 
 # 6. Jekyll collections settings
 defaults:
