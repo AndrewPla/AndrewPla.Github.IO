@@ -113,14 +113,14 @@ css_inline: true # Will insert all styles into a single <style> block in the <he
 
 # 8. Site favicons & manifest icons
 favicons: # Favicons are also used in the manifest file. Syntax is 'size: path'
-  16: '/assets/logos/Andrew Pla logo.png'
-  32: '/assets/logos/Andrew Pla logo.png'
-  96: '/assets/logos/Andrew Pla logo.png'
-  120: '/assets/logos/Andrew Pla logo.png'
-  144: '/assets/logos/Andrew Pla logo.png'
-  180: '/assets/logos/Andrew Pla logo.png'
-  512: '/assets/logos/Andrew Pla logo.png'
-  1024: '/assets/logos/Andrew Pla logo.png'
+  32: '/assets/logos/face-icons-transparent.png'
+  16: '/assets/logos/face-icons-transparent.png'
+  96: '/assets/logos/face-icons-transparent.png'
+  120: '/assets/logos/face-icons-transparent.png'
+  144: '/assets/logos/face-icons-transparent.png'
+  180: '/assets/logos/face-icons-transparent.png'
+  512: '/assets/logos/face-icons-transparent.png'
+  1024: '/assets/logos/face-icons-transparent.png'
 
 # 9. Site navigation
 navigation_header:
