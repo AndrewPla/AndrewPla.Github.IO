@@ -4,18 +4,53 @@ title: Links
 permalink: /links/
 ---
 
-## 🌐 Find Me Online
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-Here are some places you can find me:
+<style>
+.linktree-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
 
-- [GitHub](https://github.com/AndrewPla)
-- [LinkedIn](https://www.linkedin.com/in/andrewplatech)
-- [YouTube](https://www.youtube.com/@andrewplatech)
-- [BlueSky](https://bsky.app/profile/andrewpla.tech)
-- [Twitter](https://x.com/AndrewPlaTech)
-- [Blog](https://andrewpla.tech)
-- [Instagram](https://www.instagram.com/andrewplatech/)
-- [Facebook](https://www.facebook.com/andrewplatech)
-- [Mastodon](https://techhub.social/@AndrewPlaTech)
-- [Threads](https://www.threads.com/@andrewplatech)
-- [TikTok](https://www.tiktok.com/@andrewplatech)
+.linktree-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.linktree-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 14px 20px;
+  background-color: #1a73e8;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.linktree-links a:hover {
+  background-color: #1558b0;
+  transform: scale(1.05);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+}
+
+.linktree-links i {
+  font-size: 1.3rem;
+}
+</style>
+
+<div class="linktree-container">
+  <div class="linktree-title">🌐 Find Me Online</div>
+  <div class="linktree-links">
+    <a href="https://github.com/AndrewPla" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+    <a href="https://www.linkedin.com/in/andrewplatech" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
+    <a href
