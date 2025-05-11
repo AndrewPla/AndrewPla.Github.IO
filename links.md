@@ -53,4 +53,14 @@ permalink: /links/
   <div class="linktree-links">
     <a href="https://github.com/AndrewPla" target="_blank"><i class="fab fa-github"></i>GitHub</a>
     <a href="https://www.linkedin.com/in/andrewplatech" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
-    <a href
+    <a href="https://www.youtube.com/@andrewplatech" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
+    <a href="https://bsky.app/profile/andrewpla.tech" target="_blank"><i class="fas fa-cloud"></i>BlueSky</a>
+    <a href="https://x.com/AndrewPlaTech" target="_blank"><i class="fab fa-x-twitter"></i>Twitter (X)</a>
+    <a href="https://andrewpla.tech" target="_blank"><i class="fas fa-globe"></i>Blog</a>
+    <a href="https://www.instagram.com/andrewplatech/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
+    <a href="https://www.facebook.com/andrewplatech" target="_blank"><i class="fab fa-facebook"></i>Facebook</a>
+    <a href="https://techhub.social/@AndrewPlaTech" target="_blank"><i class="fab fa-mastodon"></i>Mastodon</a>
+    <a href="https://www.threads.com/@andrewplatech" target="_blank"><i class="fas fa-thread"></i>Threads</a>
+    <a href="https://www.tiktok.com/@andrewplatech" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
+  </div>
+</div>
