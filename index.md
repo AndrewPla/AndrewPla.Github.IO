@@ -5,30 +5,23 @@ permalink: /
 ---
 
 <section class="ap-hero">
-  <p class="ap-eyebrow">For IT Pros Who Want to Level Up</p>
-  <h1>Build practical IT skills that move your career forward.</h1>
-  <p class="ap-lead">I’m Andrew Pla — sysadmin helping sysadmins. PowerShell MVP, speaker, and podcast host at PDQ. I share tactical ideas you can use right away to work faster, secure your environment, and grow your options.</p>
+  <p class="ap-eyebrow">Practical IT content, no fluff</p>
+  <h1>Subscribe for practical IT ideas you can apply immediately.</h1>
+  <p class="ap-lead">I am Andrew Pla, a sysadmin helping sysadmins. I share real-world tips on PowerShell, automation, and leveling up your IT career.</p>
 
-  <div class="ap-cta-row">
-    <a class="button" href="/links/#updates">Get updates</a>
-    <a class="button ap-ghost" href="/writing/">Start reading</a>
-    <a class="button ap-soft" href="/contact/">Contact Andrew</a>
+  <div class="ap-subscribe">
+    <p class="ap-subscribe-copy">Get occasional updates when I publish something useful. Newsletter is launching soon, and updates currently land via LinkedIn.</p>
+    <a class="button ap-primary-cta" href="/links/#updates">Join the newsletter</a>
+    <p class="ap-subscribe-note">No spam. Just useful updates.</p>
   </div>
-</section>
 
-<section class="ap-grid" aria-label="Quick destinations">
-  <a class="ap-card" href="/writing/">
-    <h2>Writing</h2>
-    <p>Actionable walkthroughs on PowerShell, automation, and admin workflows.</p>
-  </a>
-  <a class="ap-card" href="/podcast/">
-    <h2>Podcast</h2>
-    <p>Conversations and practical takes to help you stay sharp in IT.</p>
-  </a>
-  <a class="ap-card" href="/links/">
-    <h2>Links</h2>
-    <p>Useful resources, updates, and shortcuts to stay connected.</p>
-  </a>
+  <p class="ap-quick-links">
+    <a href="/writing/">Read the blog</a>
+    <span aria-hidden="true">/</span>
+    <a href="/podcast/">Listen to the podcast</a>
+    <span aria-hidden="true">/</span>
+    <a href="/contact/">Contact Andrew</a>
+  </p>
 </section>
 
 <section class="ap-latest">
@@ -38,7 +31,7 @@ permalink: /
   </div>
 
   <ul class="ap-posts">
-  {% for post in site.posts limit: 5 %}
+  {% for post in site.posts limit: 4 %}
     <li>
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
