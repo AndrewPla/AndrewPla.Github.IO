@@ -4,72 +4,92 @@ title: Links
 permalink: /links/
 ---
 
-<div id="updates" class="typeset" style="margin-bottom: 1.5rem;">
-  <h2 style="margin-bottom: .25rem;">Get updates</h2>
-  <p style="margin-top: 0;">Friendly, occasional updates when I ship something, learn something, or find something worth sharing.</p>
-  <p style="margin: .75rem 0 0 0;">
-    <a class="button" href="https://www.linkedin.com/in/andrewplatech/">Follow on LinkedIn (for now)</a>
-  </p>
-  <p style="opacity:.75; margin-top:.5rem;"><small>Newsletter coming soon.</small></p>
-</div>
+<link rel="stylesheet" href="{{ '/assets/links.css' | relative_url }}">
 
-<!-- Font Awesome CDN -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<section class="ap-tree-page">
+  <div class="ap-tree-ambient" aria-hidden="true"></div>
 
-<style>
-.linktree-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+  <div class="ap-tree-shell" id="apTreeShell">
+    <header class="ap-tree-profile">
+      <img class="ap-tree-avatar" src="{{ '/assets/avatar.jpg' | relative_url }}" alt="Andrew Pla profile photo">
+      <p class="ap-tree-eyebrow">Parody mode activated</p>
+      <h1>@AndrewPlaTech</h1>
+      <p class="ap-tree-bio">
+        A suspiciously Linktree-like page, but for sysadmins.
+        Practical automation, PowerShell, podcast stuff, and updates.
+      </p>
+    </header>
 
-.linktree-title {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-}
+    <section class="ap-tree-updates" id="updates" aria-label="Newsletter signup">
+      <h2>Newsletter-ish updates</h2>
+      <p>Friendly updates when I publish something actually useful. Newsletter is coming soon, LinkedIn is home base for now.</p>
+      <a class="ap-tree-primary" href="https://www.linkedin.com/in/andrewplatech/" target="_blank" rel="noopener noreferrer">Subscribe via LinkedIn</a>
+    </section>
 
-.linktree-links a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 12px 0;
-  padding: 14px 20px;
-  background-color: #1a73e8;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+    <section class="ap-tree-links" aria-label="Primary links">
+      <a class="ap-tree-link" href="https://github.com/AndrewPla" target="_blank" rel="noopener noreferrer">
+        <span class="ap-tree-icon" aria-hidden="true">🐙</span>
+        <span class="ap-tree-main">
+          <strong>GitHub</strong>
+          <small>Code, scripts, and experiments</small>
+        </span>
+        <span class="ap-tree-arrow" aria-hidden="true">↗</span>
+      </a>
 
-.linktree-links a:hover {
-  background-color: #1558b0;
-  transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-}
+      <a class="ap-tree-link" href="https://www.linkedin.com/in/andrewplatech" target="_blank" rel="noopener noreferrer">
+        <span class="ap-tree-icon" aria-hidden="true">💼</span>
+        <span class="ap-tree-main">
+          <strong>LinkedIn</strong>
+          <small>Updates and professional stuff</small>
+        </span>
+        <span class="ap-tree-arrow" aria-hidden="true">↗</span>
+      </a>
 
-.linktree-links i {
-  font-size: 1.3rem;
-}
-</style>
+      <a class="ap-tree-link" href="https://www.youtube.com/@andrewplatech" target="_blank" rel="noopener noreferrer">
+        <span class="ap-tree-icon" aria-hidden="true">📺</span>
+        <span class="ap-tree-main">
+          <strong>YouTube</strong>
+          <small>Video content and demos</small>
+        </span>
+        <span class="ap-tree-arrow" aria-hidden="true">↗</span>
+      </a>
 
-<div class="linktree-container">
-  <div class="linktree-title">🌐 Find Me Online</div>
-  <div class="linktree-links">
-    <a href="https://github.com/AndrewPla" target="_blank"><i class="fab fa-github"></i>GitHub</a>
-    <a href="https://www.linkedin.com/in/andrewplatech" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
-    <a href="https://www.youtube.com/@andrewplatech" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
-    <a href="https://bsky.app/profile/andrewpla.tech" target="_blank"><i class="fas fa-cloud"></i>BlueSky</a>
-    <a href="https://x.com/AndrewPlaTech" target="_blank"><i class="fab fa-x-twitter"></i>Twitter (X)</a>
-    <a href="https://andrewpla.tech" target="_blank"><i class="fas fa-globe"></i>Blog</a>
-    <a href="https://www.instagram.com/andrewplatech/" target="_blank"><i class="fab fa-instagram"></i>Instagram</a>
-    <a href="https://www.facebook.com/andrewplatech" target="_blank"><i class="fab fa-facebook"></i>Facebook</a>
-    <a href="https://techhub.social/@AndrewPlaTech" target="_blank"><i class="fab fa-mastodon"></i>Mastodon</a>
-    <a href="https://www.threads.com/@andrewplatech" target="_blank"><i class="fas fa-thread"></i>Threads</a>
-    <a href="https://www.tiktok.com/@andrewplatech" target="_blank"><i class="fab fa-tiktok"></i>TikTok</a>
+      <a class="ap-tree-link" href="https://bsky.app/profile/andrewpla.tech" target="_blank" rel="noopener noreferrer">
+        <span class="ap-tree-icon" aria-hidden="true">🦋</span>
+        <span class="ap-tree-main">
+          <strong>BlueSky</strong>
+          <small>Short takes and misc links</small>
+        </span>
+        <span class="ap-tree-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <a class="ap-tree-link" href="https://x.com/AndrewPlaTech" target="_blank" rel="noopener noreferrer">
+        <span class="ap-tree-icon" aria-hidden="true">🛰️</span>
+        <span class="ap-tree-main">
+          <strong>Twitter/X</strong>
+          <small>Thread-shaped thoughts</small>
+        </span>
+        <span class="ap-tree-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <a class="ap-tree-link" href="{{ '/' | relative_url }}">
+        <span class="ap-tree-icon" aria-hidden="true">🏠</span>
+        <span class="ap-tree-main">
+          <strong>Main Site</strong>
+          <small>Blog, podcast, and everything else</small>
+        </span>
+        <span class="ap-tree-arrow" aria-hidden="true">→</span>
+      </a>
+    </section>
+
+    <section class="ap-tree-footer">
+      <button class="ap-tree-chip" id="copyEmailBtn" type="button" data-email="andrew@andrewpla.tech">Copy email</button>
+      <a class="ap-tree-chip" href="{{ '/contact/' | relative_url }}">Contact page</a>
+      <a class="ap-tree-chip ap-tree-secret" href="{{ '/vibes/' | relative_url }}">Secret vibes room</a>
+      <p class="ap-tree-legal">Definitely not Linktree. Definitely a little bit of Linktree energy.</p>
+      <p class="ap-tree-toast" id="copyToast" role="status" aria-live="polite"></p>
+    </section>
   </div>
-</div>
+</section>
+
+<script src="{{ '/assets/links.js' | relative_url }}"></script>

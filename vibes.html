@@ -12,65 +12,93 @@ sitemap: false
   <canvas id="vibesCanvas" aria-hidden="true"></canvas>
   <div id="stickers" aria-hidden="true"></div>
 
-  <a class="vibes-exit" href="{{ '/' | relative_url }}">
-    Too many vibes for me, get me outta here!!
-  </a>
+  <a class="vibes-exit" href="{{ '/' | relative_url }}">Back to reality</a>
 
   <div class="vibes-ui">
     <div class="vibes-badge">
-      <div class="badge-pill">APT // VIBES</div>
+      <div class="badge-pill">APT // SECRET VIBES</div>
       <div class="badge-sub">
-        Move your mouse. Click to summon chaos. Press <kbd>V</kbd> for terminal.
+        Move your mouse. Click anywhere. Press <kbd>V</kbd> for console mode.
       </div>
     </div>
 
     <div class="vibes-card">
-      <h1>Welcome to the secret room</h1>
+      <h1>You found the hidden room.</h1>
       <p>
-        This page is intentionally unhinged. If you found it, you’re in the inner circle.
+        If you found this page, you are my kind of person.
+        If you want to say hi, I would love to hear from you.
+        <a href="{{ '/contact/' | relative_url }}">Say hi here</a>.
       </p>
 
       <div class="controls">
-        <button class="btn" id="btnPalette" type="button">Change dimension</button>
-        <button class="btn ghost" id="btnCalm" type="button">Calm it down</button>
-        <button class="btn ghost" id="btnChaos" type="button">MORE</button>
+        <button class="btn" id="btnPalette" type="button">Switch universe</button>
+        <button class="btn ghost" id="btnCalm" type="button">Dial it down</button>
+        <button class="btn ghost" id="btnChaos" type="button">Maximum nonsense</button>
+        <button class="btn ghost" id="btnBurst" type="button">Drop stickers</button>
       </div>
 
       <div class="player">
         <div class="player-row">
           <div>
-            <div class="label">Now playing</div>
-            <div class="now" id="npValue">Loading…</div>
+            <div class="label">Station</div>
+            <select id="stationSelect" class="station-select" aria-label="Choose music station">
+              <option value="groovesalad">SomaFM // Groove Salad</option>
+              <option value="dronezone">SomaFM // Drone Zone</option>
+              <option value="deepspaceone">SomaFM // Deep Space One</option>
+              <option value="spacestation">SomaFM // Space Station</option>
+            </select>
           </div>
-          <button class="btn" id="btnPlay" type="button">Play</button>
+          <div class="player-actions">
+            <button class="btn" id="btnPlay" type="button">Play</button>
+            <button class="btn ghost" id="btnNext" type="button">Next</button>
+          </div>
         </div>
 
         <audio id="audio" preload="none" crossorigin="anonymous">
-          <source src="https://ice3.somafm.com/groovesalad-128-mp3" type="audio/mpeg">
+          <source src="https://ice1.somafm.com/groovesalad-128-mp3" type="audio/mpeg">
         </audio>
 
+        <div class="label">Now playing</div>
+        <div class="now" id="npValue">Loading stream data...</div>
+
         <div class="fineprint">
-          Autoplay is blocked by browsers — click Play.
-          If audio fails, <a href="https://somafm.com/groovesalad/" target="_blank" rel="noopener">open SomaFM</a>.
+          Browser autoplay is blocked by default, so hit Play.
+          If audio fails, open <a href="https://somafm.com/" target="_blank" rel="noopener noreferrer">SomaFM</a>.
         </div>
       </div>
+
+      <div class="music-portal">
+        <div class="label">musicforprogramming.net portal</div>
+        <iframe
+          class="portal-frame"
+          src="https://musicforprogramming.net/latest/"
+          title="musicforprogramming.net"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+        <p class="fineprint">
+          If the embed is blocked by browser/frame policy,
+          <a href="https://musicforprogramming.net/" target="_blank" rel="noopener noreferrer">open it in a new tab</a>.
+        </p>
+      </div>
+
+      <div class="vibes-status" id="vibesStatus" aria-live="polite"></div>
     </div>
 
-    <!-- Hidden terminal overlay -->
     <div class="terminal hidden" id="terminal">
       <div class="terminal-top">
         <div class="dots">
           <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
         </div>
         <div class="term-title">andrewpla://console</div>
-        <button class="term-x" id="termClose" type="button" aria-label="Close">×</button>
+        <button class="term-x" id="termClose" type="button" aria-label="Close">x</button>
       </div>
 
       <div class="terminal-out" id="termOut" role="log" aria-live="polite"></div>
 
       <form class="terminal-in" id="termForm" autocomplete="off">
         <span class="prompt">PS&gt;</span>
-        <input id="termInput" type="text" placeholder="help | whoami | Get-PSWednesday | apt | clear" spellcheck="false" />
+        <input id="termInput" type="text" placeholder="help | whoami | vibe | calm | chaos | clear" spellcheck="false">
       </form>
     </div>
   </div>
