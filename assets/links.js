@@ -1,22 +1,23 @@
 (function () {
-  const shell = document.getElementById("apTreeShell");
   const copyEmailBtn = document.getElementById("copyEmailBtn");
   const copyToast = document.getElementById("copyToast");
+  const reactiveTargets = document.querySelectorAll(".ap-links-btn, .ap-link-item, .ap-links-chip");
 
-  if (shell) {
-    shell.addEventListener("pointermove", (event) => {
-      const rect = shell.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width;
-      const y = (event.clientY - rect.top) / rect.height;
-      const rotateX = (0.5 - y) * 1.2;
-      const rotateY = (x - 0.5) * 1.2;
-      shell.style.transform = `perspective(1400px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-
-    shell.addEventListener("pointerleave", () => {
-      shell.style.transform = "";
-    });
+  function ripple(target, event) {
+    const rect = target.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const bubble = document.createElement("span");
+    bubble.className = "ap-ripple";
+    bubble.style.left = x + "px";
+    bubble.style.top = y + "px";
+    target.appendChild(bubble);
+    window.setTimeout(() => bubble.remove(), 520);
   }
+
+  reactiveTargets.forEach((target) => {
+    target.addEventListener("click", (event) => ripple(target, event));
+  });
 
   if (!copyEmailBtn || !copyToast) return;
 
@@ -26,13 +27,12 @@
 
     try {
       await navigator.clipboard.writeText(email);
-      copyToast.textContent = "Email copied. Paste away.";
-      copyToast.classList.add("is-visible");
+      copyToast.textContent = "Email copied.";
     } catch {
       copyToast.textContent = "Clipboard blocked. Email: " + email;
-      copyToast.classList.add("is-visible");
     }
 
+    copyToast.classList.add("is-visible");
     window.clearTimeout(copyToast._hideTimer);
     copyToast._hideTimer = window.setTimeout(() => {
       copyToast.classList.remove("is-visible");
