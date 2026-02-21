@@ -2,6 +2,16 @@
   (function () {
     var key = "ap-site-mode";
     var mode = "normal";
+    var toggleBtn = null;
+    var retroCanvas = null;
+    var retroCtx = null;
+    var retroRaf = 0;
+    var retroPipes = [];
+    var retroChrome = null;
+    var retroCounter = null;
+    var retroW = 0;
+    var retroH = 0;
+    var retroDpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
 
     try {
       mode = localStorage.getItem(key) || "normal";
@@ -9,21 +19,196 @@
       mode = "normal";
     }
 
+    function rand(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
     function apply(nextMode) {
       var body = document.body;
       if (!body) return;
       body.classList.toggle("mode-1990s", nextMode === "retro");
       body.dataset.siteMode = nextMode;
+
       if (toggleBtn) {
-        toggleBtn.textContent = nextMode === "retro" ? "Switch to Normal Mode" : "Switch to 1990s Mode";
+        toggleBtn.textContent = nextMode === "retro" ? "normal" : "90s";
+        toggleBtn.title = nextMode === "retro" ? "Switch to normal mode" : "Switch to 1990s mode";
+      }
+
+      if (nextMode === "retro") {
+        enableRetro();
+      } else {
+        disableRetro();
       }
     }
 
-    var toggleBtn = document.createElement("button");
+    function resizeRetroCanvas() {
+      if (!retroCanvas || !retroCtx) return;
+      retroW = Math.floor(window.innerWidth);
+      retroH = Math.floor(window.innerHeight);
+      retroCanvas.width = Math.floor(retroW * retroDpr);
+      retroCanvas.height = Math.floor(retroH * retroDpr);
+      retroCanvas.style.width = retroW + "px";
+      retroCanvas.style.height = retroH + "px";
+      retroCtx.setTransform(retroDpr, 0, 0, retroDpr, 0, 0);
+      retroCtx.fillStyle = "rgba(0,0,0,0.9)";
+      retroCtx.fillRect(0, 0, retroW, retroH);
+    }
+
+    function newPipe() {
+      var dirs = [
+        [1, 0],
+        [-1, 0],
+        [0, 1],
+        [0, -1]
+      ];
+      var dir = Math.floor(Math.random() * dirs.length);
+      var hue = Math.floor(rand(0, 360));
+      return {
+        x: rand(0, retroW),
+        y: rand(0, retroH),
+        dir: dir,
+        step: rand(6, 14),
+        width: rand(3, 8),
+        hue: hue,
+        turnsIn: Math.floor(rand(6, 20))
+      };
+    }
+
+    function initPipes() {
+      retroPipes = [];
+      for (var i = 0; i < 18; i += 1) {
+        retroPipes.push(newPipe());
+      }
+    }
+
+    function animatePipes() {
+      if (!retroCtx) return;
+      retroCtx.fillStyle = "rgba(0,0,0,0.09)";
+      retroCtx.fillRect(0, 0, retroW, retroH);
+
+      for (var i = 0; i < retroPipes.length; i += 1) {
+        var p = retroPipes[i];
+        if (!p) continue;
+
+        var dirs = [
+          [1, 0],
+          [-1, 0],
+          [0, 1],
+          [0, -1]
+        ];
+
+        if (p.turnsIn <= 0) {
+          p.dir = Math.floor(Math.random() * dirs.length);
+          p.turnsIn = Math.floor(rand(6, 22));
+          if (Math.random() < 0.18) p.hue = Math.floor(rand(0, 360));
+        }
+        p.turnsIn -= 1;
+
+        var dx = dirs[p.dir][0] * p.step;
+        var dy = dirs[p.dir][1] * p.step;
+        var nx = p.x + dx;
+        var ny = p.y + dy;
+
+        if (nx < -20 || nx > retroW + 20 || ny < -20 || ny > retroH + 20) {
+          retroPipes[i] = newPipe();
+          continue;
+        }
+
+        retroCtx.strokeStyle = "hsl(" + p.hue + ", 92%, 62%)";
+        retroCtx.lineWidth = p.width;
+        retroCtx.lineCap = "round";
+        retroCtx.beginPath();
+        retroCtx.moveTo(p.x, p.y);
+        retroCtx.lineTo(nx, ny);
+        retroCtx.stroke();
+
+        retroCtx.fillStyle = "hsl(" + p.hue + ", 92%, 62%)";
+        retroCtx.beginPath();
+        retroCtx.arc(nx, ny, p.width * 0.5, 0, Math.PI * 2);
+        retroCtx.fill();
+
+        p.x = nx;
+        p.y = ny;
+
+        if (Math.random() < 0.02) {
+          retroCtx.fillStyle = "rgba(0,0,0,0.9)";
+          retroCtx.fillRect(0, 0, retroW, retroH);
+        }
+      }
+
+      retroRaf = window.requestAnimationFrame(animatePipes);
+    }
+
+    function createRetroChrome() {
+      if (retroChrome) return;
+      retroChrome = document.createElement("div");
+      retroChrome.className = "ap-retro-chrome";
+      retroChrome.innerHTML =
+        "<marquee class='ap-retro-marquee' behavior='alternate' scrollamount='8'>" +
+        "WELCOME TO THE WORLD WIDE WEB // YOU'VE GOT MAIL (not really) // POWERED BY NOSTALGIA" +
+        "</marquee>" +
+        "<div class='ap-retro-badges'>" +
+        "<span class='ap-retro-badge blink'>UNDER CONSTRUCTION</span>" +
+        "<span class='ap-retro-badge'>BEST VIEWED @ 800x600</span>" +
+        "<span class='ap-retro-badge'>NETSCAPE NOW!</span>" +
+        "<span class='ap-retro-counter'>VISITORS: <strong id='apRetroCounter'>000001</strong></span>" +
+        "</div>";
+      document.body.appendChild(retroChrome);
+      retroCounter = document.getElementById("apRetroCounter");
+      incrementCounter();
+    }
+
+    function incrementCounter() {
+      var counterKey = "ap-retro-counter";
+      var value = 1;
+      try {
+        value = Number(localStorage.getItem(counterKey) || "0") + 1;
+        localStorage.setItem(counterKey, String(value));
+      } catch (e) {
+        value = 1;
+      }
+      if (retroCounter) {
+        retroCounter.textContent = String(value).padStart(6, "0");
+      }
+    }
+
+    function enableRetro() {
+      if (!retroCanvas) {
+        retroCanvas = document.createElement("canvas");
+        retroCanvas.className = "ap-retro-pipes";
+        document.body.appendChild(retroCanvas);
+        retroCtx = retroCanvas.getContext("2d");
+      }
+
+      resizeRetroCanvas();
+      initPipes();
+      if (!retroRaf) {
+        retroRaf = window.requestAnimationFrame(animatePipes);
+      }
+      createRetroChrome();
+    }
+
+    function disableRetro() {
+      if (retroRaf) {
+        window.cancelAnimationFrame(retroRaf);
+        retroRaf = 0;
+      }
+      if (retroCanvas) {
+        retroCanvas.remove();
+        retroCanvas = null;
+        retroCtx = null;
+      }
+      if (retroChrome) {
+        retroChrome.remove();
+        retroChrome = null;
+        retroCounter = null;
+      }
+    }
+
+    toggleBtn = document.createElement("button");
     toggleBtn.type = "button";
     toggleBtn.className = "ap-mode-toggle";
     toggleBtn.setAttribute("aria-label", "Toggle site mode");
-
     toggleBtn.addEventListener("click", function () {
       mode = mode === "retro" ? "normal" : "retro";
       try {
@@ -31,8 +216,9 @@
       } catch (e) {}
       apply(mode);
     });
-
-    apply(mode);
     document.body.appendChild(toggleBtn);
+
+    window.addEventListener("resize", resizeRetroCanvas);
+    apply(mode);
   })();
 </script>

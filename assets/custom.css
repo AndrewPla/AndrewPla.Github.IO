@@ -321,52 +321,178 @@ input[type="submit"]:focus {
 
 .ap-mode-toggle {
   position: fixed;
-  right: 12px;
-  bottom: 12px;
+  right: 8px;
+  bottom: 8px;
   z-index: 9999;
-  min-height: 2.2rem;
-  padding: 0.38rem 0.72rem;
-  border: 1px solid #111;
+  min-height: 1.4rem;
+  padding: 0.12rem 0.44rem;
+  border: 1px solid #222;
   border-radius: 999px;
-  background: #111;
+  background: rgba(17, 17, 17, 0.96);
   color: #fff;
-  font-size: 0.82rem;
+  font-size: 0.68rem;
   font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
 }
 
 .ap-mode-toggle:hover,
 .ap-mode-toggle:focus {
-  background: #2c2c2c;
+  background: #343434;
 }
 
 body.mode-1990s {
-  background: #000 !important;
-  color: #00ff7f !important;
-  font-family: "Courier New", Courier, monospace !important;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(73, 0, 116, 0.28), transparent 35%),
+    radial-gradient(circle at 85% 15%, rgba(0, 97, 173, 0.25), transparent 35%),
+    #020204 !important;
+  color: #7affcc !important;
+  font-family: "Comic Sans MS", "Trebuchet MS", "Courier New", cursive !important;
+}
+
+body.mode-1990s,
+body.mode-1990s * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%2300ff66' d='M2 16l8-7 7 1 4-6 2 7 7 2-5 4 3 7-7-2-5 6-2-7-8-5z'/%3E%3Ccircle cx='19' cy='13' r='2' fill='%23001008'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+
+body.mode-1990s .ap-retro-pipes {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.86;
+}
+
+body.mode-1990s .ap-retro-chrome {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+body.mode-1990s .ap-retro-marquee {
+  min-height: 1.7rem;
+  border-top: 2px solid #ffe991;
+  border-bottom: 2px solid #ffe991;
+  background: linear-gradient(90deg, #1c0060, #0036a2, #1c0060);
+  color: #ffe991;
+  font-family: "Comic Sans MS", "Courier New", cursive;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.8rem;
+}
+
+body.mode-1990s .ap-retro-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.25rem;
+  background: rgba(0, 0, 0, 0.76);
+}
+
+body.mode-1990s .ap-retro-badge,
+body.mode-1990s .ap-retro-counter {
+  border: 2px outset #f4f4f4;
+  padding: 0.05rem 0.34rem;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: #000;
+  background: #ffff99;
+}
+
+body.mode-1990s .ap-retro-counter {
+  background: #a7ffea;
+}
+
+@keyframes ap-retro-blink {
+  0%, 48% { opacity: 1; }
+  50%, 100% { opacity: 0.35; }
+}
+
+body.mode-1990s .blink {
+  animation: ap-retro-blink 0.95s steps(2, end) infinite;
+}
+
+body.mode-1990s .header,
+body.mode-1990s .main,
+body.mode-1990s .footer,
+body.mode-1990s .feature,
+body.mode-1990s .vibes-shell {
+  position: relative;
+  z-index: 2;
+}
+
+body.mode-1990s .container {
+  width: min(92vw, 780px) !important;
+  max-width: 780px !important;
 }
 
 body.mode-1990s .header {
-  background: #000 !important;
-  border-bottom: 3px double #00ff7f !important;
+  top: auto;
+  position: relative;
+  margin-top: 3.4rem;
+  border: 3px ridge #a7d6ff !important;
+  background: linear-gradient(180deg, #3c6fd7, #183f8e) !important;
+  backdrop-filter: none !important;
+}
+
+body.mode-1990s .header a,
+body.mode-1990s .nav--header a {
+  color: #fff37c !important;
+  text-shadow: 1px 1px 0 #001a4a;
+}
+
+body.mode-1990s .feature {
+  border: 2px outset #cfdcff;
+  background: rgba(0, 9, 28, 0.86) !important;
 }
 
 body.mode-1990s .footer {
   background: #000 !important;
   color: #8dffd2 !important;
-  border-top: 3px double #00ff7f !important;
+  border-top: 3px ridge #79b8ff !important;
 }
 
 body.mode-1990s .footer a,
 body.mode-1990s a {
-  color: #00f7ff !important;
+  color: #80d7ff !important;
   text-decoration: underline;
 }
 
 body.mode-1990s .typeset p a:not(.button),
 body.mode-1990s .typeset li a:not(.button) {
   background-image: none;
+}
+
+body.mode-1990s .article,
+body.mode-1990s .ap-hero,
+body.mode-1990s .ap-subscribe,
+body.mode-1990s .ap-latest,
+body.mode-1990s .ap-tree-link,
+body.mode-1990s .ap-tree-updates,
+body.mode-1990s .ap-card {
+  border: 3px ridge #87c6ff !important;
+  background: rgba(0, 8, 18, 0.83) !important;
+  color: #a8ffe3 !important;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.6) !important;
+  border-radius: 0 !important;
+}
+
+body.mode-1990s .ap-tree-main strong,
+body.mode-1990s .ap-tree-main small,
+body.mode-1990s .ap-posts time,
+body.mode-1990s .ap-subscribe-note,
+body.mode-1990s .ap-copy,
+body.mode-1990s p,
+body.mode-1990s li,
+body.mode-1990s small {
+  color: #b9ffe8 !important;
 }
 
 body.mode-1990s button:not(.button--nav),
@@ -376,8 +502,10 @@ body.mode-1990s input[type="submit"] {
   border-radius: 0 !important;
   background: #ffff99 !important;
   color: #000 !important;
-  box-shadow: 3px 3px 0 #00f7ff !important;
+  box-shadow: 2px 2px 0 #3be2ff !important;
   text-transform: uppercase;
+  font-family: "Comic Sans MS", "Courier New", cursive !important;
+  letter-spacing: 0;
 }
 
 body.mode-1990s button:not(.button--nav):hover,
@@ -391,21 +519,10 @@ body.mode-1990s input[type="submit"]:focus {
   background: #ffe5ff !important;
 }
 
-body.mode-1990s .ap-hero,
-body.mode-1990s .ap-subscribe,
-body.mode-1990s .ap-latest,
-body.mode-1990s .ap-tree-link,
-body.mode-1990s .ap-tree-updates,
-body.mode-1990s .ap-card {
-  border: 2px solid #00ff7f !important;
-  background: #00120d !important;
-  color: #9effd7 !important;
-  box-shadow: none !important;
-}
-
 body.mode-1990s .ap-eyebrow,
 body.mode-1990s h1,
 body.mode-1990s h2,
 body.mode-1990s h3 {
-  color: #ffff66 !important;
+  color: #ffe97b !important;
+  text-shadow: 1px 1px 0 #00153d;
 }
