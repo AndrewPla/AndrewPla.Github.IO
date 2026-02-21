@@ -10,8 +10,8 @@ feature_text: |
     <a class="button" href="/links/">Browse Links</a>
   </p>
   <p>
-    <a class="button" href="/podcast/">Podcast</a>
-    <a class="button" href="/shop/">Shop</a>
+    <a class="button ap-ghost" href="/podcast/">Podcast</a>
+    <a class="button ap-ghost" href="/shop/">Shop</a>
   </p>
 ---
 
@@ -24,17 +24,13 @@ feature_text: |
 
 ## Latest Writing
 
-{% assign recent_posts = site.posts | slice: 0, 3 %}
-<ul class="list list--posts">
-  {% for post in recent_posts %}
-    <li class="item item--post">
-      <article class="article article--post">
-        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-        {% include post-meta.html page=post %}
-        {{ post.excerpt | markdownify | truncatewords: 40 }}
-      </article>
-    </li>
-  {% endfor %}
+<ul class="ap-posts">
+{% for post in site.posts limit: 5 %}
+  <li>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
+  </li>
+{% endfor %}
 </ul>
 
-<a class="button" href="/writing/">View all Writing</a>
+<a class="button ap-ghost" href="/writing/">View all Writing</a>
