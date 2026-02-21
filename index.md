@@ -6,26 +6,28 @@ feature_text: |
   <p>I’m Andrew Pla — sysadmin helping sysadmins. PowerShell MVP, speaker, and podcast host at PDQ. I share practical ways to build skills that make your workday smoother, your environment safer, and your career options bigger.</p>
   <p>
     <a class="button" href="/links/#updates">Get updates</a>
-    <a class="button" href="/writing/">Read Writing</a>
-    <a class="button" href="/links/">Browse Links</a>
   </p>
-  <p>
-    <a class="button ap-ghost" href="/podcast/">Podcast</a>
-    <a class="button ap-ghost" href="/shop/">Shop</a>
+  <p class="ap-quicklinks">
+    <a href="/writing/">Writing</a>
+    <span>•</span>
+    <a href="/links/">Links</a>
+    <span>•</span>
+    <a href="/podcast/">Podcast</a>
+    <span>•</span>
+    <a href="/shop/">Shop</a>
+    <span>•</span>
+    <a href="/contact/">Contact</a>
   </p>
 ---
 
-## What you’ll find here
+## Welcome
 
-- **Practical automation** that helps you get time back.
-- **Skills that scale** — PowerShell, tooling, troubleshooting, and real-world patterns.
-- **Security habits** that reduce risk without killing velocity.
-- **Career momentum** — confidence, consistency, and community.
+This site is where I share practical skills, honest lessons, and community energy for working IT pros.
 
 ## Latest Writing
 
 <ul class="ap-posts">
-{% for post in site.posts limit: 5 %}
+{% for post in site.posts limit: 4 %}
   <li>
     <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
     <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
