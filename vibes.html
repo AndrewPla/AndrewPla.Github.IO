@@ -6,102 +6,68 @@ indexing: false
 sitemap: false
 ---
 
-<link rel="stylesheet" href="{{ '/assets/vibes.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/vibes.css?v=20260221a' | relative_url }}">
 
-<div class="vibes-root" id="vibesRoot">
-  <canvas id="vibesCanvas" aria-hidden="true"></canvas>
-  <div id="stickers" aria-hidden="true"></div>
+<div class="v90-root" id="v90Root">
+  <canvas id="v90Canvas" aria-hidden="true"></canvas>
+  <div class="v90-scanlines" aria-hidden="true"></div>
 
-  <a class="vibes-exit" href="{{ '/' | relative_url }}">Back to reality</a>
+  <a class="v90-exit" href="{{ '/' | relative_url }}">EXIT TO MAIN SITE</a>
 
-  <div class="vibes-ui">
-    <div class="vibes-badge">
-      <div class="badge-pill">APT // SECRET VIBES</div>
-      <div class="badge-sub">
-        Move your mouse. Click anywhere. Press <kbd>V</kbd> for console mode.
-      </div>
-    </div>
+  <main class="v90-stage">
+    <section class="v90-window">
+      <header class="v90-titlebar">
+        <span>AndrewPla Internet Explorer 4.0</span>
+        <span class="v90-lights" aria-hidden="true">● ● ●</span>
+      </header>
 
-    <div class="vibes-card">
-      <h1>You found the hidden room.</h1>
-      <p>
-        If you found this page, you are my kind of person.
-        If you want to say hi, I would love to hear from you.
-        <a href="{{ '/contact/' | relative_url }}">Say hi here</a>.
-      </p>
+      <div class="v90-body">
+        <p class="v90-kicker">WELCOME TO THE SECRET ZONE</p>
+        <h1>YOU FOUND IT</h1>
 
-      <div class="controls">
-        <button class="btn" id="btnPalette" type="button">Switch universe</button>
-        <button class="btn ghost" id="btnCalm" type="button">Dial it down</button>
-        <button class="btn ghost" id="btnChaos" type="button">Maximum nonsense</button>
-        <button class="btn ghost" id="btnBurst" type="button">Drop stickers</button>
-      </div>
+        <marquee class="v90-marquee" behavior="alternate" scrollamount="7">
+          If you found this page, you are my kind of person.
+        </marquee>
 
-      <div class="player">
-        <div class="player-row">
-          <div>
-            <div class="label">Station</div>
-            <select id="stationSelect" class="station-select" aria-label="Choose music station">
-              <option value="groovesalad">SomaFM // Groove Salad</option>
-              <option value="dronezone">SomaFM // Drone Zone</option>
-              <option value="deepspaceone">SomaFM // Deep Space One</option>
-              <option value="spacestation">SomaFM // Space Station</option>
-            </select>
-          </div>
-          <div class="player-actions">
-            <button class="btn" id="btnPlay" type="button">Play</button>
-            <button class="btn ghost" id="btnNext" type="button">Next</button>
-          </div>
+        <p class="v90-copy">
+          This is the weird corner of the site. If you want to say hi, I would love to hear from you.
+          <a href="{{ '/contact/' | relative_url }}">Contact Andrew</a>.
+        </p>
+
+        <div class="v90-controls">
+          <label for="v90Station">STATION:</label>
+          <select id="v90Station" class="v90-select">
+            <option value="https://ice1.somafm.com/groovesalad-128-mp3">SomaFM // Groove Salad</option>
+            <option value="https://ice1.somafm.com/dronezone-128-mp3">SomaFM // Drone Zone</option>
+            <option value="https://ice1.somafm.com/deepspaceone-128-mp3">SomaFM // Deep Space One</option>
+            <option value="https://ice1.somafm.com/spacestation-128-mp3">SomaFM // Space Station</option>
+          </select>
+          <button class="v90-btn" id="v90Play" type="button">PLAY</button>
+          <button class="v90-btn alt" id="v90Trip" type="button">TRIP OUT</button>
         </div>
 
-        <audio id="audio" preload="none" crossorigin="anonymous">
+        <p class="v90-status" id="v90Status">Move your mouse. Click to spawn extra chaos.</p>
+
+        <div class="v90-portal">
+          <h2>MUSICFORPROGRAMMING PORTAL</h2>
+          <iframe
+            src="https://musicforprogramming.net/latest/"
+            title="musicforprogramming.net"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+          <p>
+            If embed fails, open
+            <a href="https://musicforprogramming.net/" target="_blank" rel="noopener noreferrer">musicforprogramming.net</a>.
+          </p>
+        </div>
+
+        <audio id="v90Audio" preload="none">
           <source src="https://ice1.somafm.com/groovesalad-128-mp3" type="audio/mpeg">
         </audio>
-
-        <div class="label">Now playing</div>
-        <div class="now" id="npValue">Loading stream data...</div>
-
-        <div class="fineprint">
-          Browser autoplay is blocked by default, so hit Play.
-          If audio fails, open <a href="https://somafm.com/" target="_blank" rel="noopener noreferrer">SomaFM</a>.
-        </div>
       </div>
-
-      <div class="music-portal">
-        <div class="label">musicforprogramming.net portal</div>
-        <iframe
-          class="portal-frame"
-          src="https://musicforprogramming.net/latest/"
-          title="musicforprogramming.net"
-          loading="lazy"
-          referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
-        <p class="fineprint">
-          If the embed is blocked by browser/frame policy,
-          <a href="https://musicforprogramming.net/" target="_blank" rel="noopener noreferrer">open it in a new tab</a>.
-        </p>
-      </div>
-
-      <div class="vibes-status" id="vibesStatus" aria-live="polite"></div>
-    </div>
-
-    <div class="terminal hidden" id="terminal">
-      <div class="terminal-top">
-        <div class="dots">
-          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-        </div>
-        <div class="term-title">andrewpla://console</div>
-        <button class="term-x" id="termClose" type="button" aria-label="Close">x</button>
-      </div>
-
-      <div class="terminal-out" id="termOut" role="log" aria-live="polite"></div>
-
-      <form class="terminal-in" id="termForm" autocomplete="off">
-        <span class="prompt">PS&gt;</span>
-        <input id="termInput" type="text" placeholder="help | whoami | vibe | calm | chaos | clear" spellcheck="false">
-      </form>
-    </div>
-  </div>
+    </section>
+  </main>
 </div>
 
-<script src="{{ '/assets/vibes.js' | relative_url }}"></script>
+<script src="{{ '/assets/vibes.js?v=20260221a' | relative_url }}"></script>

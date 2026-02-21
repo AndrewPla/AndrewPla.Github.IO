@@ -1,1 +1,38 @@
-<!-- Overwrite this file with code you want before the closing body tag -->
+<script>
+  (function () {
+    var key = "ap-site-mode";
+    var mode = "normal";
+
+    try {
+      mode = localStorage.getItem(key) || "normal";
+    } catch (e) {
+      mode = "normal";
+    }
+
+    function apply(nextMode) {
+      var body = document.body;
+      if (!body) return;
+      body.classList.toggle("mode-1990s", nextMode === "retro");
+      body.dataset.siteMode = nextMode;
+      if (toggleBtn) {
+        toggleBtn.textContent = nextMode === "retro" ? "Switch to Normal Mode" : "Switch to 1990s Mode";
+      }
+    }
+
+    var toggleBtn = document.createElement("button");
+    toggleBtn.type = "button";
+    toggleBtn.className = "ap-mode-toggle";
+    toggleBtn.setAttribute("aria-label", "Toggle site mode");
+
+    toggleBtn.addEventListener("click", function () {
+      mode = mode === "retro" ? "normal" : "retro";
+      try {
+        localStorage.setItem(key, mode);
+      } catch (e) {}
+      apply(mode);
+    });
+
+    apply(mode);
+    document.body.appendChild(toggleBtn);
+  })();
+</script>

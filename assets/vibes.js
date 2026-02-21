@@ -1,446 +1,201 @@
 (function () {
-  const root = document.documentElement;
-  const canvas = document.getElementById("vibesCanvas");
-  const stickers = document.getElementById("stickers");
-  const vibesStatus = document.getElementById("vibesStatus");
+  const canvas = document.getElementById("v90Canvas");
+  const statusEl = document.getElementById("v90Status");
+  const audio = document.getElementById("v90Audio");
+  const stationSelect = document.getElementById("v90Station");
+  const playBtn = document.getElementById("v90Play");
+  const tripBtn = document.getElementById("v90Trip");
 
-  const btnPalette = document.getElementById("btnPalette");
-  const btnCalm = document.getElementById("btnCalm");
-  const btnChaos = document.getElementById("btnChaos");
-  const btnBurst = document.getElementById("btnBurst");
-
-  const audio = document.getElementById("audio");
-  const btnPlay = document.getElementById("btnPlay");
-  const btnNext = document.getElementById("btnNext");
-  const stationSelect = document.getElementById("stationSelect");
-  const npValue = document.getElementById("npValue");
-
-  const terminal = document.getElementById("terminal");
-  const termOut = document.getElementById("termOut");
-  const termForm = document.getElementById("termForm");
-  const termInput = document.getElementById("termInput");
-  const termClose = document.getElementById("termClose");
-
-  if (!canvas || !audio) return;
+  if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
-  const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
 
-  let W = 0;
-  let H = 0;
-  let hue = 168;
-  let intensity = 1;
-  let stickerBurst = 8;
-  let stickerSize = 88;
+  let width = 0;
+  let height = 0;
+  let t = 0;
+  let hue = 140;
+  let pointerX = 0;
+  let pointerY = 0;
+  let hyper = false;
 
-  let mouseX = 0;
-  let mouseY = 0;
-  const pulses = [];
+  const sparks = [];
 
-  const stickerSets = [
-    ["✨", "🛰️", "🌌", "🎛️", "🎧", "🧠", "🛸", "🫧"],
-    ["🧙", "🔮", "⚡", "🕳️", "🧪", "🦄", "👾", "🌠"],
-    ["🛠️", "🖥️", "⌨️", "📟", "⚙️", "🧰", "🔧", "📡"],
-    ["🍄", "🪩", "🌀", "🫠", "🌈", "💥", "🪐", "🚀"]
-  ];
-  let stickersActive = stickerSets[0];
-
-  const palettes = [
-    { hue: 168, name: "Emerald Nebula" },
-    { hue: 245, name: "Blue Supercluster" },
-    { hue: 302, name: "Neon Void" },
-    { hue: 36, name: "Solar Flare" }
-  ];
-  let paletteIndex = 0;
-
-  const stations = [
-    {
-      id: "groovesalad",
-      label: "Groove Salad",
-      stream: "https://ice1.somafm.com/groovesalad-128-mp3",
-      now: "https://somafm.com/songs/groovesalad.json",
-      page: "https://somafm.com/groovesalad/"
-    },
-    {
-      id: "dronezone",
-      label: "Drone Zone",
-      stream: "https://ice1.somafm.com/dronezone-128-mp3",
-      now: "https://somafm.com/songs/dronezone.json",
-      page: "https://somafm.com/dronezone/"
-    },
-    {
-      id: "deepspaceone",
-      label: "Deep Space One",
-      stream: "https://ice1.somafm.com/deepspaceone-128-mp3",
-      now: "https://somafm.com/songs/deepspaceone.json",
-      page: "https://somafm.com/deepspaceone/"
-    },
-    {
-      id: "spacestation",
-      label: "Space Station",
-      stream: "https://ice1.somafm.com/spacestation-128-mp3",
-      now: "https://somafm.com/songs/spacestation.json",
-      page: "https://somafm.com/spacestation/"
-    }
-  ];
-  let stationIndex = 0;
-  let nowPlayingTimer = null;
-
-  let audioCtx = null;
-  let analyser = null;
-  let sourceNode = null;
-  let freqData = null;
-
-  function setStatus(text) {
-    if (!vibesStatus) return;
-    vibesStatus.textContent = text;
+  function setStatus(msg) {
+    if (statusEl) statusEl.textContent = msg;
   }
 
   function rand(min, max) {
     return min + Math.random() * (max - min);
   }
 
-  function setVars() {
-    root.style.setProperty("--v-hue", String(hue));
-    root.style.setProperty("--v-intensity", String(intensity));
-  }
-
   function resize() {
-    W = Math.floor(window.innerWidth);
-    H = Math.floor(window.innerHeight);
-    canvas.width = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
-    canvas.style.width = W + "px";
-    canvas.style.height = H + "px";
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    if (!mouseX && !mouseY) {
-      mouseX = W * 0.5;
-      mouseY = H * 0.5;
+    width = Math.floor(window.innerWidth);
+    height = Math.floor(window.innerHeight);
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (!pointerX && !pointerY) {
+      pointerX = width * 0.5;
+      pointerY = height * 0.5;
     }
   }
 
-  function spawnPulse(x, y, power) {
-    pulses.push({
+  function spawnSpark(x, y, extra) {
+    sparks.push({
       x,
       y,
-      r: rand(28, 110) * power,
-      speed: rand(1.7, 4.2) * power,
-      life: 1
+      vx: rand(-1.8, 1.8) * extra,
+      vy: rand(-2.2, 2.2) * extra,
+      life: rand(0.45, 1),
+      size: rand(2, 7) * extra
     });
-    while (pulses.length > 44) pulses.shift();
+    if (sparks.length > 380) sparks.shift();
   }
 
-  function dropSticker(x, y) {
-    if (!stickers) return;
-    const el = document.createElement("div");
-    el.className = "sticker";
-    el.textContent = stickersActive[Math.floor(Math.random() * stickersActive.length)];
-    el.style.left = x + "px";
-    el.style.top = y + "px";
-    el.style.setProperty("--rot", rand(-42, 42).toFixed(0) + "deg");
-    el.style.setProperty("--dx", rand(-160, 160).toFixed(0) + "px");
-    el.style.setProperty("--dur", Math.floor(rand(1200, 2200) / intensity) + "ms");
-    el.style.setProperty("--size", Math.floor(rand(stickerSize * 0.72, stickerSize * 1.44)) + "px");
-    stickers.appendChild(el);
-    window.setTimeout(() => el.remove(), 2600);
-  }
-
-  function stickerBurstAt(x, y, count) {
-    for (let i = 0; i < count; i += 1) {
-      dropSticker(x + rand(-26, 26), y + rand(-26, 26));
+  function burst(x, y, amount) {
+    for (let i = 0; i < amount; i += 1) {
+      spawnSpark(x + rand(-20, 20), y + rand(-20, 20), rand(0.8, 1.4));
     }
   }
 
-  function audioEnergy() {
-    if (!analyser || !freqData) return 0;
-    analyser.getByteFrequencyData(freqData);
-    let sum = 0;
-    const n = Math.min(42, freqData.length);
-    for (let i = 0; i < n; i += 1) {
-      sum += freqData[i];
+  function drawBackground(time) {
+    const speed = hyper ? 1.8 : 1;
+    const g = ctx.createLinearGradient(0, 0, width, height);
+    g.addColorStop(0, `hsl(${(hue + time * 24 * speed) % 360}, 70%, 8%)`);
+    g.addColorStop(0.5, `hsl(${(hue + 95 + time * 30 * speed) % 360}, 75%, 11%)`);
+    g.addColorStop(1, `hsl(${(hue + 180 + time * 20 * speed) % 360}, 70%, 8%)`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, width, height);
+
+    const rings = hyper ? 9 : 6;
+    for (let i = 0; i < rings; i += 1) {
+      const r = (Math.sin(time * (0.7 + i * 0.1)) * 0.5 + 0.5) * (Math.min(width, height) * 0.55);
+      const grad = ctx.createRadialGradient(pointerX, pointerY, Math.max(10, r * 0.08), pointerX, pointerY, r);
+      grad.addColorStop(0, `hsla(${(hue + i * 35 + time * 70) % 360}, 95%, 65%, ${hyper ? 0.2 : 0.12})`);
+      grad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(pointerX, pointerY, r, 0, Math.PI * 2);
+      ctx.fill();
     }
-    return (sum / n) / 255;
+  }
+
+  function drawGrid(time) {
+    const cell = hyper ? 34 : 46;
+    ctx.save();
+    ctx.globalAlpha = hyper ? 0.22 : 0.14;
+    ctx.strokeStyle = "rgba(255,255,255,0.25)";
+    ctx.lineWidth = 1;
+
+    const driftX = (time * (hyper ? 55 : 28)) % cell;
+    const driftY = (time * (hyper ? 35 : 18)) % cell;
+
+    for (let x = -cell; x < width + cell; x += cell) {
+      ctx.beginPath();
+      ctx.moveTo(x + driftX, 0);
+      ctx.lineTo(x + driftX, height);
+      ctx.stroke();
+    }
+    for (let y = -cell; y < height + cell; y += cell) {
+      ctx.beginPath();
+      ctx.moveTo(0, y + driftY);
+      ctx.lineTo(width, y + driftY);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawSparks() {
+    for (let i = sparks.length - 1; i >= 0; i -= 1) {
+      const s = sparks[i];
+      s.life -= hyper ? 0.024 : 0.016;
+      if (s.life <= 0) {
+        sparks.splice(i, 1);
+        continue;
+      }
+      s.x += s.vx;
+      s.y += s.vy;
+      s.vy += 0.02;
+
+      ctx.fillStyle = `hsla(${(hue + i * 3) % 360}, 100%, 68%, ${s.life})`;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
+      ctx.fill();
+    }
   }
 
   function frame() {
-    ctx.fillStyle = `rgba(1, 2, 3, ${0.14 + 0.05 / intensity})`;
-    ctx.fillRect(0, 0, W, H);
+    t += hyper ? 0.02 : 0.012;
+    hue = (hue + (hyper ? 1.2 : 0.42)) % 360;
 
-    const energy = audioEnergy();
-    if (energy > 0.28 && Math.random() < energy * 0.5) {
-      spawnPulse(rand(0, W), rand(0, H), 0.9 + energy * 1.9);
+    drawBackground(t);
+    drawGrid(t);
+    drawSparks();
+
+    if (Math.random() < (hyper ? 0.45 : 0.18)) {
+      spawnSpark(pointerX + rand(-16, 16), pointerY + rand(-16, 16), hyper ? 1.4 : 1);
     }
-
-    const wash = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, Math.min(W, H) * 0.74);
-    wash.addColorStop(0, `hsla(${hue}, 96%, 63%, ${0.18 * intensity + energy * 0.22})`);
-    wash.addColorStop(0.45, `hsla(${(hue + 118) % 360}, 94%, 62%, ${0.09 * intensity + energy * 0.18})`);
-    wash.addColorStop(1, "rgba(0,0,0,0)");
-    ctx.fillStyle = wash;
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.globalCompositeOperation = "lighter";
-    for (let i = pulses.length - 1; i >= 0; i -= 1) {
-      const p = pulses[i];
-      p.life -= 0.012 * intensity;
-      p.r += p.speed * intensity;
-      if (p.life <= 0) {
-        pulses.splice(i, 1);
-        continue;
-      }
-      const alpha = Math.max(0, p.life);
-      const grad = ctx.createRadialGradient(p.x, p.y, p.r * 0.06, p.x, p.y, p.r);
-      grad.addColorStop(0, `hsla(${hue}, 95%, 64%, ${0.56 * alpha})`);
-      grad.addColorStop(1, `hsla(${(hue + 192) % 360}, 96%, 62%, 0)`);
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.globalCompositeOperation = "source-over";
 
     window.requestAnimationFrame(frame);
   }
 
-  function ensureAudioAnalyzer() {
-    if (audioCtx || !window.AudioContext) return;
-    audioCtx = new window.AudioContext();
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 256;
-    freqData = new Uint8Array(analyser.frequencyBinCount);
-    sourceNode = audioCtx.createMediaElementSource(audio);
-    sourceNode.connect(analyser);
-    analyser.connect(audioCtx.destination);
-  }
-
-  function selectedStation() {
-    return stations[stationIndex];
-  }
-
-  function setStation(index, keepPlaying) {
-    if (!stations.length) return;
-    stationIndex = (index + stations.length) % stations.length;
-    const station = selectedStation();
-    if (stationSelect) stationSelect.value = station.id;
-
-    const shouldResume = keepPlaying && !audio.paused;
-    audio.src = station.stream;
-    audio.load();
-    npValue.textContent = "Tuning " + station.label + "...";
-    setStatus("Switched to " + station.label + ".");
-    refreshNowPlaying();
-
-    if (shouldResume) {
-      audio.play().catch(() => {
-        setStatus("Tap Play to resume audio.");
-      });
-    }
-  }
-
-  async function refreshNowPlaying() {
-    const station = selectedStation();
-    if (!station) return;
-    try {
-      const res = await fetch(station.now, { cache: "no-store" });
-      if (!res.ok) throw new Error("bad-response");
-      const data = await res.json();
-      const top = Array.isArray(data.songs) ? data.songs[0] : null;
-      if (!top) throw new Error("bad-payload");
-      npValue.textContent = top.artist + " - " + top.title;
-    } catch {
-      npValue.innerHTML = "Now playing unavailable. <a href=\"" + station.page + "\" target=\"_blank\" rel=\"noopener noreferrer\">Open station page</a>.";
-    }
-  }
-
-  function startNowPlayingTimer() {
-    if (nowPlayingTimer) window.clearInterval(nowPlayingTimer);
-    nowPlayingTimer = window.setInterval(refreshNowPlaying, 60000);
-  }
-
-  function writeLine(line) {
-    if (!termOut) return;
-    const row = document.createElement("div");
-    row.className = "terminal-line";
-    row.textContent = line;
-    termOut.appendChild(row);
-    termOut.scrollTop = termOut.scrollHeight;
-  }
-
-  function openTerminal() {
-    if (!terminal) return;
-    terminal.classList.remove("hidden");
-    if (termInput) termInput.focus();
-  }
-
-  function closeTerminal() {
-    if (!terminal) return;
-    terminal.classList.add("hidden");
-  }
-
-  function handleCommand(raw) {
-    const cmd = raw.trim().toLowerCase();
-    if (!cmd) return;
-    writeLine("> " + raw);
-    if (cmd === "help") {
-      writeLine("Commands: help, whoami, vibe, calm, chaos, station, clear");
-      return;
-    }
-    if (cmd === "whoami") {
-      writeLine("You are someone with excellent taste in hidden pages.");
-      return;
-    }
-    if (cmd === "vibe") {
-      setStatus("Vibe level stable at " + intensity.toFixed(2));
-      writeLine("Vibe level: " + intensity.toFixed(2));
-      return;
-    }
-    if (cmd === "calm") {
-      intensity = Math.max(0.6, +(intensity - 0.2).toFixed(2));
-      stickerBurst = Math.max(4, stickerBurst - 2);
-      setVars();
-      writeLine("Calming down. Intensity: " + intensity.toFixed(2));
-      return;
-    }
-    if (cmd === "chaos") {
-      intensity = Math.min(2.6, +(intensity + 0.24).toFixed(2));
-      stickerBurst = Math.min(36, stickerBurst + 4);
-      setVars();
-      writeLine("Chaos increased. Intensity: " + intensity.toFixed(2));
-      return;
-    }
-    if (cmd === "station") {
-      const station = selectedStation();
-      writeLine("Current station: " + (station ? station.label : "None"));
-      return;
-    }
-    if (cmd === "clear") {
-      if (termOut) termOut.innerHTML = "";
-      return;
-    }
-    writeLine("Unknown command. Try: help");
-  }
-
-  function bindEvents() {
+  function bind() {
     window.addEventListener("resize", resize);
 
     window.addEventListener("mousemove", (event) => {
-      mouseX = event.clientX;
-      mouseY = event.clientY;
-      if (Math.random() < 0.07 * intensity) {
-        spawnPulse(mouseX, mouseY, 0.8);
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (Math.random() < 0.35) {
+        spawnSpark(pointerX, pointerY, hyper ? 1.2 : 0.9);
       }
     });
 
     window.addEventListener("click", (event) => {
-      spawnPulse(event.clientX, event.clientY, 1.7);
-      stickerBurstAt(event.clientX, event.clientY, Math.floor(stickerBurst * intensity * 0.75));
+      burst(event.clientX, event.clientY, hyper ? 42 : 26);
+      setStatus("Chaos burst deployed.");
     });
 
-    btnPalette && btnPalette.addEventListener("click", () => {
-      paletteIndex = (paletteIndex + 1) % palettes.length;
-      hue = palettes[paletteIndex].hue;
-      stickersActive = stickerSets[paletteIndex % stickerSets.length];
-      setVars();
-      setStatus("Universe switched to " + palettes[paletteIndex].name + ".");
-      spawnPulse(W * 0.5, H * 0.45, 2.2);
-    });
+    if (stationSelect && audio) {
+      stationSelect.addEventListener("change", () => {
+        audio.src = stationSelect.value;
+        audio.load();
+        setStatus("Station changed. Press PLAY.");
+      });
+    }
 
-    btnCalm && btnCalm.addEventListener("click", () => {
-      intensity = Math.max(0.6, +(intensity - 0.2).toFixed(2));
-      stickerBurst = Math.max(4, stickerBurst - 2);
-      stickerSize = Math.max(62, stickerSize - 8);
-      setVars();
-      setStatus("Calmer mode engaged.");
-    });
-
-    btnChaos && btnChaos.addEventListener("click", () => {
-      intensity = Math.min(2.6, +(intensity + 0.24).toFixed(2));
-      stickerBurst = Math.min(36, stickerBurst + 4);
-      stickerSize = Math.min(150, stickerSize + 10);
-      setVars();
-      setStatus("Chaos level increased.");
-      for (let i = 0; i < 10; i += 1) {
-        spawnPulse(rand(0, W), rand(0, H), 1.05);
-      }
-    });
-
-    btnBurst && btnBurst.addEventListener("click", () => {
-      stickerBurstAt(W * 0.5, H * 0.56, Math.floor(18 * intensity));
-      setStatus("Sticker storm deployed.");
-    });
-
-    btnPlay && btnPlay.addEventListener("click", async () => {
-      try {
-        ensureAudioAnalyzer();
-        if (audioCtx && audioCtx.state === "suspended") {
-          await audioCtx.resume();
+    if (playBtn && audio) {
+      playBtn.addEventListener("click", async () => {
+        try {
+          if (audio.paused) {
+            await audio.play();
+            playBtn.textContent = "PAUSE";
+            setStatus("Streaming audio.");
+          } else {
+            audio.pause();
+            playBtn.textContent = "PLAY";
+            setStatus("Audio paused.");
+          }
+        } catch {
+          setStatus("Browser blocked autoplay. Press PLAY again.");
         }
-        if (audio.paused) {
-          await audio.play();
-          btnPlay.textContent = "Pause";
-          setStatus("Now playing " + selectedStation().label + ".");
-        } else {
-          audio.pause();
-          btnPlay.textContent = "Play";
-          setStatus("Playback paused.");
-        }
-      } catch {
-        setStatus("Audio was blocked. Try the station link in the Now Playing area.");
-      }
-    });
+      });
+    }
 
-    btnNext && btnNext.addEventListener("click", () => {
-      setStation(stationIndex + 1, true);
-    });
-
-    stationSelect && stationSelect.addEventListener("change", (event) => {
-      const id = event.target.value;
-      const idx = stations.findIndex((station) => station.id === id);
-      if (idx >= 0) setStation(idx, true);
-    });
-
-    audio.addEventListener("play", () => {
-      if (btnPlay) btnPlay.textContent = "Pause";
-    });
-    audio.addEventListener("pause", () => {
-      if (btnPlay) btnPlay.textContent = "Play";
-    });
-    audio.addEventListener("error", () => {
-      setStatus("Stream error. Try Next or open SomaFM directly.");
-    });
-
-    window.addEventListener("keydown", (event) => {
-      if (event.key.toLowerCase() === "v" && document.activeElement !== termInput) {
-        if (terminal && terminal.classList.contains("hidden")) {
-          openTerminal();
-        } else {
-          closeTerminal();
-        }
-      }
-      if (event.key === "Escape") {
-        closeTerminal();
-      }
-    });
-
-    termClose && termClose.addEventListener("click", closeTerminal);
-    termForm && termForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (!termInput) return;
-      handleCommand(termInput.value);
-      termInput.value = "";
-    });
+    if (tripBtn) {
+      tripBtn.addEventListener("click", () => {
+        hyper = !hyper;
+        tripBtn.textContent = hyper ? "CALM DOWN" : "TRIP OUT";
+        setStatus(hyper ? "HYPER MODE ACTIVATED." : "Hyper mode disabled.");
+        burst(width * 0.5, height * 0.5, hyper ? 80 : 32);
+      });
+    }
   }
 
   resize();
-  setVars();
-  bindEvents();
-
-  const preset = stationSelect ? stations.findIndex((station) => station.id === stationSelect.value) : -1;
-  if (preset >= 0) stationIndex = preset;
-  setStation(stationIndex, false);
-  startNowPlayingTimer();
-
-  writeLine("Welcome to the secret terminal.");
-  writeLine("Type 'help' for commands.");
-
+  bind();
+  setStatus("Move your mouse. Click to spawn extra chaos.");
   window.requestAnimationFrame(frame);
 })();
