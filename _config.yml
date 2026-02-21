@@ -163,3 +163,12 @@ fonts:
     - https://fonts.gstatic.com
   font_urls:
     - https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap
+
+# Optional site ticker (top announcement strip)
+ticker:
+  enabled: true
+  local_feed: /assets/ticker.json
+  remote_feed: "" # Optional: remote JSON endpoint, falls back to local_feed on errors
+  timezone: America/New_York
+  refresh_seconds: 300
+  rotation_seconds: 10

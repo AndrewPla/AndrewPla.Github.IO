@@ -1,0 +1,21 @@
+{% assign ticker_enabled = site.ticker.enabled | default: false %}
+{% if ticker_enabled %}
+<div
+  class="ap-site-ticker"
+  id="apSiteTicker"
+  hidden
+  data-enabled="{{ site.ticker.enabled | default: false }}"
+  data-local-feed="{{ site.ticker.local_feed | default: '/assets/ticker.json' | relative_url }}"
+  data-remote-feed="{{ site.ticker.remote_feed | default: '' }}"
+  data-timezone="{{ site.ticker.timezone | default: site.timezone | default: 'UTC' }}"
+  data-refresh-seconds="{{ site.ticker.refresh_seconds | default: 300 }}"
+  data-rotation-seconds="{{ site.ticker.rotation_seconds | default: 10 }}">
+  <div class="container ap-site-ticker__inner">
+    <span class="ap-site-ticker__label">Live</span>
+    <div class="ap-site-ticker__viewport" aria-live="polite">
+      <span class="ap-site-ticker__track" id="apSiteTickerTrack"></span>
+    </div>
+    <a class="ap-site-ticker__link" id="apSiteTickerLink" hidden rel="noopener noreferrer"></a>
+  </div>
+</div>
+{% endif %}
