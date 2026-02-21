@@ -52,16 +52,21 @@ function spawnPulse(x, y, power = 1) {
 }
 
 const emoji = ["🧙‍♂️","🧠","⚡","🛠️","🖥️","🌈","✨","🪩","🚀","🫠","🍄","👾","🧃","🎛️","🎧"];
+let stickerBurst = 6; // baseline "crazy"
+let stickerSize = 90; // baseline size
+
 function sticker(x, y) {
   const el = document.createElement("div");
   el.className = "sticker";
   el.textContent = emoji[Math.floor(Math.random() * emoji.length)];
   el.style.left = `${x}px`;
   el.style.top = `${y}px`;
-  el.style.setProperty("--rot", `${rand(-25, 25)}deg`);
-  el.style.setProperty("--dx", `${rand(-80, 80)}px`);
+  el.style.setProperty("--rot", `${rand(-45, 45)}deg`);
+  el.style.setProperty("--dx", `${rand(-180, 180)}px`);
+  el.style.setProperty("--dur", `${Math.floor(rand(1200, 2400) / intensity)}ms`);
+  el.style.setProperty("--size", `${Math.floor(rand(stickerSize * 0.7, stickerSize * 1.45))}px`);
   stickers.appendChild(el);
-  setTimeout(() => el.remove(), 2300);
+  setTimeout(() => el.remove(), 2600);
 }
 
 let mouse = { x: W/2, y: H/2 };
@@ -73,28 +78,47 @@ window.addEventListener("mousemove", (e) => {
 });
 
 window.addEventListener("click", (e) => {
-  // Guaranteed visible fun
-  sticker(e.clientX, e.clientY);
-  spawnPulse(e.clientX, e.clientY, 1.4);
-  for (let i=0;i<3;i++) spawnPulse(e.clientX + rand(-30,30), e.clientY + rand(-30,30), 0.9);
+  const n = Math.floor(stickerBurst * intensity);
+  for (let i = 0; i < n; i++) {
+    sticker(
+      e.clientX + rand(-20, 20),
+      e.clientY + rand(-20, 20)
+    );
+  }
+  spawnPulse(e.clientX, e.clientY, 1.8);
+  for (let i=0;i<6;i++) spawnPulse(e.clientX + rand(-40,40), e.clientY + rand(-40,40), 1.0);
 });
 
 // Button actions
+const emojiSets = [
+  ["👾","🪩","🌈","✨","🎛️","🎧","🚀","🍄"],
+  ["🧙‍♂️","📜","🕯️","🔮","🐉","⚡","🗡️","🧿"],
+  ["🛠️","🖥️","🧠","⚙️","📡","🧰","🔧","🧃"],
+  ["😵‍💫","🫠","🌀","💥","🧨","🧿","🕳️","🧬"]
+];
+
+let emoji = emojiSets[0];
+
 btnPalette?.addEventListener("click", () => {
   hue = (hue + 60) % 360;
+  emoji = emojiSets[(Math.floor(hue / 60)) % emojiSets.length];
   setVars();
-  spawnPulse(W*0.5, H*0.45, 2.0);
+  spawnPulse(W*0.5, H*0.45, 2.2);
 });
 
 btnCalm?.addEventListener("click", () => {
   intensity = Math.max(0.6, +(intensity - 0.2).toFixed(2));
+  stickerBurst = Math.max(2, stickerBurst - 2);
+  stickerSize = Math.max(60, stickerSize - 10);
   setVars();
 });
 
 btnChaos?.addEventListener("click", () => {
   intensity = Math.min(2.4, +(intensity + 0.25).toFixed(2));
+  stickerBurst = Math.min(30, stickerBurst + 4);
+  stickerSize = Math.min(160, stickerSize + 10);
   setVars();
-  for (let i=0;i<6;i++) spawnPulse(rand(0,W), rand(0,H), 1.1);
+  for (let i=0;i<10;i++) spawnPulse(rand(0,W), rand(0,H), 1.2);
 });
 
 // Canvas rendering

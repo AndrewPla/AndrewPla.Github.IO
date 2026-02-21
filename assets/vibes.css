@@ -78,15 +78,39 @@
 }
 .sticker{
   position: absolute;
-  font-size: 44px;
-  filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
-  animation: floatUp 2.2s ease-out forwards;
-  transform: translate(-50%, -50%) rotate(var(--rot));
+  font-size: var(--size, 84px);
+  filter:
+    drop-shadow(0 22px 55px rgba(0,0,0,.6))
+    hue-rotate(calc(var(--hue) * 1deg))
+    saturate(160%);
+  mix-blend-mode: screen;
+  animation: floatUp var(--dur, 1800ms) ease-out forwards;
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+  will-change: transform, opacity, filter;
 }
+
 @keyframes floatUp{
-  0%{ opacity: 0; transform: translate(-50%, -50%) scale(.8) rotate(var(--rot)); }
-  10%{ opacity: 1; }
-  100%{ opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% - 180px)) scale(1.15) rotate(calc(var(--rot) + 25deg)); }
+  0%{
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.7) rotate(var(--rot));
+    filter: blur(0px) saturate(160%);
+  }
+  12%{ opacity: 1; }
+  70%{
+    opacity: 1;
+    transform:
+      translate(calc(-50% + var(--dx)), calc(-50% - 220px))
+      scale(1.25)
+      rotate(calc(var(--rot) + 35deg));
+  }
+  100%{
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx)), calc(-50% - 420px))
+      scale(1.55)
+      rotate(calc(var(--rot) + 65deg));
+    filter: blur(1px) saturate(190%);
+  }
 }
 
 /* Escape hatch */
