@@ -1,30 +1,40 @@
 ---
-#title: Andrew Pla Tech
-#feature_image: /assets/logos/RetroHeaderImagething.png
-feature_image: /assets/blogsandblurbs.png
+layout: home
+permalink: /
+feature_text: |
+  <h1>Help IT pros reach their next level.</h1>
+  <p>I’m Andrew Pla — sysadmin helping sysadmins. PowerShell MVP, speaker, and podcast host at PDQ. I share practical ways to build skills that make your workday smoother, your environment safer, and your career options bigger.</p>
+  <p>
+    <a class="button" href="/links/#updates">Get updates</a>
+    <a class="button" href="/writing/">Read Writing</a>
+    <a class="button" href="/links/">Browse Links</a>
+  </p>
+  <p>
+    <a class="button" href="/podcast/">Podcast</a>
+    <a class="button" href="/shop/">Shop</a>
+  </p>
 ---
 
-#### whoami
-I'm Andrew Pla, a tech enthusiast and community-driven professional with a focus on PowerShell, SysAdmin, and hosting the [PowerShell Podcast](https://powershellpodcast.podbean.com/).
+## What you’ll find here
 
-#### 🌐 Professional Background
+- **Practical automation** that helps you get time back.
+- **Skills that scale** — PowerShell, tooling, troubleshooting, and real-world patterns.
+- **Security habits** that reduce risk without killing velocity.
+- **Career momentum** — confidence, consistency, and community.
 
-- 🔭 SysAdmin now working at [PDQ](https://pdq.com) helping sysadmins automate their problems away.
-- 10 + years working in IT
-- 🎙️ Proud host of the [PowerShell Podcast](https://powershellpodcast.podbean.com/)
-- Speaker at various conferences, including PowerShell + DevOps Global Summit
+## Latest Writing
 
-#### Links
+{% assign recent_posts = site.posts | slice: 0, 3 %}
+<ul class="list list--posts">
+  {% for post in recent_posts %}
+    <li class="item item--post">
+      <article class="article article--post">
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        {% include post-meta.html page=post %}
+        {{ post.excerpt | markdownify | truncatewords: 40 }}
+      </article>
+    </li>
+  {% endfor %}
+</ul>
 
-- 🤝 Ask me about PowerShell, collaboration, or anything else really.
-- [Twitter](https://twitter.com/AndrewPlaTech)
-- [LinkedIn](https://www.linkedin.com/in/andrewplatech/).
-- [Instagram](https://www.instagram.com/andrewplatech)
-- [Facebook](https://www.facebook.com/andrewplatech)
-
-#### ⚡ Fun Facts
-
-- Love playing pickleball
-- I have 2 kids (Caden and Ava), 1 wife (Reanne), and 1 dog (Dolly)
-
-Thanks for stopping by! 🚀
+<a class="button" href="/writing/">View all Writing</a>
