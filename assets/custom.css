@@ -40,6 +40,29 @@ body {
   padding-top: 1.5rem;
 }
 
+.feature {
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.2rem;
+}
+
+.feature .container {
+  min-height: clamp(120px, 18vh, 200px);
+  max-width: 860px;
+}
+
+.feature h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+.feature p {
+  margin-top: 0.45rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 @media (min-width: 960px) {
   .layout-home .main {
     justify-content: flex-start;
