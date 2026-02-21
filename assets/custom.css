@@ -1,0 +1,15 @@
+.logo .wordmark{
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 1.1rem;
+}
+
+.logo .wordmark-secondary{
+  margin-left: .6rem;
+  font-weight: 700;
+  font-size: .8rem;
+  opacity: .75;
+  border: 1px solid rgba(0,0,0,.15);
+  padding: .15rem .45rem;
+  border-radius: 999px;
+}
