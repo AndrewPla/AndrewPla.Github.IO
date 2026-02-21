@@ -85,7 +85,7 @@ permalink: /links/
     <section class="ap-tree-footer">
       <button class="ap-tree-chip" id="copyEmailBtn" type="button" data-email="andrew@andrewpla.tech">Copy email</button>
       <a class="ap-tree-chip" href="{{ '/contact/' | relative_url }}">Contact page</a>
-      <a class="ap-tree-chip ap-tree-secret" href="{{ '/vibes/' | relative_url }}">Secret vibes room</a>
+      <a class="ap-tree-chip ap-tree-secret" href="{{ '/shell-room/' | relative_url }}">Secret Shell Room</a>
       <p class="ap-tree-legal">Definitely not Linktree. Definitely a little bit of Linktree energy.</p>
       <p class="ap-tree-toast" id="copyToast" role="status" aria-live="polite"></p>
     </section>

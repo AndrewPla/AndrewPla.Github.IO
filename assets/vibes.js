@@ -1,32 +1,161 @@
 (function () {
-  const canvas = document.getElementById("v90Canvas");
-  const statusEl = document.getElementById("v90Status");
-  const audio = document.getElementById("v90Audio");
-  const stationSelect = document.getElementById("v90Station");
-  const playBtn = document.getElementById("v90Play");
-  const tripBtn = document.getElementById("v90Trip");
+  const canvas = document.getElementById("shellCanvas");
+  const taskInput = document.getElementById("taskInput");
+  const focusMinutesInput = document.getElementById("focusMinutes");
+  const breakMinutesInput = document.getElementById("breakMinutes");
+  const autoStartBreakInput = document.getElementById("autoStartBreak");
+  const timerDisplay = document.getElementById("timerDisplay");
+  const timerStatus = document.getElementById("timerStatus");
+  const startPauseBtn = document.getElementById("startPauseBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const skipBtn = document.getElementById("skipBtn");
 
-  if (!canvas) return;
+  const stationSelect = document.getElementById("stationSelect");
+  const volumeRange = document.getElementById("volumeRange");
+  const playBtn = document.getElementById("playBtn");
+  const alarmTestBtn = document.getElementById("alarmTestBtn");
+  const audioStatus = document.getElementById("audioStatus");
+  const focusAudio = document.getElementById("focusAudio");
+
+  const drillText = document.getElementById("drillText");
+  const nextDrillBtn = document.getElementById("nextDrillBtn");
+
+  if (!canvas || !timerDisplay || !focusAudio) return;
 
   const ctx = canvas.getContext("2d");
   const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
 
   let width = 0;
   let height = 0;
-  let t = 0;
-  let hue = 140;
   let pointerX = 0;
   let pointerY = 0;
-  let hyper = false;
+  let time = 0;
+  let matrixCols = [];
+  let timerId = null;
+  let isRunning = false;
+  let phase = "focus";
+  let remaining = 25 * 60;
+  let phaseCount = 1;
 
-  const sparks = [];
+  const drills = [
+    "Get-Process | Sort-Object CPU -Descending | Select-Object -First 10",
+    "Get-Service | Where-Object Status -eq 'Running' | Sort-Object DisplayName",
+    "Get-ChildItem -Recurse | Group-Object Extension | Sort-Object Count -Descending",
+    "$env:Path -split ';' | Where-Object { $_ }",
+    "Get-EventLog -LogName System -Newest 25 | Select-Object TimeGenerated, EntryType, Source, Message",
+    "Get-Command -Module Microsoft.PowerShell.Utility | Select-Object -First 20"
+  ];
+  let drillIndex = 0;
 
-  function setStatus(msg) {
-    if (statusEl) statusEl.textContent = msg;
+  function setAudioStatus(message) {
+    if (audioStatus) audioStatus.textContent = message;
   }
 
-  function rand(min, max) {
-    return min + Math.random() * (max - min);
+  function formatTime(totalSeconds) {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
+  }
+
+  function focusMinutes() {
+    return Math.max(1, Math.min(120, Number(focusMinutesInput.value) || 25));
+  }
+
+  function breakMinutes() {
+    return Math.max(1, Math.min(60, Number(breakMinutesInput.value) || 5));
+  }
+
+  function updateTimerView() {
+    timerDisplay.textContent = formatTime(remaining);
+    const task = taskInput && taskInput.value.trim() ? taskInput.value.trim() : "No task set";
+    if (phase === "focus") {
+      timerStatus.textContent = "Focus " + phaseCount + " | " + task;
+    } else {
+      timerStatus.textContent = "Break time | breathe + stretch";
+    }
+    document.title = formatTime(remaining) + " - " + (phase === "focus" ? "Focus" : "Break");
+  }
+
+  function resetPhase(seconds, mode) {
+    phase = mode;
+    remaining = seconds;
+    updateTimerView();
+  }
+
+  function playAlarm() {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const audioCtx = new AudioCtx();
+    const now = audioCtx.currentTime;
+    const notes = [880, 660, 990, 740, 1100];
+    for (let i = 0; i < notes.length; i += 1) {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "square";
+      osc.frequency.value = notes[i];
+      gain.gain.value = 0.001;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      const start = now + i * 0.22;
+      gain.gain.exponentialRampToValueAtTime(0.11, start + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
+      osc.start(start);
+      osc.stop(start + 0.2);
+    }
+  }
+
+  function phaseComplete() {
+    playAlarm();
+    if (phase === "focus") {
+      resetPhase(breakMinutes() * 60, "break");
+    } else {
+      phaseCount += 1;
+      resetPhase(focusMinutes() * 60, "focus");
+    }
+
+    const autoNext = autoStartBreakInput && autoStartBreakInput.checked;
+    if (!autoNext) {
+      pauseTimer();
+      timerStatus.textContent += " | Complete. Press Start.";
+    }
+  }
+
+  function tick() {
+    if (!isRunning) return;
+    remaining -= 1;
+    if (remaining <= 0) {
+      remaining = 0;
+      updateTimerView();
+      phaseComplete();
+      return;
+    }
+    updateTimerView();
+  }
+
+  function startTimer() {
+    if (isRunning) return;
+    isRunning = true;
+    startPauseBtn.textContent = "Pause";
+    timerId = window.setInterval(tick, 1000);
+  }
+
+  function pauseTimer() {
+    isRunning = false;
+    startPauseBtn.textContent = "Start";
+    if (timerId) {
+      window.clearInterval(timerId);
+      timerId = null;
+    }
+  }
+
+  function resetTimer() {
+    pauseTimer();
+    phaseCount = 1;
+    resetPhase(focusMinutes() * 60, "focus");
+  }
+
+  function skipPhase() {
+    phaseComplete();
   }
 
   function resize() {
@@ -37,165 +166,142 @@
     canvas.style.width = width + "px";
     canvas.style.height = height + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    if (!pointerX && !pointerY) {
-      pointerX = width * 0.5;
-      pointerY = height * 0.5;
-    }
+
+    const colWidth = 16;
+    const count = Math.ceil(width / colWidth);
+    matrixCols = new Array(count).fill(0).map(() => Math.random() * height);
+    pointerX = width * 0.5;
+    pointerY = height * 0.5;
   }
 
-  function spawnSpark(x, y, extra) {
-    sparks.push({
-      x,
-      y,
-      vx: rand(-1.8, 1.8) * extra,
-      vy: rand(-2.2, 2.2) * extra,
-      life: rand(0.45, 1),
-      size: rand(2, 7) * extra
-    });
-    if (sparks.length > 380) sparks.shift();
-  }
-
-  function burst(x, y, amount) {
-    for (let i = 0; i < amount; i += 1) {
-      spawnSpark(x + rand(-20, 20), y + rand(-20, 20), rand(0.8, 1.4));
-    }
-  }
-
-  function drawBackground(time) {
-    const speed = hyper ? 1.8 : 1;
-    const g = ctx.createLinearGradient(0, 0, width, height);
-    g.addColorStop(0, `hsl(${(hue + time * 24 * speed) % 360}, 70%, 8%)`);
-    g.addColorStop(0.5, `hsl(${(hue + 95 + time * 30 * speed) % 360}, 75%, 11%)`);
-    g.addColorStop(1, `hsl(${(hue + 180 + time * 20 * speed) % 360}, 70%, 8%)`);
-    ctx.fillStyle = g;
+  function drawMatrix() {
+    time += 0.016;
+    ctx.fillStyle = "rgba(3, 9, 7, 0.18)";
     ctx.fillRect(0, 0, width, height);
 
-    const rings = hyper ? 9 : 6;
-    for (let i = 0; i < rings; i += 1) {
-      const r = (Math.sin(time * (0.7 + i * 0.1)) * 0.5 + 0.5) * (Math.min(width, height) * 0.55);
-      const grad = ctx.createRadialGradient(pointerX, pointerY, Math.max(10, r * 0.08), pointerX, pointerY, r);
-      grad.addColorStop(0, `hsla(${(hue + i * 35 + time * 70) % 360}, 95%, 65%, ${hyper ? 0.2 : 0.12})`);
-      grad.addColorStop(1, "rgba(0,0,0,0)");
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(pointerX, pointerY, r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
+    const chars = "01PS>$#{}[]()|+-*";
+    ctx.font = "14px 'Courier New', monospace";
 
-  function drawGrid(time) {
-    const cell = hyper ? 34 : 46;
-    ctx.save();
-    ctx.globalAlpha = hyper ? 0.22 : 0.14;
-    ctx.strokeStyle = "rgba(255,255,255,0.25)";
-    ctx.lineWidth = 1;
+    for (let i = 0; i < matrixCols.length; i += 1) {
+      const x = i * 16;
+      const y = matrixCols[i];
+      const char = chars[Math.floor(Math.random() * chars.length)];
 
-    const driftX = (time * (hyper ? 55 : 28)) % cell;
-    const driftY = (time * (hyper ? 35 : 18)) % cell;
+      ctx.fillStyle = "rgba(72, 255, 184, 0.88)";
+      ctx.fillText(char, x, y);
 
-    for (let x = -cell; x < width + cell; x += cell) {
-      ctx.beginPath();
-      ctx.moveTo(x + driftX, 0);
-      ctx.lineTo(x + driftX, height);
-      ctx.stroke();
-    }
-    for (let y = -cell; y < height + cell; y += cell) {
-      ctx.beginPath();
-      ctx.moveTo(0, y + driftY);
-      ctx.lineTo(width, y + driftY);
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  function drawSparks() {
-    for (let i = sparks.length - 1; i >= 0; i -= 1) {
-      const s = sparks[i];
-      s.life -= hyper ? 0.024 : 0.016;
-      if (s.life <= 0) {
-        sparks.splice(i, 1);
-        continue;
+      if (y > height && Math.random() > 0.98) {
+        matrixCols[i] = 0;
+      } else {
+        matrixCols[i] += 10 + Math.random() * 10;
       }
-      s.x += s.vx;
-      s.y += s.vy;
-      s.vy += 0.02;
-
-      ctx.fillStyle = `hsla(${(hue + i * 3) % 360}, 100%, 68%, ${s.life})`;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.size * s.life, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  function frame() {
-    t += hyper ? 0.02 : 0.012;
-    hue = (hue + (hyper ? 1.2 : 0.42)) % 360;
-
-    drawBackground(t);
-    drawGrid(t);
-    drawSparks();
-
-    if (Math.random() < (hyper ? 0.45 : 0.18)) {
-      spawnSpark(pointerX + rand(-16, 16), pointerY + rand(-16, 16), hyper ? 1.4 : 1);
     }
 
-    window.requestAnimationFrame(frame);
+    const ringRadius = 80 + Math.sin(time * 4) * 26;
+    const glow = ctx.createRadialGradient(pointerX, pointerY, 8, pointerX, pointerY, ringRadius);
+    glow.addColorStop(0, "rgba(57, 212, 255, 0.24)");
+    glow.addColorStop(1, "rgba(57, 212, 255, 0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
+
+    window.requestAnimationFrame(drawMatrix);
   }
 
-  function bind() {
-    window.addEventListener("resize", resize);
+  function bindAudio() {
+    focusAudio.volume = (Number(volumeRange.value) || 55) / 100;
 
+    stationSelect.addEventListener("change", () => {
+      focusAudio.src = stationSelect.value;
+      focusAudio.load();
+      setAudioStatus("Station changed. Press Play.");
+    });
+
+    volumeRange.addEventListener("input", () => {
+      focusAudio.volume = (Number(volumeRange.value) || 55) / 100;
+    });
+
+    playBtn.addEventListener("click", async () => {
+      try {
+        if (focusAudio.paused) {
+          await focusAudio.play();
+          playBtn.textContent = "Pause";
+          setAudioStatus("Streaming SomaFM.");
+        } else {
+          focusAudio.pause();
+          playBtn.textContent = "Play";
+          setAudioStatus("Audio paused.");
+        }
+      } catch {
+        setAudioStatus("Browser blocked autoplay. Press Play again.");
+      }
+    });
+
+    alarmTestBtn.addEventListener("click", () => {
+      playAlarm();
+      setAudioStatus("Alarm test played.");
+    });
+  }
+
+  function bindTimer() {
+    startPauseBtn.addEventListener("click", () => {
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    resetBtn.addEventListener("click", resetTimer);
+    skipBtn.addEventListener("click", skipPhase);
+
+    focusMinutesInput.addEventListener("change", () => {
+      if (!isRunning && phase === "focus") {
+        resetPhase(focusMinutes() * 60, "focus");
+      }
+    });
+
+    breakMinutesInput.addEventListener("change", () => {
+      if (!isRunning && phase === "break") {
+        resetPhase(breakMinutes() * 60, "break");
+      }
+    });
+  }
+
+  function bindDrills() {
+    if (!nextDrillBtn || !drillText) return;
+    nextDrillBtn.addEventListener("click", () => {
+      drillIndex = (drillIndex + 1) % drills.length;
+      drillText.textContent = drills[drillIndex];
+    });
+  }
+
+  function bindPointer() {
     window.addEventListener("mousemove", (event) => {
       pointerX = event.clientX;
       pointerY = event.clientY;
-      if (Math.random() < 0.35) {
-        spawnSpark(pointerX, pointerY, hyper ? 1.2 : 0.9);
-      }
     });
 
     window.addEventListener("click", (event) => {
-      burst(event.clientX, event.clientY, hyper ? 42 : 26);
-      setStatus("Chaos burst deployed.");
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      for (let i = 0; i < 25; i += 1) {
+        const idx = Math.floor(Math.random() * matrixCols.length);
+        matrixCols[idx] = Math.random() * height * 0.2;
+      }
     });
-
-    if (stationSelect && audio) {
-      stationSelect.addEventListener("change", () => {
-        audio.src = stationSelect.value;
-        audio.load();
-        setStatus("Station changed. Press PLAY.");
-      });
-    }
-
-    if (playBtn && audio) {
-      playBtn.addEventListener("click", async () => {
-        try {
-          if (audio.paused) {
-            await audio.play();
-            playBtn.textContent = "PAUSE";
-            setStatus("Streaming audio.");
-          } else {
-            audio.pause();
-            playBtn.textContent = "PLAY";
-            setStatus("Audio paused.");
-          }
-        } catch {
-          setStatus("Browser blocked autoplay. Press PLAY again.");
-        }
-      });
-    }
-
-    if (tripBtn) {
-      tripBtn.addEventListener("click", () => {
-        hyper = !hyper;
-        tripBtn.textContent = hyper ? "CALM DOWN" : "TRIP OUT";
-        setStatus(hyper ? "HYPER MODE ACTIVATED." : "Hyper mode disabled.");
-        burst(width * 0.5, height * 0.5, hyper ? 80 : 32);
-      });
-    }
   }
 
+  window.addEventListener("beforeunload", () => {
+    pauseTimer();
+    document.title = "Andrew Pla";
+  });
+
   resize();
-  bind();
-  setStatus("Move your mouse. Click to spawn extra chaos.");
-  window.requestAnimationFrame(frame);
+  updateTimerView();
+  bindTimer();
+  bindAudio();
+  bindDrills();
+  bindPointer();
+  window.addEventListener("resize", resize);
+  window.requestAnimationFrame(drawMatrix);
 })();
