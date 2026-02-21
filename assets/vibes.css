@@ -1,0 +1,171 @@
+:root{
+  --bg:#070a10;
+  --surface:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.12);
+  --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.68);
+  --a:#38bdf8;
+  --b:#a78bfa;
+  --shadow:0 18px 60px rgba(0,0,0,.45);
+}
+
+.vibes{
+  margin-top: 1rem;
+  padding: 1.25rem 0 2rem;
+}
+
+.vibes-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+  margin: .5rem 0 1rem;
+}
+
+.badge{
+:contentReference[oaicite:8]{index=8}
+  align-items:center;
+  padding:.35rem .65rem;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:linear-gradient(135deg, rgba(56,189,248,.15), rgba(167,139,250,.12));
+  box-shadow: var(--shadow);
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:.75rem;
+}
+
+.hint{ color: var(--muted); font-size: .95rem; }
+.hint code{ color: var(--text); }
+
+.vibes-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 900px){
+  .vibes-grid{ grid-template-columns: 1.2fr .8fr; }
+}
+
+.panel{
+  border:1px solid var(--border);
+  border-radius:18px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+
+.panel::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(700px 400px at 10% -10%, rgba(56,189,248,.22), transparent 55%),
+    radial-gradient(700px 400px at 110% 10%, rgba(167,139,250,.20), transparent 55%);
+  pointer-events:none;
+  opacity:.9;
+}
+
+.panel > *{ position:relative; }
+
+.panel-terminal{ padding: 0; }
+.terminal-top{
+  display:flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.65rem .85rem;
+  border-bottom:1px solid var(--border);
+  background: rgba(0,0,0,.18);
+}
+.dot{ width:10px; height:10px; border-radius:50%; display:inline-block; opacity:.9; }
+.dot.red{ background:#ff5f56; }
+.dot.yellow{ background:#ffbd2e; }
+.dot.green{ background:#27c93f; }
+.terminal-title{ margin-left:.5rem; color:var(--muted); font-weight:700; font-size:.9rem; }
+
+.terminal-out{
+  padding: .9rem .95rem;
+  height: 340px;
+  overflow:auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .95rem;
+  line-height: 1.45;
+}
+.line{ margin: .2rem 0; color: var(--text); }
+.muted{ color: var(--muted); }
+.good{ color: #86efac; }
+.warn{ color: #fbbf24; }
+
+.terminal-in{
+  display:flex;
+  gap:.5rem;
+  align-items:center;
+  padding: .75rem .85rem;
+  border-top:1px solid var(--border);
+  background: rgba(0,0,0,.16);
+}
+.prompt{
+  font-family: ui-monospace, monospace;
+  font-weight: 900;
+  color: var(--a);
+}
+#termInput{
+  width:100%;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  padding: .6rem .75rem;
+  color: var(--text);
+  outline:none;
+}
+#termInput:focus{
+  border-color: rgba(56,189,248,.55);
+  box-shadow: 0 0 0 4px rgba(56,189,248,.12);
+}
+
+.panel-music{
+  padding: 1rem 1rem 1.1rem;
+}
+.panel-music h2{ margin-top:.2rem; letter-spacing:-.02em; }
+.nowplaying{
+  margin-top: .75rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: .85rem .9rem;
+  background: rgba(0,0,0,.14);
+}
+.np-label{ color: var(--muted); font-size:.85rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+.np-value{ margin-top:.35rem; font-weight:900; }
+
+.buttons{ display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.8rem; }
+.btn{
+  border-radius: 999px;
+  padding: .65rem .9rem;
+  font-weight: 850;
+  border: 1px solid rgba(255,255,255,.14);
+  cursor:pointer;
+  text-decoration:none;
+}
+.btn.ghost{
+  background: transparent;
+  color: var(--text);
+}
+.btn.ghost:hover{
+  background: rgba(56,189,248,.12);
+  border-color: rgba(56,189,248,.45);
+}
+
+.player{ margin-top: .75rem; }
+.player summary{ cursor:pointer; color: var(--muted); font-weight:800; }
+.player audio{ width:100%; margin-top:.65rem; }
+
+.fineprint{ margin:.5rem 0 0; color: var(--muted); font-size:.9rem; }
+.easter{ margin-top: 1rem; }
+.secret{
+  border: 1px dashed rgba(255,255,255,.22);
+  border-radius: 16px;
+  padding: .75rem .85rem;
+  background: rgba(0,0,0,.10);
+}
