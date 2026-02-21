@@ -10,12 +10,13 @@
 }
 
 body {
-  background: linear-gradient(180deg, #fbfbfb 0%, var(--ap-bg) 60%);
+  background: var(--ap-bg);
   color: var(--ap-text);
 }
 
 .container {
-  max-width: 1040px;
+  width: min(94vw, 1160px);
+  max-width: 1160px;
 }
 
 .header {
@@ -32,8 +33,76 @@ body {
   font-weight: 700;
 }
 
+.footer {
+  background: #111111;
+  color: #d4d4d4;
+  border-top: 1px solid #2c2c2c;
+}
+
+.footer a {
+  color: #ffffff;
+}
+
+.footer a:hover,
+.footer a:focus {
+  color: #f0f0f0;
+}
+
+.footer .small {
+  color: #b8b8b8;
+}
+
 .main {
   padding-top: 1.35rem;
+}
+
+a {
+  color: #111111;
+}
+
+a:hover,
+a:focus {
+  color: #000000;
+}
+
+.typeset p a:not(.button),
+.typeset li a:not(.button) {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 58%, rgba(17, 17, 17, 0.22) 58%);
+}
+
+.typeset p a:not(.button):hover,
+.typeset p a:not(.button):focus,
+.typeset li a:not(.button):hover,
+.typeset li a:not(.button):focus {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 58%, rgba(17, 17, 17, 0.4) 58%);
+}
+
+button:not(.button--nav),
+.button:not(.button--nav),
+input[type="submit"] {
+  margin-bottom: 0.45rem;
+  padding: 0.74rem 1.08rem;
+  border: 1px solid #111111;
+  border-radius: 11px;
+  background: #111111;
+  color: #ffffff !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+  text-decoration: none !important;
+  transition: background-color 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
+}
+
+button:not(.button--nav):hover,
+button:not(.button--nav):focus,
+.button:not(.button--nav):hover,
+.button:not(.button--nav):focus,
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  background: #2a2a2a;
+  border-color: #2a2a2a;
+  box-shadow: none;
+  transform: translateY(-1px);
 }
 
 /* Tighten feature banners on non-home pages */
@@ -66,8 +135,17 @@ body {
   justify-content: flex-start;
 }
 
+.layout-home .container {
+  width: min(95vw, 1240px);
+  max-width: 1240px;
+}
+
 .layout-home .main > .article.article--page.content {
   width: 100%;
+}
+
+.layout-home .article.typeset {
+  max-width: none;
 }
 
 .ap-hero {
@@ -89,7 +167,7 @@ body {
 
 .ap-hero h1 {
   margin: 0.55rem 0 0;
-  max-width: 18ch;
+  max-width: 24ch;
   font-size: clamp(1.9rem, 4.2vw, 3rem);
   line-height: 1.06;
   letter-spacing: -0.02em;
@@ -119,7 +197,7 @@ body {
 .ap-primary-cta.button {
   margin: 0.8rem 0 0 !important;
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;
   min-height: 2.95rem;
   display: inline-flex;
   align-items: center;
