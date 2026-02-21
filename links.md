@@ -4,6 +4,15 @@ title: Links
 permalink: /links/
 ---
 
+<div id="updates" class="typeset" style="margin-bottom: 1.5rem;">
+  <h2 style="margin-bottom: .25rem;">Get updates</h2>
+  <p style="margin-top: 0;">Friendly, occasional updates when I ship something, learn something, or find something worth sharing.</p>
+  <p style="margin: .75rem 0 0 0;">
+    <a class="button" href="https://www.linkedin.com/in/andrewplatech/">Follow on LinkedIn (for now)</a>
+  </p>
+  <p style="opacity:.75; margin-top:.5rem;"><small>Newsletter coming soon.</small></p>
+</div>
+
 <!-- Font Awesome CDN -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
