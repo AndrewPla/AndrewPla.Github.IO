@@ -1,12 +1,13 @@
 (function () {
   const copyEmailBtn = document.getElementById("copyEmailBtn");
   const copyToast = document.getElementById("copyToast");
-  const reactiveTargets = document.querySelectorAll(".ap-links-btn, .ap-link-item, .ap-links-chip");
+  const reactiveTargets = document.querySelectorAll(".ap-links-btn, .ap-link-item, .ap-links-chip, .ap-priority-card");
 
   function ripple(target, event) {
     const rect = target.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    const hasPointer = typeof event.clientX === "number" && typeof event.clientY === "number";
+    const x = hasPointer ? event.clientX - rect.left : rect.width / 2;
+    const y = hasPointer ? event.clientY - rect.top : rect.height / 2;
     const bubble = document.createElement("span");
     bubble.className = "ap-ripple";
     bubble.style.left = x + "px";
