@@ -475,6 +475,7 @@ body.mode-1990s .ap-retro-marquee {
 body.mode-1990s .ap-retro-badges {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: 0.25rem;
   padding: 0.2rem 0.25rem;
@@ -495,9 +496,34 @@ body.mode-1990s .ap-retro-counter {
   background: #a7ffea;
 }
 
+body.mode-1990s .ap-retro-emoji {
+  display: inline-block;
+  margin-left: 0.2rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  vertical-align: middle;
+}
+
+body.mode-1990s .ap-retro-sticker {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 2px outset #f4f4f4;
+  background: #001325;
+  padding: 1px;
+  image-rendering: pixelated;
+  box-shadow: 1px 1px 0 #2ce9ff;
+  animation: ap-retro-bob 0.95s steps(2, end) infinite alternate;
+}
+
 @keyframes ap-retro-blink {
   0%, 48% { opacity: 1; }
   50%, 100% { opacity: 0.35; }
+}
+
+@keyframes ap-retro-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2px); }
 }
 
 body.mode-1990s .blink {
