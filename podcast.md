@@ -18,6 +18,14 @@ feature_text: |
     </p>
   </section>
 
+  <section class="ap-podcast-player-card">
+    <h3>Listen right here</h3>
+    <p class="ap-podcast-meta">Stream current episodes without leaving this page.</p>
+    <div class="ap-podcast-player" role="region" aria-label="The PowerShell Podcast embedded player">
+      <iframe title="The PowerShell Podcast" allowtransparency="true" height="315" width="100%" style="border: none; min-width: min(100%, 430px);height:315px;" scrolling="no" data-name="pb-iframe-player" src="https://www.podbean.com/player-v2/?i=rtiuk-d20bd9-pbblog-playlist&share=1&download=1&fonts=Arial&skin=666666&font-color=auto&rtl=0&logo_link=episode_page&btn-skin=7&size=315" loading="lazy" allowfullscreen=""></iframe>
+    </div>
+  </section>
+
   <section class="ap-podcast-grid">
     <article class="ap-podcast-card">
       <h3>Featured Episode</h3>
