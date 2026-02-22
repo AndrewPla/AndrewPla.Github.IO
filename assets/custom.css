@@ -693,14 +693,15 @@ input[type="submit"]:focus {
 
 body.mode-retro {
   background:
-    radial-gradient(circle at 12% 16%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0) 32%),
-    linear-gradient(180deg, #2f75da 0%, #5aabf0 32%, #dff2ff 100%) !important;
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0) 26%),
+    radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 20%),
+    linear-gradient(180deg, #4d9ce8 0%, #77b6ef 36%, #9ad16b 63%, #6fb74c 100%) !important;
   color: #11325f !important;
   font-family: "Tahoma", "Trebuchet MS", "Verdana", sans-serif !important;
 }
 
 body.mode-retro .ap-mode-toggle {
-  bottom: 2.45rem;
+  bottom: 2.62rem;
   border: 1px solid #21579a;
   border-radius: 7px;
   background: linear-gradient(180deg, #f8fcff, #bad8f8);
@@ -721,38 +722,156 @@ body.mode-retro .ap-retro-chrome {
 }
 
 body.mode-retro .ap-retro-titlebar {
-  min-height: 2.1rem;
+  min-height: 2.18rem;
   border-bottom: 1px solid #0f3f84;
-  background: linear-gradient(180deg, #2f7ce1, #1f5dad);
+  background: linear-gradient(180deg, #3a8be8, #1f5eb2);
 }
 
 body.mode-retro .ap-retro-titlebar-inner {
   width: min(95vw, 1120px);
   margin: 0 auto;
-  min-height: 2.1rem;
+  min-height: 2.18rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 body.mode-retro .ap-retro-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
   color: #ffffff;
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-weight: 700;
   text-shadow: 0 1px 0 #10376f;
 }
 
-body.mode-retro .ap-retro-window-controls {
-  display: inline-flex;
-  gap: 0.22rem;
+body.mode-retro .ap-retro-ms-logo,
+body.mode-retro .ap-retro-win-flag {
+  width: 0.94rem;
+  height: 0.94rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  transform: skewX(-11deg);
 }
 
-body.mode-retro .ap-retro-window-controls span {
-  width: 0.88rem;
-  height: 0.88rem;
-  border: 1px solid #ffffff;
+body.mode-retro .ap-retro-ms-logo i,
+body.mode-retro .ap-retro-win-flag i {
+  display: block;
+}
+
+body.mode-retro .ap-retro-ms-logo i:nth-child(1),
+body.mode-retro .ap-retro-win-flag i:nth-child(1) { background: #f25022; }
+body.mode-retro .ap-retro-ms-logo i:nth-child(2),
+body.mode-retro .ap-retro-win-flag i:nth-child(2) { background: #7fba00; }
+body.mode-retro .ap-retro-ms-logo i:nth-child(3),
+body.mode-retro .ap-retro-win-flag i:nth-child(3) { background: #00a4ef; }
+body.mode-retro .ap-retro-ms-logo i:nth-child(4),
+body.mode-retro .ap-retro-win-flag i:nth-child(4) { background: #ffb900; }
+
+body.mode-retro .ap-retro-window-controls {
+  display: inline-flex;
+  gap: 0.12rem;
+}
+
+body.mode-retro .ap-retro-win-btn {
+  position: relative;
+  width: 1.08rem;
+  height: 0.98rem;
+  border: 1px solid #cce5ff;
   border-radius: 2px;
-  background: linear-gradient(180deg, #8cc2ff, #4f8fdd);
+  background: linear-gradient(180deg, #9ac6f5, #4f85c8);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.42) inset;
+}
+
+body.mode-retro .ap-retro-win-btn--min::before {
+  content: "";
+  position: absolute;
+  left: 0.22rem;
+  right: 0.22rem;
+  bottom: 0.2rem;
+  height: 1px;
+  background: #113d74;
+}
+
+body.mode-retro .ap-retro-win-btn--max::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  right: 0.25rem;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  border: 1px solid #113d74;
+}
+
+body.mode-retro .ap-retro-win-btn--close {
+  border-color: #f4b3b3;
+  background: linear-gradient(180deg, #f7847e, #cf3a34);
+}
+
+body.mode-retro .ap-retro-win-btn--close::before,
+body.mode-retro .ap-retro-win-btn--close::after {
+  content: "";
+  position: absolute;
+  left: 0.26rem;
+  right: 0.26rem;
+  top: 0.45rem;
+  height: 1px;
+  background: #ffffff;
+}
+
+body.mode-retro .ap-retro-win-btn--close::before {
+  transform: rotate(45deg);
+}
+
+body.mode-retro .ap-retro-win-btn--close::after {
+  transform: rotate(-45deg);
+}
+
+body.mode-retro .ap-retro-desktop {
+  position: absolute;
+  left: 0.9rem;
+  top: 2.55rem;
+  display: grid;
+  gap: 0.62rem;
+}
+
+body.mode-retro .ap-retro-desktop-icon {
+  width: 4.6rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.14rem;
+  color: #ffffff;
+  font-size: 0.68rem;
+  line-height: 1.1;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 36, 78, 0.9);
+}
+
+body.mode-retro .ap-retro-desktop-icon::before {
+  content: "";
+  width: 1.55rem;
+  height: 1.42rem;
+  border: 1px solid rgba(255, 255, 255, 0.66);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+}
+
+body.mode-retro .ap-retro-desktop-icon--computer::before {
+  background:
+    linear-gradient(180deg, #b9ddff 0 70%, #2f5ea5 70% 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--internet::before {
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 38% 35%, #ffffff 0 12%, #4aa2ff 38%, #1f5da9 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--bin::before {
+  background:
+    linear-gradient(180deg, #dff4ff 0 18%, #7ab4e8 18% 100%);
 }
 
 body.mode-retro .ap-retro-taskbar {
@@ -760,19 +879,19 @@ body.mode-retro .ap-retro-taskbar {
   left: 0;
   right: 0;
   bottom: 0;
-  min-height: 2.1rem;
+  min-height: 2.22rem;
   border-top: 1px solid #184f96;
-  background: linear-gradient(180deg, #2f69be, #25579f);
+  background: linear-gradient(180deg, #2f71ca, #24559e);
 }
 
 body.mode-retro .ap-retro-taskbar-inner {
   width: min(95vw, 1120px);
   margin: 0 auto;
-  min-height: 2.1rem;
+  min-height: 2.22rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.4rem;
+  gap: 0.46rem;
 }
 
 body.mode-retro .ap-retro-task-left {
@@ -783,31 +902,61 @@ body.mode-retro .ap-retro-task-left {
 }
 
 body.mode-retro .ap-retro-start {
-  min-height: 1.45rem;
+  min-height: 1.56rem;
   display: inline-flex;
   align-items: center;
-  padding: 0.02rem 0.58rem;
-  border: 1px solid #1c4f12;
+  gap: 0.26rem;
+  padding: 0.03rem 0.62rem 0.03rem 0.46rem;
+  border: 1px solid #1e4f15;
   border-radius: 999px;
-  background: linear-gradient(180deg, #56c551, #2f8f2a);
+  background: linear-gradient(180deg, #6eda66, #2f8f2a);
   color: #ffffff;
-  font-size: 0.76rem;
+  font-size: 0.8rem;
   font-style: italic;
   font-weight: 700;
   text-shadow: 0 1px 0 #16440e;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.32) inset;
+}
+
+body.mode-retro .ap-retro-start-label {
+  text-transform: capitalize;
+}
+
+body.mode-retro .ap-retro-quicklaunch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.16rem;
+}
+
+body.mode-retro .ap-retro-ql-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset;
+}
+
+body.mode-retro .ap-retro-ql-icon--ie {
+  background:
+    radial-gradient(circle at 34% 36%, #ffffff 0 16%, #4fa7ff 38%, #1f5ca6 100%);
+}
+
+body.mode-retro .ap-retro-ql-icon--mail {
+  background:
+    linear-gradient(180deg, #f8fbff 0 45%, #9ac4ef 45% 100%);
 }
 
 body.mode-retro .ap-retro-task-pill {
-  min-height: 1.35rem;
+  min-height: 1.44rem;
   display: inline-flex;
   align-items: center;
   max-width: 16rem;
-  padding: 0.02rem 0.46rem;
-  border: 1px solid rgba(10, 43, 92, 0.9);
-  border-radius: 4px;
-  background: linear-gradient(180deg, #7cb3f2, #548fd5);
+  padding: 0.02rem 0.54rem;
+  border: 1px solid #1e4b87;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #8ebcf0, #5d95d7);
   color: #ffffff;
-  font-size: 0.72rem;
+  font-size: 0.73rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -852,7 +1001,7 @@ body.mode-retro .container {
 }
 
 body.mode-retro .main {
-  padding-bottom: 2.5rem;
+  padding-bottom: 2.62rem;
 }
 
 body.mode-retro .header {
@@ -1016,6 +1165,10 @@ body.mode-retro .footer .nav--footer a:focus {
     width: min(96vw, 1120px);
   }
 
+  body.mode-retro .ap-retro-quicklaunch {
+    display: none;
+  }
+
   body.mode-retro .ap-retro-task-pill:last-child {
     display: none;
   }
@@ -1028,6 +1181,10 @@ body.mode-retro .footer .nav--footer a:focus {
 
   body.mode-retro .main {
     padding-bottom: 2.3rem;
+  }
+
+  body.mode-retro .ap-retro-desktop {
+    display: none;
   }
 
   body.mode-retro .ap-retro-visit {
