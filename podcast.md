@@ -14,7 +14,7 @@ feature_text: |
     <p class="ap-podcast-meta">Use this page as your launchpad: listen here, jump to the PDQ hub, or watch the full episode playlist on YouTube.</p>
     <p class="ap-podcast-actions">
       <a class="button ap-podcast-btn" href="https://www.pdq.com/resources/the-powershell-podcast/">PDQ Podcast Hub</a>
-      <a class="button ap-podcast-btn" href="https://www.youtube.com/playlist?list=PL1mL90yFExsjUS8DRkzfLUcHds7vlxqgM">PDQ YouTube Playlist</a>
+      <a class="button ap-podcast-btn" href="https://www.youtube.com/playlist?list=PL1mL90yFExsjUS8DRkzfLUcHds7vlxqgM" target="_blank" rel="noopener noreferrer">PDQ YouTube Playlist</a>
       <a class="button ap-podcast-btn ap-podcast-btn--ghost" href="https://powershellpodcast.podbean.com/">Podbean Archive</a>
       <a class="button ap-podcast-btn ap-podcast-btn--ghost" href="https://feed.podbean.com/powershellpodcast/feed.xml">RSS feed</a>
     </p>
@@ -34,7 +34,7 @@ feature_text: |
         <p class="ap-podcast-arrow">Open PDQ Hub -></p>
       </a>
 
-      <a class="ap-podcast-link-card" href="https://www.youtube.com/playlist?list=PL1mL90yFExsjUS8DRkzfLUcHds7vlxqgM">
+      <a class="ap-podcast-link-card" href="https://www.youtube.com/playlist?list=PL1mL90yFExsjUS8DRkzfLUcHds7vlxqgM" target="_blank" rel="noopener noreferrer">
         <p class="ap-podcast-pill">Video</p>
         <h4>PDQ YouTube Playlist</h4>
         <p>Watch episodes in one playlist when you want the visual walkthrough format.</p>
@@ -66,8 +66,18 @@ feature_text: |
     </header>
     <section class="ap-podcast-grid">
       <article class="ap-podcast-card">
-        <p class="ap-podcast-pill">Career</p>
-        <h4>Career growth + leadership picks</h4>
+        <p class="ap-podcast-pill">Technical</p>
+        <h4>Deep technical picks</h4>
+        <ul class="ap-podcast-list">
+          <li><a href="https://powershellpodcast.podbean.com/e/living-in-powershell-with-jeff-hicks/">Living in PowerShell with Jeff Hicks</a></li>
+          <li><a href="https://powershellpodcast.podbean.com/e/powershell-is-fun-mkay-with-harm-venstra/">PowerShell Is Fun mkay with Harm Veenstra</a></li>
+          <li><a href="https://powershellpodcast.podbean.com/e/stop-trying-so-hard-and-start-automating-smarter-with-jake-hildreth/">Automating Smarter with Jake Hildreth</a></li>
+        </ul>
+      </article>
+
+      <article class="ap-podcast-card">
+        <p class="ap-podcast-pill">Leadership</p>
+        <h4>Community + leadership picks</h4>
         <ul class="ap-podcast-list">
           <li><a href="https://powershellpodcast.podbean.com/e/owning-your-career-and-your-time-with-don-jones/">Owning Your Career and Your Time with Don Jones</a></li>
           <li><a href="https://powershellpodcast.podbean.com/e/powershell-to-distinguished-engineer-with-ryan-spletzer/">PowerShell to Distinguished Engineer with Ryan Spletzer</a></li>
@@ -76,23 +86,22 @@ feature_text: |
       </article>
 
       <article class="ap-podcast-card">
-        <p class="ap-podcast-pill">PowerShell</p>
-        <h4>Automation + scripting picks</h4>
+        <p class="ap-podcast-pill">Beginner</p>
+        <h4>Great episodes for beginners</h4>
         <ul class="ap-podcast-list">
           <li><a href="https://powershellpodcast.podbean.com/e/learning-powershell-in-2026-with-tara/">Learning PowerShell in 2026 with Tara</a></li>
           <li><a href="https://powershellpodcast.podbean.com/e/powershell-is-fun-mkay-with-harm-venstra/">PowerShell Is Fun mkay with Harm Veenstra</a></li>
           <li><a href="https://powershellpodcast.podbean.com/e/stop-trying-so-hard-and-start-automating-smarter-with-jake-hildreth/">Automating Smarter with Jake Hildreth</a></li>
-          <li><a href="https://powershellpodcast.podbean.com/e/living-in-powershell-with-jeff-hicks/">Living in PowerShell with Jeff Hicks</a></li>
         </ul>
       </article>
 
       <article class="ap-podcast-card">
-        <p class="ap-podcast-pill">People</p>
-        <h4>Community + story picks</h4>
+        <p class="ap-podcast-pill">Vibes</p>
+        <h4>Best chemistry + off-the-wall energy</h4>
         <ul class="ap-podcast-list">
-          <li><a href="https://powershellpodcast.podbean.com/e/powershell-to-distinguished-engineer-with-ryan-spletzer/">PowerShell to Distinguished Engineer with Ryan Spletzer</a></li>
           <li><a href="https://powershellpodcast.podbean.com/e/living-in-powershell-with-jeff-hicks/">Living in PowerShell with Jeff Hicks</a></li>
-          <li><a href="https://powershellpodcast.podbean.com/e/owning-your-career-and-your-time-with-don-jones/">Owning Your Career and Your Time with Don Jones</a></li>
+          <li><a href="https://powershellpodcast.podbean.com/e/powershell-to-distinguished-engineer-with-ryan-spletzer/">PowerShell to Distinguished Engineer with Ryan Spletzer</a></li>
+          <li><a href="https://powershellpodcast.podbean.com/e/from-sharepoint-to-security-with-david-sass/">From SharePoint to Security with David Sass</a></li>
         </ul>
       </article>
     </section>

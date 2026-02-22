@@ -14,6 +14,7 @@
     var retroMusicToggle = null;
     var retroMusicClose = null;
     var retroMusicStationId = "groovesalad";
+    var retroWindowDragCleanup = null;
     var retroStartHandlers = [];
     var retroMusicStations = [
       {
@@ -452,6 +453,105 @@
       }
     }
 
+    function findRetroWindowElement() {
+      if (document.body.classList.contains("layout-home")) {
+        return document.querySelector(".ap-home-window");
+      }
+      return (
+        document.querySelector(".main > .article.article--page.content") ||
+        document.querySelector(".main > .article.article--post.content") ||
+        document.querySelector(".main > .content")
+      );
+    }
+
+    function initRetroWindowDrag() {
+      if (retroWindowDragCleanup) {
+        retroWindowDragCleanup();
+        retroWindowDragCleanup = null;
+      }
+
+      var windowElement = findRetroWindowElement();
+      if (!windowElement) return;
+
+      windowElement.classList.add("ap-retro-draggable-window");
+
+      var isHomeLayout = document.body.classList.contains("layout-home");
+      var dragHandle = isHomeLayout ? windowElement.querySelector(".ap-home-window-head") : null;
+      var insertedHandle = false;
+
+      if (!dragHandle) {
+        dragHandle = document.createElement("div");
+        dragHandle.className = "ap-retro-window-drag-handle";
+        dragHandle.setAttribute("aria-hidden", "true");
+        windowElement.insertBefore(dragHandle, windowElement.firstChild);
+        insertedHandle = true;
+      }
+
+      var startX = 0;
+      var startY = 0;
+      var baseX = 0;
+      var baseY = 0;
+      var dragging = false;
+
+      function applyPosition(nextX, nextY) {
+        windowElement.dataset.dragX = String(nextX);
+        windowElement.dataset.dragY = String(nextY);
+        windowElement.style.transform = "translate(" + nextX + "px, " + nextY + "px)";
+      }
+
+      function readPosition() {
+        return {
+          x: Number(windowElement.dataset.dragX || "0"),
+          y: Number(windowElement.dataset.dragY || "0")
+        };
+      }
+
+      function onMove(event) {
+        if (!dragging) return;
+        var nextX = baseX + (event.clientX - startX);
+        var nextY = baseY + (event.clientY - startY);
+        applyPosition(nextX, nextY);
+      }
+
+      function onUp() {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("ap-retro-dragging");
+        window.removeEventListener("mousemove", onMove);
+        window.removeEventListener("mouseup", onUp);
+      }
+
+      function onDown(event) {
+        if (event.button !== 0) return;
+        event.preventDefault();
+        var position = readPosition();
+        startX = event.clientX;
+        startY = event.clientY;
+        baseX = position.x;
+        baseY = position.y;
+        dragging = true;
+        document.body.classList.add("ap-retro-dragging");
+        window.addEventListener("mousemove", onMove);
+        window.addEventListener("mouseup", onUp);
+      }
+
+      dragHandle.addEventListener("mousedown", onDown);
+
+      retroWindowDragCleanup = function () {
+        dragHandle.removeEventListener("mousedown", onDown);
+        window.removeEventListener("mousemove", onMove);
+        window.removeEventListener("mouseup", onUp);
+        document.body.classList.remove("ap-retro-dragging");
+        if (insertedHandle && dragHandle.parentNode) {
+          dragHandle.parentNode.removeChild(dragHandle);
+        }
+        windowElement.classList.remove("ap-retro-draggable-window");
+        windowElement.style.removeProperty("transform");
+        delete windowElement.dataset.dragX;
+        delete windowElement.dataset.dragY;
+      };
+    }
+
     function incrementCounter() {
       var counterKey = "ap-retro-counter";
       var value = 1;
@@ -478,9 +578,14 @@
 
     function enableRetro() {
       createRetroChrome();
+      initRetroWindowDrag();
     }
 
     function disableRetro() {
+      if (retroWindowDragCleanup) {
+        retroWindowDragCleanup();
+        retroWindowDragCleanup = null;
+      }
       if (retroClockTimer) {
         window.clearInterval(retroClockTimer);
         retroClockTimer = 0;
