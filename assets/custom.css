@@ -1082,6 +1082,7 @@ body.mode-retro .ap-retro-taskbar {
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 18;
   min-height: 2.28rem;
   border-top: 1px solid #1e5ca8;
   background:
@@ -1123,6 +1124,7 @@ body.mode-retro .ap-retro-task-left {
 
 body.mode-retro .ap-retro-start {
   appearance: none;
+  pointer-events: auto;
   min-height: 1.68rem;
   display: inline-flex;
   align-items: center;
@@ -1157,6 +1159,7 @@ body.mode-retro .ap-retro-start-menu {
   position: absolute;
   left: 0.22rem;
   bottom: 2.26rem;
+  z-index: 22;
   width: min(22rem, 94vw);
   border: 1px solid #2b5fa1;
   border-radius: 7px 7px 0 0;
@@ -1165,6 +1168,10 @@ body.mode-retro .ap-retro-start-menu {
     linear-gradient(180deg, #f7fbff, #dbeafa);
   box-shadow: 0 16px 28px rgba(0, 39, 92, 0.4);
   overflow: hidden;
+}
+
+body.mode-retro .ap-retro-start-menu[hidden] {
+  display: none !important;
 }
 
 body.mode-retro .ap-retro-start-menu-head {
@@ -1458,7 +1465,7 @@ body.mode-retro h4 {
 }
 
 body.mode-retro:not(.layout-home) .main {
-  padding-top: 6.22rem;
+  padding-top: 7.12rem;
 }
 
 body.mode-retro:not(.layout-home) .main > .article.article--page.content,
@@ -1757,7 +1764,7 @@ body.mode-retro.layout-home .ap-posts li {
   }
 
   body.mode-retro:not(.layout-home) .main {
-    padding-top: 7.08rem;
+    padding-top: 7.9rem;
   }
 
   body.mode-retro:not(.layout-home) .main > .article.article--page.content,
@@ -1782,7 +1789,7 @@ body.mode-retro.layout-home .ap-posts li {
   }
 
   body.mode-retro:not(.layout-home) .main {
-    padding-top: 8.36rem;
+    padding-top: 9.08rem;
   }
 
   body.mode-retro:not(.layout-home) .main > .article.article--page.content,

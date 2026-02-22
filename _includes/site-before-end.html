@@ -244,18 +244,36 @@
         }
       }
 
+      function openStartMenu() {
+        if (!retroStartMenu) return;
+        retroStartMenu.hidden = false;
+        if (retroStartBtn) {
+          retroStartBtn.setAttribute("aria-expanded", "true");
+        }
+      }
+
       function toggleStartMenu(event) {
         event.preventDefault();
         event.stopPropagation();
-        var nextIsOpen = retroStartMenu.hidden;
-        retroStartMenu.hidden = !nextIsOpen;
-        retroStartBtn.setAttribute("aria-expanded", nextIsOpen ? "true" : "false");
+        if (retroStartMenu.hidden) {
+          openStartMenu();
+        } else {
+          closeStartMenu();
+        }
       }
 
       function handleDocClick(event) {
         if (!retroStartMenu || retroStartMenu.hidden) return;
-        if (retroStartMenu.contains(event.target) || event.target === retroStartBtn) return;
+        if (retroStartMenu.contains(event.target)) return;
+        if (retroStartBtn && retroStartBtn.contains(event.target)) return;
         closeStartMenu();
+      }
+
+      function handleMenuClick(event) {
+        var target = event.target;
+        if (target && target.closest && target.closest(".ap-retro-start-link")) {
+          closeStartMenu();
+        }
       }
 
       function handleEscape(event) {
@@ -265,10 +283,12 @@
       }
 
       retroStartBtn.addEventListener("click", toggleStartMenu);
+      retroStartMenu.addEventListener("click", handleMenuClick);
       document.addEventListener("click", handleDocClick);
       document.addEventListener("keydown", handleEscape);
       retroStartHandlers = [
         { target: retroStartBtn, type: "click", handler: toggleStartMenu },
+        { target: retroStartMenu, type: "click", handler: handleMenuClick },
         { target: document, type: "click", handler: handleDocClick },
         { target: document, type: "keydown", handler: handleEscape }
       ];
