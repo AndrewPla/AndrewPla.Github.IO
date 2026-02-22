@@ -137,6 +137,11 @@ body {
   color: #b8b8b8;
 }
 
+.footer .ap-mode-toggle {
+  float: right;
+  margin-top: 0.35rem;
+}
+
 .main {
   padding-top: 1.35rem;
 }
@@ -726,10 +731,8 @@ input[type="submit"]:focus {
 }
 
 .ap-mode-toggle {
-  position: fixed;
-  top: 0.74rem;
-  right: 0.74rem;
-  z-index: 9999;
+  position: relative;
+  z-index: 2;
   min-height: 1.9rem;
   display: inline-flex;
   align-items: center;
@@ -794,12 +797,30 @@ body.mode-retro {
     linear-gradient(180deg, #4d9ce8 0%, #77b6ef 36%, #9ad16b 63%, #6fb74c 100%) !important;
   color: #11325f !important;
   font-family: "Tahoma", "Trebuchet MS", "Verdana", sans-serif !important;
+  cursor: url("/assets/xp-cursor.svg") 1 1, default !important;
+}
+
+body.mode-retro * {
+  cursor: url("/assets/xp-cursor.svg") 1 1, default !important;
+}
+
+body.mode-retro a,
+body.mode-retro button,
+body.mode-retro .button,
+body.mode-retro [role="button"],
+body.mode-retro input[type="submit"],
+body.mode-retro .ap-retro-desktop-icon {
+  cursor: url("/assets/xp-hand.svg") 3 1, pointer !important;
 }
 
 body.mode-retro .ap-mode-toggle {
+  position: fixed;
   top: auto;
   right: 0.55rem;
   bottom: 2.55rem;
+  z-index: 9999;
+  float: none;
+  margin-top: 0;
   border: 1px solid #1f5ca2;
   border-radius: 7px;
   background: linear-gradient(180deg, #f8fcff, #b7d8fa);
@@ -938,23 +959,28 @@ body.mode-retro .ap-retro-win-btn--close::after {
 
 body.mode-retro .ap-retro-desktop-nav {
   position: absolute;
-  left: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(95vw, 1120px);
   top: 2.55rem;
   display: grid;
-  gap: 0.55rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.36rem;
   pointer-events: auto;
 }
 
 body.mode-retro .ap-retro-desktop-icon {
-  width: 5.15rem;
+  width: auto;
   display: grid;
   justify-items: center;
-  gap: 0.18rem;
+  gap: 0.22rem;
   text-decoration: none;
-  padding: 0.2rem 0.08rem;
+  padding: 0.28rem 0.12rem;
   border-radius: 6px;
   color: #ffffff;
-  font-size: 0.66rem;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   line-height: 1.1;
   text-align: center;
   text-shadow: 0 1px 2px rgba(0, 36, 78, 0.9);
@@ -968,15 +994,17 @@ body.mode-retro .ap-retro-desktop-icon:focus {
 }
 
 body.mode-retro .ap-retro-desktop-icon.is-current {
-  background: rgba(19, 76, 144, 0.32);
+  background: rgba(16, 70, 136, 0.44);
+  box-shadow: 0 0 0 1px rgba(177, 216, 255, 0.55) inset;
 }
 
 body.mode-retro .ap-retro-desktop-glyph {
-  width: 1.55rem;
-  height: 1.42rem;
+  position: relative;
+  width: 2rem;
+  height: 1.82rem;
   display: block;
-  border: 1px solid rgba(255, 255, 255, 0.66);
-  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 4px;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
 }
 
@@ -985,39 +1013,194 @@ body.mode-retro .ap-retro-desktop-label {
 }
 
 body.mode-retro .ap-retro-desktop-icon--home .ap-retro-desktop-glyph {
-  background:
-    linear-gradient(180deg, #b9ddff 0 70%, #2f5ea5 70% 100%);
+  border-color: #8ec0f2;
+  background: linear-gradient(180deg, #d6edff 0 44%, #5f9cd8 44% 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--home .ap-retro-desktop-glyph::before {
+  content: "";
+  position: absolute;
+  left: 0.28rem;
+  right: 0.28rem;
+  top: 0.24rem;
+  height: 0.72rem;
+  border: 1px solid #2f649d;
+  background: linear-gradient(180deg, #f3fbff, #9cc8ef);
+}
+
+body.mode-retro .ap-retro-desktop-icon--home .ap-retro-desktop-glyph::after {
+  content: "";
+  position: absolute;
+  left: 0.65rem;
+  width: 0.7rem;
+  bottom: 0.18rem;
+  height: 0.16rem;
+  border-radius: 999px;
+  background: #2f619f;
 }
 
 body.mode-retro .ap-retro-desktop-icon--writing .ap-retro-desktop-glyph {
+  border-color: #a5caee;
+  background: linear-gradient(180deg, #ffffff 0 24%, #83b6e7 24% 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--writing .ap-retro-desktop-glyph::before {
+  content: "";
+  position: absolute;
+  left: 0.42rem;
+  right: 0.35rem;
+  top: 0.42rem;
+  bottom: 0.32rem;
   background:
-    linear-gradient(180deg, #ffffff 0 24%, #7eb6f0 24% 100%);
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.8) 0 1px,
+      rgba(255, 255, 255, 0) 1px 4px
+    );
+}
+
+body.mode-retro .ap-retro-desktop-icon--writing .ap-retro-desktop-glyph::after {
+  content: "";
+  position: absolute;
+  left: 0.23rem;
+  top: 0.22rem;
+  bottom: 0.22rem;
+  width: 0.12rem;
+  background: #d94a4a;
 }
 
 body.mode-retro .ap-retro-desktop-icon--links .ap-retro-desktop-glyph {
-  background:
-    linear-gradient(135deg, #f3fcff 0%, #8fc5f2 54%, #3c74b9 100%);
+  border-radius: 999px;
+  border-color: #8cc1f2;
+  background: radial-gradient(circle at 40% 35%, #fbfeff 0 18%, #5ea3e2 50%, #1e5b9f 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--links .ap-retro-desktop-glyph::before {
+  content: "";
+  position: absolute;
+  inset: 0.36rem 0.34rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+body.mode-retro .ap-retro-desktop-icon--links .ap-retro-desktop-glyph::after {
+  content: "";
+  position: absolute;
+  inset: 0.22rem 0.54rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.82);
+  border-right: 1px solid rgba(255, 255, 255, 0.82);
 }
 
 body.mode-retro .ap-retro-desktop-icon--podcast .ap-retro-desktop-glyph {
   border-radius: 999px;
-  background:
-    radial-gradient(circle at 38% 35%, #ffffff 0 12%, #4aa2ff 38%, #1f5da9 100%);
+  border-color: #8bc2f4;
+  background: radial-gradient(circle at 50% 45%, #ffffff 0 14%, #5ca7ef 38%, #1f5ea7 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--podcast .ap-retro-desktop-glyph::before {
+  content: "";
+  position: absolute;
+  left: 0.83rem;
+  top: 0.58rem;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 999px;
+  background: #f5faff;
+}
+
+body.mode-retro .ap-retro-desktop-icon--podcast .ap-retro-desktop-glyph::after {
+  content: "";
+  position: absolute;
+  left: 0.66rem;
+  top: 0.38rem;
+  width: 0.67rem;
+  height: 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
 }
 
 body.mode-retro .ap-retro-desktop-icon--about .ap-retro-desktop-glyph {
-  background:
-    radial-gradient(circle at 50% 30%, #ffffff 0 24%, #7fb3ea 24% 100%);
+  border-color: #8dbfee;
+  background: linear-gradient(180deg, #dff0ff 0 26%, #70a9dd 26% 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--about .ap-retro-desktop-glyph::before {
+  content: "";
+  position: absolute;
+  left: 0.72rem;
+  top: 0.28rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: #f8fcff;
+}
+
+body.mode-retro .ap-retro-desktop-icon--about .ap-retro-desktop-glyph::after {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.24rem;
+  height: 0.6rem;
+  border-radius: 999px 999px 2px 2px;
+  background: #f4faff;
 }
 
 body.mode-retro .ap-retro-desktop-icon--shop .ap-retro-desktop-glyph {
-  background:
-    linear-gradient(180deg, #ffffff 0 20%, #96c4f1 20% 100%);
+  border-color: #97c7ef;
+  background: linear-gradient(180deg, #f7fcff 0 25%, #75ade0 25% 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--shop .ap-retro-desktop-glyph::before {
+  content: "";
+  position: absolute;
+  left: 0.44rem;
+  right: 0.44rem;
+  top: 0.48rem;
+  bottom: 0.24rem;
+  border: 1px solid #2c649f;
+  background: linear-gradient(180deg, #f8fdff, #9fc8ed);
+}
+
+body.mode-retro .ap-retro-desktop-icon--shop .ap-retro-desktop-glyph::after {
+  content: "";
+  position: absolute;
+  left: 0.66rem;
+  right: 0.66rem;
+  top: 0.3rem;
+  height: 0.25rem;
+  border: 1px solid #2f689f;
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
 }
 
 body.mode-retro .ap-retro-desktop-icon--newsletter .ap-retro-desktop-glyph {
-  background:
-    linear-gradient(180deg, #dff4ff 0 18%, #7ab4e8 18% 100%);
+  border-color: #95c5ef;
+  background: linear-gradient(180deg, #f8fcff 0 24%, #77afe0 24% 100%);
+}
+
+body.mode-retro .ap-retro-desktop-icon--newsletter .ap-retro-desktop-glyph::before {
+  content: "";
+  position: absolute;
+  left: 0.32rem;
+  right: 0.32rem;
+  top: 0.45rem;
+  bottom: 0.34rem;
+  border: 1px solid #2e649d;
+  background: #edf7ff;
+}
+
+body.mode-retro .ap-retro-desktop-icon--newsletter .ap-retro-desktop-glyph::after {
+  content: "";
+  position: absolute;
+  left: 0.34rem;
+  right: 0.34rem;
+  top: 0.47rem;
+  height: 0.46rem;
+  border-left: 1px solid #2e649d;
+  border-right: 1px solid #2e649d;
+  transform: skewY(-22deg);
 }
 
 body.mode-retro .ap-retro-taskbar {
@@ -1134,7 +1317,6 @@ body.mode-retro .ap-retro-visit strong {
 
 body.mode-retro .header,
 body.mode-retro .main,
-body.mode-retro .footer,
 body.mode-retro .feature,
 body.mode-retro .vibes-shell {
   position: relative;
@@ -1147,7 +1329,7 @@ body.mode-retro .container {
 }
 
 body.mode-retro .main {
-  padding-top: 1rem;
+  padding-top: 4.75rem;
   padding-bottom: 2.62rem;
 }
 
@@ -1205,18 +1387,11 @@ body.mode-retro small {
 }
 
 body.mode-retro .footer {
-  background: linear-gradient(180deg, #1f58a5, #123b75) !important;
-  color: #eaf4ff !important;
-  border-top: 1px solid #0f2f5c !important;
+  display: none !important;
 }
 
-body.mode-retro .footer a,
 body.mode-retro a {
   color: #0d4ca6 !important;
-}
-
-body.mode-retro .footer a {
-  color: #dbeeff !important;
 }
 
 body.mode-retro .typeset p a:not(.button),
@@ -1257,41 +1432,49 @@ body.mode-retro h4 {
   text-shadow: none;
 }
 
-body.mode-retro.layout-home .ap-hero {
+body.mode-retro.layout-home .main {
+  padding-top: 6.1rem;
+}
+
+body.mode-retro.layout-home .main > .article.article--page.content {
   position: relative;
   overflow: hidden;
-  border-color: #5e93cf !important;
-  border-radius: 10px !important;
+  border: 1px solid #4a7fbe !important;
+  border-radius: 9px !important;
+  background: linear-gradient(180deg, #fbfdff, #ebf4ff) !important;
+  box-shadow: 0 18px 30px rgba(11, 58, 116, 0.2) !important;
+  padding: 2.9rem 1rem 1.05rem !important;
+}
+
+body.mode-retro.layout-home .main > .article.article--page.content::before {
+  content: "AndrewPla Desktop - Home";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  min-height: 1.92rem;
+  padding: 0.2rem 0.92rem;
+  border-bottom: 1px solid #2f67ab;
+  background: linear-gradient(180deg, #3f91ea, #1f5fb6);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 #124384;
+}
+
+body.mode-retro.layout-home .ap-hero {
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
   padding: 0 !important;
 }
 
-body.mode-retro.layout-home .ap-hero::before {
-  content: "Desktop Window - Start Here";
-  display: block;
-  min-height: 1.85rem;
-  padding: 0.18rem 0.85rem;
-  border-bottom: 1px solid #2b5fa8;
-  background: linear-gradient(180deg, #3f8ee8, #1f5fb6);
-  color: #ffffff;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-}
-
-body.mode-retro.layout-home .ap-hero > * {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-body.mode-retro.layout-home .ap-eyebrow {
-  margin-top: 0.95rem;
-}
-
 body.mode-retro.layout-home .ap-hero h1 {
-  max-width: 34ch;
-  font-size: clamp(2rem, 4.8vw, 3.15rem);
-  line-height: 1.12;
-  color: #0b325f !important;
+  max-width: 36ch;
+  font-size: clamp(2.02rem, 4.7vw, 3.08rem);
+  line-height: 1.14;
+  color: #0b335f !important;
 }
 
 body.mode-retro.layout-home .ap-lead,
@@ -1299,7 +1482,7 @@ body.mode-retro.layout-home .ap-subscribe-copy,
 body.mode-retro.layout-home .ap-subscribe-note,
 body.mode-retro.layout-home .ap-posts time {
   color: #0f3f73 !important;
-  font-size: 1.03rem;
+  font-size: 1.02rem;
 }
 
 body.mode-retro.layout-home .ap-subscribe {
@@ -1308,10 +1491,10 @@ body.mode-retro.layout-home .ap-subscribe {
 }
 
 body.mode-retro.layout-home .ap-quick-links {
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.55rem;
+  gap: 0.46rem;
 }
 
 body.mode-retro.layout-home .ap-quick-links span[aria-hidden="true"] {
@@ -1319,7 +1502,7 @@ body.mode-retro.layout-home .ap-quick-links span[aria-hidden="true"] {
 }
 
 body.mode-retro.layout-home .ap-quick-links a {
-  min-height: 2.15rem;
+  min-height: 2.08rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1338,7 +1521,7 @@ body.mode-retro.layout-home .ap-quick-links a:focus {
 
 body.mode-retro.layout-home .ap-latest {
   border-color: #6fa3db !important;
-  border-left: 6px solid #3f7fc5 !important;
+  border-left: 5px solid #3f7fc5 !important;
   background: linear-gradient(180deg, #ffffff, #f1f8ff) !important;
 }
 
@@ -1352,41 +1535,19 @@ body.mode-retro.layout-home .ap-posts li {
   border-top-color: #c3daf3 !important;
 }
 
-body.mode-retro .footer .small,
-body.mode-retro .footer .nav--footer a {
-  color: #eaf4ff !important;
-}
-
-body.mode-retro .footer .small {
-  display: inline-block;
-  padding: 0.1rem 0.3rem;
-  background: rgba(8, 34, 73, 0.5);
-  border: 1px solid #2b65aa;
-}
-
-body.mode-retro .footer .nav--footer a {
-  border: 1px solid #2b65aa;
-  padding: 0.08rem 0.35rem;
-  background: rgba(7, 36, 78, 0.56);
-  text-decoration: none;
-}
-
-body.mode-retro .footer .nav--footer a:hover,
-body.mode-retro .footer .nav--footer a:focus {
-  background: #205796;
-}
-
 @media (max-width: 860px) {
   body.mode-retro .ap-retro-titlebar-inner,
   body.mode-retro .ap-retro-taskbar-inner {
     width: min(96vw, 1120px);
   }
 
-  body.mode-retro .ap-retro-quicklaunch {
-    display: none;
+  body.mode-retro .ap-retro-desktop-nav {
+    width: min(96vw, 1120px);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    top: 2.48rem;
   }
 
-  body.mode-retro .ap-retro-task-pill:last-child {
+  body.mode-retro .ap-retro-quicklaunch {
     display: none;
   }
 }
@@ -1400,22 +1561,31 @@ body.mode-retro .footer .nav--footer a:focus {
     padding-bottom: 2.3rem;
   }
 
+  body.mode-retro.layout-home .main {
+    padding-top: 8.45rem;
+  }
+
   body.mode-retro.layout-home .ap-quick-links {
     grid-template-columns: 1fr;
   }
 
   body.mode-retro .ap-retro-desktop-nav {
-    left: 0.34rem;
-    right: 0.34rem;
-    top: 2.45rem;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(4.1rem, 1fr);
-    gap: 0.28rem;
+    width: min(97vw, 1120px);
+    top: 2.4rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.2rem;
   }
 
   body.mode-retro .ap-retro-desktop-icon {
     width: auto;
-    font-size: 0.58rem;
+    font-size: 0.56rem;
+    gap: 0.16rem;
+    padding: 0.22rem 0.06rem;
+  }
+
+  body.mode-retro .ap-retro-desktop-glyph {
+    width: 1.62rem;
+    height: 1.5rem;
   }
 
   body.mode-retro .ap-retro-visit {

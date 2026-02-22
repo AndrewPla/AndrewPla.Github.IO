@@ -74,6 +74,7 @@
       if (!body) return;
       body.classList.toggle("mode-retro", nextMode === "retro");
       body.dataset.siteMode = nextMode;
+      mountToggle(nextMode);
 
       if (toggleBtn) {
         toggleBtn.classList.toggle("is-retro", nextMode === "retro");
@@ -85,6 +86,24 @@
         enableRetro();
       } else {
         disableRetro();
+      }
+    }
+
+    function mountToggle(nextMode) {
+      if (!toggleBtn) return;
+      if (nextMode === "retro") {
+        if (toggleBtn.parentNode !== document.body) {
+          document.body.appendChild(toggleBtn);
+        }
+        return;
+      }
+      var footerHost = document.querySelector(".footer .container");
+      if (footerHost) {
+        if (toggleBtn.parentNode !== footerHost) {
+          footerHost.appendChild(toggleBtn);
+        }
+      } else if (toggleBtn.parentNode !== document.body) {
+        document.body.appendChild(toggleBtn);
       }
     }
 
@@ -121,7 +140,6 @@
         "<span class='ap-retro-ql-icon ap-retro-ql-icon--mail'></span>" +
         "</span>" +
         "<span class='ap-retro-task-pill'>AndrewPla.tech</span>" +
-        "<span class='ap-retro-task-pill'>PowerShell Podcast</span>" +
         "</div>" +
         "<div class='ap-retro-tray'>" +
         "<span class='ap-retro-visit'>Visits <strong id='apRetroCounter'>000001</strong></span>" +
