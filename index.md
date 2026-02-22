@@ -20,6 +20,12 @@ permalink: /
     <span aria-hidden="true">/</span>
     <a href="/podcast/">Listen to the podcast</a>
     <span aria-hidden="true">/</span>
+    <a href="/links/">All links</a>
+    <span aria-hidden="true">/</span>
+    <a href="/about/">About Andrew</a>
+    <span aria-hidden="true">/</span>
+    <a href="/shop/">Shop</a>
+    <span aria-hidden="true">/</span>
     <a href="/contact/">Contact Andrew</a>
   </p>
 </section>

@@ -7,11 +7,66 @@
     var retroCounter = null;
     var retroClock = null;
     var retroClockTimer = 0;
+    var desktopShortcuts = [
+      {% for item in site.navigation_header %}
+        {% if item.url contains '://' %}
+          {% assign desktop_url = item.url %}
+        {% else %}
+          {% assign desktop_url = item.url | relative_url %}
+        {% endif %}
+        { title: {{ item.title | jsonify }}, url: {{ desktop_url | jsonify }}, slug: {{ item.title | slugify | jsonify }} }{% unless forloop.last %},{% endunless %}
+      {% endfor %},
+      { title: "Newsletter", url: {{ "/links/#updates" | relative_url | jsonify }}, slug: "newsletter" }
+    ];
 
     try {
       mode = localStorage.getItem(key) || "normal";
     } catch (e) {
       mode = "normal";
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function normalizePath(url) {
+      try {
+        var parsed = new URL(url, window.location.origin);
+        var path = parsed.pathname.replace(/\/+$/, "");
+        return path || "/";
+      } catch (e) {
+        return "/";
+      }
+    }
+
+    function isCurrentUrl(url) {
+      return normalizePath(window.location.pathname) === normalizePath(url);
+    }
+
+    function renderDesktopIcons() {
+      return desktopShortcuts
+        .map(function (item) {
+          var currentClass = isCurrentUrl(item.url) ? " is-current" : "";
+          return (
+            "<a class='ap-retro-desktop-icon ap-retro-desktop-icon--" +
+            item.slug +
+            currentClass +
+            "' href='" +
+            item.url +
+            "'>" +
+            "<span class='ap-retro-desktop-glyph' aria-hidden='true'></span>" +
+            "<span class='ap-retro-desktop-label'>" +
+            escapeHtml(item.title) +
+            "</span>" +
+            "</a>"
+          );
+        })
+        .join("");
     }
 
     function apply(nextMode) {
@@ -21,7 +76,8 @@
       body.dataset.siteMode = nextMode;
 
       if (toggleBtn) {
-        toggleBtn.textContent = nextMode === "retro" ? "normal" : "retro";
+        toggleBtn.classList.toggle("is-retro", nextMode === "retro");
+        toggleBtn.setAttribute("aria-checked", nextMode === "retro" ? "true" : "false");
         toggleBtn.title = nextMode === "retro" ? "Switch to normal mode" : "Switch to retro mode";
       }
 
@@ -50,11 +106,9 @@
         "</span>" +
         "</div>" +
         "</div>" +
-        "<div class='ap-retro-desktop' aria-hidden='true'>" +
-        "<span class='ap-retro-desktop-icon ap-retro-desktop-icon--computer'>My Computer</span>" +
-        "<span class='ap-retro-desktop-icon ap-retro-desktop-icon--internet'>Internet</span>" +
-        "<span class='ap-retro-desktop-icon ap-retro-desktop-icon--bin'>Recycle Bin</span>" +
-        "</div>" +
+        "<nav class='ap-retro-desktop-nav' aria-label='Desktop shortcuts'>" +
+        renderDesktopIcons() +
+        "</nav>" +
         "<div class='ap-retro-taskbar'>" +
         "<div class='ap-retro-taskbar-inner'>" +
         "<div class='ap-retro-task-left'>" +
@@ -124,7 +178,13 @@
     toggleBtn = document.createElement("button");
     toggleBtn.type = "button";
     toggleBtn.className = "ap-mode-toggle";
-    toggleBtn.setAttribute("aria-label", "Toggle site mode");
+    toggleBtn.setAttribute("role", "switch");
+    toggleBtn.setAttribute("aria-checked", "false");
+    toggleBtn.setAttribute("aria-label", "Toggle between normal and retro mode");
+    toggleBtn.innerHTML =
+      "<span class='ap-mode-toggle__label ap-mode-toggle__label--normal'>Normal</span>" +
+      "<span class='ap-mode-toggle__track'><span class='ap-mode-toggle__thumb'></span></span>" +
+      "<span class='ap-mode-toggle__label ap-mode-toggle__label--retro'>Retro</span>";
     toggleBtn.addEventListener("click", function () {
       mode = mode === "retro" ? "normal" : "retro";
       try {
