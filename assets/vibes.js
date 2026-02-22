@@ -1,4 +1,5 @@
 (function () {
+  const shellRoot = document.getElementById("shellRoot");
   const canvas = document.getElementById("shellCanvas");
   const taskInput = document.getElementById("taskInput");
   const focusMinutesInput = document.getElementById("focusMinutes");
@@ -36,6 +37,10 @@
   let phase = "focus";
   let remaining = 25 * 60;
   let phaseCount = 1;
+  let alarmIntervalId = null;
+  let alarmTimeoutId = null;
+  let visualAlarmTimeoutId = null;
+  let sharedAudioCtx = null;
 
   const drills = [
     "Get-Process | Sort-Object CPU -Descending | Select-Object -First 10",
@@ -85,27 +90,74 @@
   function playAlarm() {
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     if (!AudioCtx) return;
-    const audioCtx = new AudioCtx();
-    const now = audioCtx.currentTime;
-    const notes = [880, 660, 990, 740, 1100];
-    for (let i = 0; i < notes.length; i += 1) {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
+    if (!sharedAudioCtx) {
+      sharedAudioCtx = new AudioCtx();
+    }
+
+    sharedAudioCtx.resume().catch(() => {});
+
+    if (alarmIntervalId) {
+      window.clearInterval(alarmIntervalId);
+      alarmIntervalId = null;
+    }
+    if (alarmTimeoutId) {
+      window.clearTimeout(alarmTimeoutId);
+      alarmTimeoutId = null;
+    }
+
+    const notes = [880, 660, 990, 740, 1100, 820];
+    let noteIndex = 0;
+    const hitDuration = 0.2;
+    const stepMs = 250;
+    const totalDurationMs = 9000;
+
+    function playHit(freq) {
+      const osc = sharedAudioCtx.createOscillator();
+      const gain = sharedAudioCtx.createGain();
+      const now = sharedAudioCtx.currentTime;
       osc.type = "square";
-      osc.frequency.value = notes[i];
+      osc.frequency.value = freq;
       gain.gain.value = 0.001;
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      const start = now + i * 0.22;
-      gain.gain.exponentialRampToValueAtTime(0.11, start + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
-      osc.start(start);
-      osc.stop(start + 0.2);
+      gain.connect(sharedAudioCtx.destination);
+      gain.gain.exponentialRampToValueAtTime(0.14, now + 0.03);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + hitDuration);
+      osc.start(now);
+      osc.stop(now + hitDuration + 0.02);
     }
+
+    playHit(notes[noteIndex % notes.length]);
+    noteIndex += 1;
+
+    alarmIntervalId = window.setInterval(() => {
+      playHit(notes[noteIndex % notes.length]);
+      noteIndex += 1;
+    }, stepMs);
+
+    alarmTimeoutId = window.setTimeout(() => {
+      if (alarmIntervalId) {
+        window.clearInterval(alarmIntervalId);
+        alarmIntervalId = null;
+      }
+      alarmTimeoutId = null;
+    }, totalDurationMs);
+  }
+
+  function triggerVisualAlarm() {
+    if (!shellRoot) return;
+    shellRoot.classList.add("alarm-active");
+    if (visualAlarmTimeoutId) {
+      window.clearTimeout(visualAlarmTimeoutId);
+    }
+    visualAlarmTimeoutId = window.setTimeout(() => {
+      shellRoot.classList.remove("alarm-active");
+      visualAlarmTimeoutId = null;
+    }, 10000);
   }
 
   function phaseComplete() {
     playAlarm();
+    triggerVisualAlarm();
     if (phase === "focus") {
       resetPhase(breakMinutes() * 60, "break");
     } else {
@@ -238,6 +290,7 @@
 
     alarmTestBtn.addEventListener("click", () => {
       playAlarm();
+      triggerVisualAlarm();
       setAudioStatus("Alarm test played.");
     });
   }
@@ -293,6 +346,21 @@
 
   window.addEventListener("beforeunload", () => {
     pauseTimer();
+    if (alarmIntervalId) {
+      window.clearInterval(alarmIntervalId);
+      alarmIntervalId = null;
+    }
+    if (alarmTimeoutId) {
+      window.clearTimeout(alarmTimeoutId);
+      alarmTimeoutId = null;
+    }
+    if (visualAlarmTimeoutId) {
+      window.clearTimeout(visualAlarmTimeoutId);
+      visualAlarmTimeoutId = null;
+    }
+    if (shellRoot) {
+      shellRoot.classList.remove("alarm-active");
+    }
     document.title = "Andrew Pla";
   });
 

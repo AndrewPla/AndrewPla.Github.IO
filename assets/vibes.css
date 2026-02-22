@@ -22,6 +22,22 @@
   background: radial-gradient(1300px 700px at 50% 20%, #0a1412 0%, var(--shell-bg) 60%);
   overflow: hidden;
   font-family: "Courier New", Courier, monospace;
+  transition: background-color 0.2s ease;
+}
+
+.shell-root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.shell-root.alarm-active::after {
+  opacity: 0.8;
+  animation: shellAlarmFlash 0.45s steps(2, end) infinite;
 }
 
 #shellCanvas {
@@ -77,6 +93,7 @@
   border: 1px solid var(--shell-border);
   background: linear-gradient(180deg, rgba(10, 33, 27, 0.8), rgba(6, 18, 15, 0.9));
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.52);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .shell-titlebar {
@@ -189,6 +206,7 @@
   font-weight: 700;
   color: #d9fff2;
   text-shadow: 0 0 12px rgba(86, 255, 190, 0.45);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .shell-status {
@@ -250,6 +268,52 @@
   min-height: 250px;
   border: 1px solid rgba(98, 219, 179, 0.62);
   background: #fff;
+}
+
+.shell-root.alarm-active {
+  background: radial-gradient(1400px 760px at 50% 20%, #261303 0%, #0c0402 60%);
+}
+
+.shell-root.alarm-active .shell-window {
+  border-color: #ffd97e;
+  box-shadow: 0 0 0 2px rgba(255, 217, 126, 0.28), 0 24px 70px rgba(255, 80, 0, 0.38);
+}
+
+.shell-root.alarm-active .shell-titlebar {
+  color: #fff2b6;
+  background: linear-gradient(90deg, rgba(65, 15, 5, 0.96), rgba(92, 37, 5, 0.94));
+}
+
+.shell-root.alarm-active .shell-timer {
+  color: #fff7ba;
+  text-shadow: 0 0 16px rgba(255, 228, 126, 0.8);
+  animation: shellAlarmPulse 0.45s ease-in-out infinite;
+}
+
+.shell-root.alarm-active .shell-status {
+  color: #ffe9b0;
+}
+
+@keyframes shellAlarmFlash {
+  0% {
+    background: rgba(255, 60, 60, 0.2);
+  }
+  50% {
+    background: rgba(255, 220, 80, 0.2);
+  }
+  100% {
+    background: rgba(80, 210, 255, 0.2);
+  }
+}
+
+@keyframes shellAlarmPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 @media (max-width: 760px) {
