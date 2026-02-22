@@ -15,6 +15,7 @@
   const volumeRange = document.getElementById("volumeRange");
   const playBtn = document.getElementById("playBtn");
   const alarmTestBtn = document.getElementById("alarmTestBtn");
+  const alarmStopBtn = document.getElementById("alarmStopBtn");
   const audioStatus = document.getElementById("audioStatus");
   const focusAudio = document.getElementById("focusAudio");
 
@@ -41,6 +42,7 @@
   let alarmTimeoutId = null;
   let visualAlarmTimeoutId = null;
   let sharedAudioCtx = null;
+  let alarmActive = false;
 
   const drills = [
     "Get-Process | Sort-Object CPU -Descending | Select-Object -First 10",
@@ -81,6 +83,12 @@
     document.title = formatTime(remaining) + " - " + (phase === "focus" ? "Focus" : "Break");
   }
 
+  function setAlarmButtonState(active) {
+    if (!alarmStopBtn) return;
+    alarmStopBtn.disabled = !active;
+    alarmStopBtn.setAttribute("aria-disabled", active ? "false" : "true");
+  }
+
   function resetPhase(seconds, mode) {
     phase = mode;
     remaining = seconds;
@@ -96,14 +104,9 @@
 
     sharedAudioCtx.resume().catch(() => {});
 
-    if (alarmIntervalId) {
-      window.clearInterval(alarmIntervalId);
-      alarmIntervalId = null;
-    }
-    if (alarmTimeoutId) {
-      window.clearTimeout(alarmTimeoutId);
-      alarmTimeoutId = null;
-    }
+    stopAlarm({ keepStatus: true, keepVisual: true });
+    alarmActive = true;
+    setAlarmButtonState(true);
 
     const notes = [880, 660, 990, 740, 1100, 820];
     let noteIndex = 0;
@@ -135,12 +138,35 @@
     }, stepMs);
 
     alarmTimeoutId = window.setTimeout(() => {
-      if (alarmIntervalId) {
-        window.clearInterval(alarmIntervalId);
-        alarmIntervalId = null;
-      }
-      alarmTimeoutId = null;
+      stopAlarm({ keepStatus: true });
     }, totalDurationMs);
+  }
+
+  function stopAlarm(options) {
+    const opts = options || {};
+
+    if (alarmIntervalId) {
+      window.clearInterval(alarmIntervalId);
+      alarmIntervalId = null;
+    }
+    if (alarmTimeoutId) {
+      window.clearTimeout(alarmTimeoutId);
+      alarmTimeoutId = null;
+    }
+    if (visualAlarmTimeoutId) {
+      window.clearTimeout(visualAlarmTimeoutId);
+      visualAlarmTimeoutId = null;
+    }
+    if (!opts.keepVisual && shellRoot) {
+      shellRoot.classList.remove("alarm-active");
+    }
+
+    alarmActive = false;
+    setAlarmButtonState(false);
+
+    if (!opts.keepStatus) {
+      setAudioStatus("Alarm stopped.");
+    }
   }
 
   function triggerVisualAlarm() {
@@ -152,12 +178,15 @@
     visualAlarmTimeoutId = window.setTimeout(() => {
       shellRoot.classList.remove("alarm-active");
       visualAlarmTimeoutId = null;
+      alarmActive = false;
+      setAlarmButtonState(false);
     }, 10000);
   }
 
   function phaseComplete() {
     playAlarm();
     triggerVisualAlarm();
+    setAudioStatus("Timer complete. Press Stop Alarm to silence.");
     if (phase === "focus") {
       resetPhase(breakMinutes() * 60, "break");
     } else {
@@ -186,6 +215,9 @@
 
   function startTimer() {
     if (isRunning) return;
+    if (alarmActive) {
+      stopAlarm({ keepStatus: true });
+    }
     isRunning = true;
     startPauseBtn.textContent = "Pause";
     timerId = window.setInterval(tick, 1000);
@@ -201,12 +233,15 @@
   }
 
   function resetTimer() {
+    stopAlarm({ keepStatus: true });
     pauseTimer();
     phaseCount = 1;
     resetPhase(focusMinutes() * 60, "focus");
+    setAudioStatus("Timer reset.");
   }
 
   function skipPhase() {
+    stopAlarm({ keepStatus: true });
     phaseComplete();
   }
 
@@ -291,7 +326,14 @@
     alarmTestBtn.addEventListener("click", () => {
       playAlarm();
       triggerVisualAlarm();
-      setAudioStatus("Alarm test played.");
+      setAudioStatus("Alarm test played. Press Stop Alarm to silence.");
+    });
+
+    if (alarmStopBtn) {
+      alarmStopBtn.addEventListener("click", () => {
+        stopAlarm();
+        setAudioStatus("Alarm silenced.");
+      });
     });
   }
 
@@ -346,25 +388,12 @@
 
   window.addEventListener("beforeunload", () => {
     pauseTimer();
-    if (alarmIntervalId) {
-      window.clearInterval(alarmIntervalId);
-      alarmIntervalId = null;
-    }
-    if (alarmTimeoutId) {
-      window.clearTimeout(alarmTimeoutId);
-      alarmTimeoutId = null;
-    }
-    if (visualAlarmTimeoutId) {
-      window.clearTimeout(visualAlarmTimeoutId);
-      visualAlarmTimeoutId = null;
-    }
-    if (shellRoot) {
-      shellRoot.classList.remove("alarm-active");
-    }
+    stopAlarm({ keepStatus: true });
     document.title = "Andrew Pla";
   });
 
   resize();
+  setAlarmButtonState(false);
   updateTimerView();
   bindTimer();
   bindAudio();

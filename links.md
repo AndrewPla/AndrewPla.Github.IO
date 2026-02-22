@@ -4,7 +4,7 @@ title: Links
 permalink: /links/
 ---
 
-<link rel="stylesheet" href="{{ '/assets/links.css?v=20260222a' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/links.css?v=20260222b' | relative_url }}">
 
 <section class="ap-links-page">
   <header class="ap-links-hero">
@@ -12,9 +12,10 @@ permalink: /links/
     <div class="ap-links-hero-copy">
       <p class="ap-links-eyebrow">Andrew Pla</p>
       <h1>Everything important, one page.</h1>
-      <p class="ap-links-sub">If you came from the podcast or social, start with the top cards and then pick the channel that matches what you want.</p>
+      <p class="ap-links-sub">If you came from podcast show notes, start with the PowerShell Focus Room, then jump into whichever channel matches what you need.</p>
 
       <div class="ap-links-quick" id="updates">
+        <a class="ap-links-btn ap-links-btn-primary" href="{{ '/shell-room/' | relative_url }}">PowerShell Focus Room</a>
         <a class="ap-links-btn ap-links-btn-primary" href="https://www.linkedin.com/in/andrewplatech/" target="_blank" rel="noopener noreferrer">LinkedIn updates</a>
         <a class="ap-links-btn" href="https://www.instagram.com/andrewplatech/" target="_blank" rel="noopener noreferrer">Instagram</a>
         <a class="ap-links-btn" href="https://www.buymeacoffee.com/andrewplatech" target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
@@ -36,10 +37,10 @@ permalink: /links/
       <small>Behind-the-scenes, short clips, and everyday creator updates.</small>
     </a>
 
-    <a class="ap-priority-card ap-priority-card--coffee" href="https://www.buymeacoffee.com/andrewplatech" target="_blank" rel="noopener noreferrer">
-      <span class="ap-priority-icon ap-priority-icon--fallback" aria-hidden="true">BMC</span>
-      <strong>Buy me a coffee</strong>
-      <small>Support the work directly if you want to back the content.</small>
+    <a class="ap-priority-card ap-priority-card--shell" href="{{ '/shell-room/' | relative_url }}">
+      <span class="ap-priority-icon">{% include icon.html id="codepen" title="PowerShell Focus Room" width="22" height="22" %}</span>
+      <strong>PowerShell Focus Room</strong>
+      <small>Pomodoro timer, coding music, and quick drills. Perfect quick hit from podcast links.</small>
     </a>
   </section>
 
@@ -157,14 +158,24 @@ permalink: /links/
     </section>
 
     <section class="ap-links-panel" aria-labelledby="connect-links-main">
-      <h2 id="connect-links-main">Direct + Support</h2>
+      <h2 id="connect-links-main">Direct + Extras</h2>
       <ul class="ap-links-list">
+        <li>
+          <a class="ap-link-item ap-link-item--shell" href="{{ '/shell-room/' | relative_url }}">
+            <span class="ap-link-icon">{% include icon.html id="codepen" title="PowerShell Focus Room" width="18" height="18" %}</span>
+            <span class="ap-link-copy">
+              <strong>PowerShell Focus Room</strong>
+              <small>Timer, music, and PowerShell drills for focused work sessions</small>
+            </span>
+            <span class="ap-link-arrow">-></span>
+          </a>
+        </li>
         <li>
           <a class="ap-link-item ap-link-item--coffee" href="https://www.buymeacoffee.com/andrewplatech" target="_blank" rel="noopener noreferrer">
             <span class="ap-link-icon ap-link-icon--fallback" aria-hidden="true">BMC</span>
             <span class="ap-link-copy">
               <strong>Buy me a coffee</strong>
-              <small>Directly support content and creator work</small>
+              <small>Tip jar for coffee and late-night builds</small>
             </span>
             <span class="ap-link-arrow">-></span>
           </a>
@@ -185,16 +196,6 @@ permalink: /links/
             <span class="ap-link-copy">
               <strong>Shop</strong>
               <small>Stickers and community merch</small>
-            </span>
-            <span class="ap-link-arrow">-></span>
-          </a>
-        </li>
-        <li>
-          <a class="ap-link-item ap-link-item--shell" href="{{ '/shell-room/' | relative_url }}">
-            <span class="ap-link-icon">{% include icon.html id="codepen" title="Shell Room" width="18" height="18" %}</span>
-            <span class="ap-link-copy">
-              <strong>Secret Shell Room</strong>
-              <small>Pomodoro + study mode for PowerShell learners</small>
             </span>
             <span class="ap-link-arrow">-></span>
           </a>

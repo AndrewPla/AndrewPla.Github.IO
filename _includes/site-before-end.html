@@ -9,7 +9,29 @@
     var retroClockTimer = 0;
     var retroStartBtn = null;
     var retroStartMenu = null;
+    var retroMusicPanel = null;
+    var retroMusicAudio = null;
+    var retroMusicToggle = null;
+    var retroMusicClose = null;
+    var retroMusicStationId = "groovesalad";
     var retroStartHandlers = [];
+    var retroMusicStations = [
+      {
+        id: "groovesalad",
+        label: "Groove Salad",
+        stream: "https://ice1.somafm.com/groovesalad-128-mp3"
+      },
+      {
+        id: "dronezone",
+        label: "Drone Zone",
+        stream: "https://ice1.somafm.com/dronezone-128-mp3"
+      },
+      {
+        id: "lush",
+        label: "Lush",
+        stream: "https://ice1.somafm.com/lush-128-mp3"
+      }
+    ];
     var desktopShortcuts = [
       {
         desktopTitle: "My Computer",
@@ -24,7 +46,7 @@
         slug: "writing"
       },
       {
-        desktopTitle: "Internet Explorer",
+        desktopTitle: "Andrewnet Explorer",
         startTitle: "Links",
         url: {{ "/links/" | relative_url | jsonify }},
         slug: "links"
@@ -131,8 +153,28 @@
             );
           })
           .join("") +
+        "<a class='ap-retro-start-link ap-retro-start-link--music' href='#' data-retro-action='music'>" +
+        "<span class='ap-retro-start-link-icon' aria-hidden='true'></span>" +
+        "<span class='ap-retro-start-link-label'>Coding Music</span>" +
+        "</a>" +
         "</nav>"
       );
+    }
+
+    function renderMusicStations() {
+      return retroMusicStations
+        .map(function (station, index) {
+          return (
+            "<button type='button' class='ap-retro-music-station" +
+            (index === 0 ? " is-active" : "") +
+            "' data-station-id='" +
+            station.id +
+            "'>" +
+            escapeHtml(station.label) +
+            "</button>"
+          );
+        })
+        .join("");
     }
 
     function currentWindowLabel() {
@@ -203,9 +245,10 @@
         "<span class='ap-retro-win-flag' aria-hidden='true'><i></i><i></i><i></i><i></i></span>" +
         "<span class='ap-retro-start-label'>start</span>" +
         "</button>" +
-        "<span class='ap-retro-quicklaunch' aria-hidden='true'>" +
+        "<span class='ap-retro-quicklaunch'>" +
         "<a class='ap-retro-ql-icon ap-retro-ql-icon--ie' href='{{ '/' | relative_url }}' aria-label='Open home'></a>" +
         "<a class='ap-retro-ql-icon ap-retro-ql-icon--mail' href='{{ '/links/#updates' | relative_url }}' aria-label='Open newsletter links'></a>" +
+        "<a class='ap-retro-ql-icon ap-retro-ql-icon--music' id='apRetroMusicToggle' href='#' aria-label='Open coding music'></a>" +
         "</span>" +
         "<a class='ap-retro-task-pill ap-retro-task-pill--active' href='" + window.location.pathname + "'>" + escapeHtml(windowLabel) + "</a>" +
         "</div>" +
@@ -221,13 +264,33 @@
         "<div class='ap-retro-start-menu' id='apRetroStartMenu' hidden>" +
         renderStartMenu() +
         "</div>" +
+        "<section class='ap-retro-music' id='apRetroMusicPanel' hidden aria-label='Coding music player'>" +
+        "<header class='ap-retro-music-head'>" +
+        "<span class='ap-retro-music-title'>Windows Media Player - Coding Mix</span>" +
+        "<button type='button' class='ap-retro-music-close' id='apRetroMusicClose' aria-label='Close coding music'>x</button>" +
+        "</header>" +
+        "<div class='ap-retro-music-body'>" +
+        "<p class='ap-retro-music-note'>Pick a stream and press play.</p>" +
+        "<div class='ap-retro-music-stations'>" +
+        renderMusicStations() +
+        "</div>" +
+        "<audio id='apRetroMusicAudio' controls preload='none'>" +
+        "<source src='" + retroMusicStations[0].stream + "' type='audio/mpeg'>" +
+        "</audio>" +
+        "</div>" +
+        "</section>" +
         "</div>";
       document.body.appendChild(retroChrome);
       retroCounter = document.getElementById("apRetroCounter");
       retroClock = document.getElementById("apRetroClock");
       retroStartBtn = document.getElementById("apRetroStartBtn");
       retroStartMenu = document.getElementById("apRetroStartMenu");
+      retroMusicPanel = document.getElementById("apRetroMusicPanel");
+      retroMusicAudio = document.getElementById("apRetroMusicAudio");
+      retroMusicToggle = document.getElementById("apRetroMusicToggle");
+      retroMusicClose = document.getElementById("apRetroMusicClose");
       initStartMenu();
+      initMusicPanel();
       incrementCounter();
       renderClock();
       retroClockTimer = window.setInterval(renderClock, 30000);
@@ -271,6 +334,13 @@
 
       function handleMenuClick(event) {
         var target = event.target;
+        var actionLink = target && target.closest ? target.closest("[data-retro-action='music']") : null;
+        if (actionLink) {
+          event.preventDefault();
+          openMusicPanel();
+          closeStartMenu();
+          return;
+        }
         if (target && target.closest && target.closest(".ap-retro-start-link")) {
           closeStartMenu();
         }
@@ -294,6 +364,94 @@
       ];
     }
 
+    function setMusicStation(stationId, shouldPlay) {
+      if (!retroMusicAudio) return;
+      var station = retroMusicStations.find(function (entry) {
+        return entry.id === stationId;
+      });
+      if (!station) return;
+
+      var source = retroMusicAudio.querySelector("source");
+      if (!source) return;
+      if (source.src !== station.stream) {
+        source.src = station.stream;
+        retroMusicAudio.load();
+      }
+      retroMusicStationId = station.id;
+
+      if (retroMusicPanel) {
+        var stationButtons = retroMusicPanel.querySelectorAll(".ap-retro-music-station");
+        stationButtons.forEach(function (button) {
+          button.classList.toggle("is-active", button.dataset.stationId === station.id);
+        });
+      }
+
+      if (shouldPlay) {
+        try {
+          var playPromise = retroMusicAudio.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function () {});
+          }
+        } catch (e) {}
+      }
+    }
+
+    function closeMusicPanel() {
+      if (!retroMusicPanel) return;
+      retroMusicPanel.hidden = true;
+    }
+
+    function openMusicPanel() {
+      if (!retroMusicPanel) return;
+      retroMusicPanel.hidden = false;
+      setMusicStation(retroMusicStationId, false);
+    }
+
+    function initMusicPanel() {
+      if (!retroMusicPanel || !retroMusicAudio || !retroMusicToggle) return;
+
+      function toggleMusicPanel(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (retroMusicPanel.hidden) {
+          if (retroStartMenu && !retroStartMenu.hidden) {
+            retroStartMenu.hidden = true;
+            if (retroStartBtn) {
+              retroStartBtn.setAttribute("aria-expanded", "false");
+            }
+          }
+          openMusicPanel();
+        } else {
+          closeMusicPanel();
+        }
+      }
+
+      function handleStationClick(event) {
+        var stationButton = event.target && event.target.closest
+          ? event.target.closest(".ap-retro-music-station")
+          : null;
+        if (!stationButton) return;
+        event.preventDefault();
+        setMusicStation(stationButton.dataset.stationId, true);
+      }
+
+      retroMusicToggle.addEventListener("click", toggleMusicPanel);
+      retroMusicPanel.addEventListener("click", handleStationClick);
+      retroStartHandlers.push(
+        { target: retroMusicToggle, type: "click", handler: toggleMusicPanel },
+        { target: retroMusicPanel, type: "click", handler: handleStationClick }
+      );
+
+      if (retroMusicClose) {
+        var closeHandler = function (event) {
+          event.preventDefault();
+          closeMusicPanel();
+        };
+        retroMusicClose.addEventListener("click", closeHandler);
+        retroStartHandlers.push({ target: retroMusicClose, type: "click", handler: closeHandler });
+      }
+    }
+
     function incrementCounter() {
       var counterKey = "ap-retro-counter";
       var value = 1;
@@ -311,8 +469,11 @@
     function renderClock() {
       if (!retroClock) return;
       var now = new Date();
-      var display = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-      retroClock.textContent = display;
+      var timeDisplay = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      var dayDisplay = now.toLocaleDateString([], { weekday: "short" });
+      retroClock.innerHTML =
+        "<span class='ap-retro-clock-time'>" + escapeHtml(timeDisplay) + "</span>" +
+        "<span class='ap-retro-clock-day'>" + escapeHtml(dayDisplay) + "</span>";
     }
 
     function enableRetro() {
@@ -337,6 +498,10 @@
         retroClock = null;
         retroStartBtn = null;
         retroStartMenu = null;
+        retroMusicPanel = null;
+        retroMusicAudio = null;
+        retroMusicToggle = null;
+        retroMusicClose = null;
       }
     }
 

@@ -241,6 +241,18 @@
   color: #cef2ff !important;
 }
 
+.shell-btn.warn {
+  background: #4a100c !important;
+  border-color: #ff9f8b !important;
+  color: #ffd7cc !important;
+}
+
+.shell-btn.warn:disabled,
+.shell-btn.warn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .shell-btn:hover,
 .shell-btn:focus {
   background: #074033 !important;

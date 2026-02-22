@@ -936,7 +936,8 @@ body.mode-retro .ap-retro-chrome {
 }
 
 body.mode-retro .ap-retro-taskbar,
-body.mode-retro .ap-retro-start-menu {
+body.mode-retro .ap-retro-start-menu,
+body.mode-retro .ap-retro-music {
   pointer-events: auto;
 }
 
@@ -1133,7 +1134,7 @@ body.mode-retro .ap-retro-start {
   border: 1px solid #265f1b;
   border-radius: 0 999px 999px 0;
   background: linear-gradient(180deg, #77de70, #3ca234 66%, #2f8b2b);
-  color: #ffffff;
+  color: #ffffff !important;
   font-size: 0.86rem;
   font-style: italic;
   font-weight: 700;
@@ -1208,8 +1209,14 @@ body.mode-retro .ap-retro-start-link {
 
 body.mode-retro .ap-retro-start-link:hover,
 body.mode-retro .ap-retro-start-link:focus {
-  border-color: #5f93cd;
-  background: linear-gradient(180deg, #ffffff, #e2f0ff);
+  border-color: #2e67ad;
+  background: linear-gradient(180deg, #4f9aee, #2a68b9);
+}
+
+body.mode-retro .ap-retro-start-link:hover .ap-retro-start-link-label,
+body.mode-retro .ap-retro-start-link:focus .ap-retro-start-link-label {
+  color: #ffffff !important;
+  text-shadow: 0 1px 0 #16417a;
 }
 
 body.mode-retro .ap-retro-start-link-icon {
@@ -1224,6 +1231,7 @@ body.mode-retro .ap-retro-start-link-label {
   font-size: 0.76rem;
   font-weight: 700;
   line-height: 1.2;
+  color: #0e396f !important;
 }
 
 body.mode-retro .ap-retro-start-link--home .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/computer.svg"); }
@@ -1234,6 +1242,111 @@ body.mode-retro .ap-retro-start-link--about .ap-retro-start-link-icon { backgrou
 body.mode-retro .ap-retro-start-link--shop .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/shop.svg"); }
 body.mode-retro .ap-retro-start-link--newsletter .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/newsletter.svg"); }
 body.mode-retro .ap-retro-start-link--contact .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/help.svg"); }
+body.mode-retro .ap-retro-start-link--music .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/music.svg"); }
+
+body.mode-retro .ap-retro-music {
+  position: absolute;
+  right: 0.22rem;
+  bottom: 2.26rem;
+  z-index: 23;
+  width: min(22.2rem, 95vw);
+  border: 1px solid #2b5fa1;
+  border-radius: 7px 7px 0 0;
+  background: linear-gradient(180deg, #ffffff, #e7f2ff);
+  box-shadow: 0 18px 30px rgba(0, 37, 82, 0.44);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+body.mode-retro .ap-retro-music[hidden] {
+  display: none !important;
+}
+
+body.mode-retro .ap-retro-music-head {
+  min-height: 1.64rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.14rem 0.2rem 0.14rem 0.62rem;
+  border-bottom: 1px solid #2a5da2;
+  background: linear-gradient(180deg, #3c8ce8, #1f5eb2);
+}
+
+body.mode-retro .ap-retro-music-title {
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-shadow: 0 1px 0 #123a71;
+}
+
+body.mode-retro .ap-retro-music-close {
+  min-width: 1.14rem;
+  min-height: 1.02rem;
+  border: 1px solid #f4b4b4;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #f58080, #cc3732);
+  color: #ffffff !important;
+  font-size: 0.73rem;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 0 rgba(86, 0, 0, 0.48);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.42) inset;
+}
+
+body.mode-retro .ap-retro-music-close:hover,
+body.mode-retro .ap-retro-music-close:focus {
+  background: linear-gradient(180deg, #ff8e8e, #d3423d);
+}
+
+body.mode-retro .ap-retro-music-body {
+  display: grid;
+  gap: 0.46rem;
+  padding: 0.62rem;
+}
+
+body.mode-retro .ap-retro-music-note {
+  margin: 0;
+  color: #1a497e !important;
+  font-size: 0.7rem !important;
+}
+
+body.mode-retro .ap-retro-music-stations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+body.mode-retro .ap-retro-music-station {
+  appearance: none;
+  min-height: 1.48rem;
+  border: 1px solid #2f6fbc !important;
+  border-radius: 4px !important;
+  background: linear-gradient(180deg, #ffffff, #cfe5fb) !important;
+  color: #104281 !important;
+  font-size: 0.67rem !important;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.12rem 0.46rem !important;
+  margin: 0 !important;
+}
+
+body.mode-retro .ap-retro-music-station:hover,
+body.mode-retro .ap-retro-music-station:focus {
+  background: linear-gradient(180deg, #ffffff, #bbdbfa) !important;
+}
+
+body.mode-retro .ap-retro-music-station.is-active {
+  border-color: #1e5aa5 !important;
+  background: linear-gradient(180deg, #6caef0, #2d73c7) !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 0 #123f74;
+}
+
+body.mode-retro .ap-retro-music audio {
+  width: 100%;
+  min-height: 2rem;
+}
 
 body.mode-retro .typeset {
   font-size: 1.01rem;
@@ -1276,6 +1389,11 @@ body.mode-retro .ap-retro-ql-icon--ie {
 
 body.mode-retro .ap-retro-ql-icon--mail {
   background-image: url("/assets/xp-icons/newsletter.svg");
+  background-color: #d7eafb;
+}
+
+body.mode-retro .ap-retro-ql-icon--music {
+  background-image: url("/assets/xp-icons/music.svg");
   background-color: #d7eafb;
 }
 
@@ -1356,6 +1474,32 @@ body.mode-retro .ap-retro-visit strong {
   font-family: "Consolas", "Courier New", monospace;
 }
 
+body.mode-retro .ap-retro-clock {
+  min-width: 3.7rem;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.04rem;
+  padding: 0.08rem 0.44rem;
+  border-color: #114b8d;
+  background: linear-gradient(180deg, #9fd1f5, #71aadd);
+  color: #05275a;
+  line-height: 1;
+}
+
+body.mode-retro .ap-retro-clock-time {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+body.mode-retro .ap-retro-clock-day {
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.84;
+}
+
 body.mode-retro .header,
 body.mode-retro .main,
 body.mode-retro .feature,
@@ -1431,7 +1575,7 @@ body.mode-retro .typeset li a:not(.button) {
   background-image: none;
 }
 
-body.mode-retro button:not(.button--nav):not(.ap-retro-start),
+body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station),
 body.mode-retro .button:not(.button--nav),
 body.mode-retro input[type="submit"] {
   border: 1px solid #2b5fa5 !important;
@@ -1444,8 +1588,8 @@ body.mode-retro input[type="submit"] {
   letter-spacing: 0;
 }
 
-body.mode-retro button:not(.button--nav):not(.ap-retro-start):hover,
-body.mode-retro button:not(.button--nav):not(.ap-retro-start):focus,
+body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station):hover,
+body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station):focus,
 body.mode-retro .button:not(.button--nav):hover,
 body.mode-retro .button:not(.button--nav):focus,
 body.mode-retro input[type="submit"]:hover,
@@ -1474,6 +1618,7 @@ body.mode-retro.layout-blog .main > .content,
 body.mode-retro.layout-categories .main > .content {
   position: relative;
   overflow: hidden;
+  margin-top: 0.72rem;
   border: 1px solid #4a7fbe !important;
   border-radius: 8px;
   background: linear-gradient(180deg, #ffffff, #eef6ff) !important;
@@ -1551,6 +1696,7 @@ body.mode-retro.layout-home .article.article--page.content {
 }
 
 body.mode-retro.layout-home .ap-home-window {
+  margin-top: 0.72rem;
   border: 1px solid #4a7fbe !important;
   border-radius: 8px;
   background: linear-gradient(180deg, #ffffff, #eef6ff);
@@ -1771,6 +1917,7 @@ body.mode-retro.layout-home .ap-posts li {
   body.mode-retro.layout-post .main > .article.article--post.content,
   body.mode-retro.layout-blog .main > .content,
   body.mode-retro.layout-categories .main > .content {
+    margin-top: 0.86rem;
     padding: 2.82rem 0.9rem 0.95rem !important;
   }
 
@@ -1796,6 +1943,7 @@ body.mode-retro.layout-home .ap-posts li {
   body.mode-retro.layout-post .main > .article.article--post.content,
   body.mode-retro.layout-blog .main > .content,
   body.mode-retro.layout-categories .main > .content {
+    margin-top: 1rem;
     padding: 2.78rem 0.76rem 0.86rem !important;
   }
 

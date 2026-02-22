@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Music icon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#f5fbff"/>
+      <stop offset="1" stop-color="#c9def4"/>
+    </linearGradient>
+    <linearGradient id="note" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#2d84de"/>
+      <stop offset="1" stop-color="#1458ad"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="7" width="48" height="50" rx="6" fill="url(#bg)" stroke="#5f8fc3" stroke-width="2"/>
+  <rect x="12" y="11" width="40" height="9" rx="3" fill="#9cc5ec"/>
+  <circle cx="24" cy="44" r="8" fill="url(#note)" stroke="#0f4e9a" stroke-width="1.6"/>
+  <circle cx="40" cy="40" r="8" fill="url(#note)" stroke="#0f4e9a" stroke-width="1.6"/>
+  <path d="M30 20v21h4V27l10-2v16h4V20z" fill="url(#note)" stroke="#0f4e9a" stroke-width="1"/>
+  <path d="M30 20l14-3v4l-14 3z" fill="#60a2e4"/>
+</svg>

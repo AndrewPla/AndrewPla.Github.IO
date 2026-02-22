@@ -151,6 +151,10 @@
   --ap-priority-accent: #ff7b00;
 }
 
+.ap-priority-card--shell {
+  --ap-priority-accent: #0f766e;
+}
+
 .ap-priority-icon {
   width: 2rem;
   height: 2rem;
