@@ -96,6 +96,12 @@
       );
     }
 
+    function currentWindowLabel() {
+      var title = document.title || "Home";
+      title = title.replace(/\s*\|\s*Andrew\s*Pla.*$/i, "").trim();
+      return title || "Home";
+    }
+
     function apply(nextMode) {
       var body = document.body;
       if (!body) return;
@@ -136,6 +142,7 @@
 
     function createRetroChrome() {
       if (retroChrome) return;
+      var windowLabel = currentWindowLabel();
       retroChrome = document.createElement("div");
       retroChrome.className = "ap-retro-chrome";
       retroChrome.innerHTML =
@@ -144,11 +151,6 @@
         "<span class='ap-retro-title'>" +
         "<span class='ap-retro-ms-logo' aria-hidden='true'><i></i><i></i><i></i><i></i></span>" +
         "AndrewPla.tech - Retro Desktop" +
-        "</span>" +
-        "<span class='ap-retro-window-controls' aria-hidden='true'>" +
-        "<span class='ap-retro-win-btn ap-retro-win-btn--min'></span>" +
-        "<span class='ap-retro-win-btn ap-retro-win-btn--max'></span>" +
-        "<span class='ap-retro-win-btn ap-retro-win-btn--close'></span>" +
         "</span>" +
         "</div>" +
         "</div>" +
@@ -163,10 +165,10 @@
         "<span class='ap-retro-start-label'>start</span>" +
         "</button>" +
         "<span class='ap-retro-quicklaunch' aria-hidden='true'>" +
-        "<span class='ap-retro-ql-icon ap-retro-ql-icon--ie'></span>" +
-        "<span class='ap-retro-ql-icon ap-retro-ql-icon--mail'></span>" +
+        "<a class='ap-retro-ql-icon ap-retro-ql-icon--ie' href='{{ '/' | relative_url }}' aria-label='Open home'></a>" +
+        "<a class='ap-retro-ql-icon ap-retro-ql-icon--mail' href='{{ '/links/#updates' | relative_url }}' aria-label='Open newsletter links'></a>" +
         "</span>" +
-        "<span class='ap-retro-task-pill'>AndrewPla.tech</span>" +
+        "<a class='ap-retro-task-pill ap-retro-task-pill--active' href='" + window.location.pathname + "'>" + escapeHtml(windowLabel) + "</a>" +
         "</div>" +
         "<div class='ap-retro-tray'>" +
         "<span class='ap-retro-visit'>Visits <strong id='apRetroCounter'>000001</strong></span>" +

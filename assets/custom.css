@@ -238,6 +238,19 @@ input[type="submit"]:focus {
   max-width: none;
 }
 
+.ap-home-window {
+  border: 0;
+}
+
+.ap-home-window-head {
+  display: none;
+}
+
+.ap-home-window-body {
+  display: grid;
+  gap: 1rem;
+}
+
 .layout-page.podcast .main.container {
   width: min(96vw, 1320px);
   max-width: 1320px;
@@ -914,7 +927,7 @@ body.mode-retro .ap-retro-titlebar-inner {
   min-height: 2.18rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 body.mode-retro .ap-retro-title {
@@ -950,65 +963,6 @@ body.mode-retro .ap-retro-ms-logo i:nth-child(3),
 body.mode-retro .ap-retro-win-flag i:nth-child(3) { background: #00a4ef; }
 body.mode-retro .ap-retro-ms-logo i:nth-child(4),
 body.mode-retro .ap-retro-win-flag i:nth-child(4) { background: #ffb900; }
-
-body.mode-retro .ap-retro-window-controls {
-  display: inline-flex;
-  gap: 0.12rem;
-}
-
-body.mode-retro .ap-retro-win-btn {
-  position: relative;
-  width: 1.08rem;
-  height: 0.98rem;
-  border: 1px solid #cce5ff;
-  border-radius: 2px;
-  background: linear-gradient(180deg, #9ac6f5, #4f85c8);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.42) inset;
-}
-
-body.mode-retro .ap-retro-win-btn--min::before {
-  content: "";
-  position: absolute;
-  left: 0.22rem;
-  right: 0.22rem;
-  bottom: 0.2rem;
-  height: 1px;
-  background: #113d74;
-}
-
-body.mode-retro .ap-retro-win-btn--max::before {
-  content: "";
-  position: absolute;
-  left: 0.25rem;
-  right: 0.25rem;
-  top: 0.2rem;
-  bottom: 0.2rem;
-  border: 1px solid #113d74;
-}
-
-body.mode-retro .ap-retro-win-btn--close {
-  border-color: #f4b3b3;
-  background: linear-gradient(180deg, #f7847e, #cf3a34);
-}
-
-body.mode-retro .ap-retro-win-btn--close::before,
-body.mode-retro .ap-retro-win-btn--close::after {
-  content: "";
-  position: absolute;
-  left: 0.26rem;
-  right: 0.26rem;
-  top: 0.45rem;
-  height: 1px;
-  background: #ffffff;
-}
-
-body.mode-retro .ap-retro-win-btn--close::before {
-  transform: rotate(45deg);
-}
-
-body.mode-retro .ap-retro-win-btn--close::after {
-  transform: rotate(-45deg);
-}
 
 body.mode-retro .ap-retro-desktop-nav {
   position: absolute;
@@ -1052,13 +1006,13 @@ body.mode-retro .ap-retro-desktop-icon.is-current {
 }
 
 body.mode-retro .ap-retro-desktop-glyph {
-  position: relative;
-  width: 2rem;
-  height: 1.82rem;
+  width: 2.1rem;
+  height: 2.1rem;
   display: block;
-  border: 1px solid rgba(255, 255, 255, 0.64);
-  border-radius: 4px;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 1px 1px rgba(0, 29, 67, 0.5));
 }
 
 body.mode-retro .ap-retro-desktop-label {
@@ -1066,194 +1020,31 @@ body.mode-retro .ap-retro-desktop-label {
 }
 
 body.mode-retro .ap-retro-desktop-icon--home .ap-retro-desktop-glyph {
-  border-color: #8ec0f2;
-  background: linear-gradient(180deg, #d6edff 0 44%, #5f9cd8 44% 100%);
-}
-
-body.mode-retro .ap-retro-desktop-icon--home .ap-retro-desktop-glyph::before {
-  content: "";
-  position: absolute;
-  left: 0.28rem;
-  right: 0.28rem;
-  top: 0.24rem;
-  height: 0.72rem;
-  border: 1px solid #2f649d;
-  background: linear-gradient(180deg, #f3fbff, #9cc8ef);
-}
-
-body.mode-retro .ap-retro-desktop-icon--home .ap-retro-desktop-glyph::after {
-  content: "";
-  position: absolute;
-  left: 0.65rem;
-  width: 0.7rem;
-  bottom: 0.18rem;
-  height: 0.16rem;
-  border-radius: 999px;
-  background: #2f619f;
+  background-image: url("/assets/xp-icons/computer.svg");
 }
 
 body.mode-retro .ap-retro-desktop-icon--writing .ap-retro-desktop-glyph {
-  border-color: #a5caee;
-  background: linear-gradient(180deg, #ffffff 0 24%, #83b6e7 24% 100%);
-}
-
-body.mode-retro .ap-retro-desktop-icon--writing .ap-retro-desktop-glyph::before {
-  content: "";
-  position: absolute;
-  left: 0.42rem;
-  right: 0.35rem;
-  top: 0.42rem;
-  bottom: 0.32rem;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.8) 0 1px,
-      rgba(255, 255, 255, 0) 1px 4px
-    );
-}
-
-body.mode-retro .ap-retro-desktop-icon--writing .ap-retro-desktop-glyph::after {
-  content: "";
-  position: absolute;
-  left: 0.23rem;
-  top: 0.22rem;
-  bottom: 0.22rem;
-  width: 0.12rem;
-  background: #d94a4a;
+  background-image: url("/assets/xp-icons/documents.svg");
 }
 
 body.mode-retro .ap-retro-desktop-icon--links .ap-retro-desktop-glyph {
-  border-radius: 999px;
-  border-color: #8cc1f2;
-  background: radial-gradient(circle at 40% 35%, #fbfeff 0 18%, #5ea3e2 50%, #1e5b9f 100%);
-}
-
-body.mode-retro .ap-retro-desktop-icon--links .ap-retro-desktop-glyph::before {
-  content: "";
-  position: absolute;
-  inset: 0.36rem 0.34rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
-}
-
-body.mode-retro .ap-retro-desktop-icon--links .ap-retro-desktop-glyph::after {
-  content: "";
-  position: absolute;
-  inset: 0.22rem 0.54rem;
-  border-left: 1px solid rgba(255, 255, 255, 0.82);
-  border-right: 1px solid rgba(255, 255, 255, 0.82);
+  background-image: url("/assets/xp-icons/internet.svg");
 }
 
 body.mode-retro .ap-retro-desktop-icon--podcast .ap-retro-desktop-glyph {
-  border-radius: 999px;
-  border-color: #8bc2f4;
-  background: radial-gradient(circle at 50% 45%, #ffffff 0 14%, #5ca7ef 38%, #1f5ea7 100%);
-}
-
-body.mode-retro .ap-retro-desktop-icon--podcast .ap-retro-desktop-glyph::before {
-  content: "";
-  position: absolute;
-  left: 0.83rem;
-  top: 0.58rem;
-  width: 0.34rem;
-  height: 0.34rem;
-  border-radius: 999px;
-  background: #f5faff;
-}
-
-body.mode-retro .ap-retro-desktop-icon--podcast .ap-retro-desktop-glyph::after {
-  content: "";
-  position: absolute;
-  left: 0.66rem;
-  top: 0.38rem;
-  width: 0.67rem;
-  height: 0.72rem;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-bottom: 0;
-  border-radius: 999px 999px 0 0;
+  background-image: url("/assets/xp-icons/podcast.svg");
 }
 
 body.mode-retro .ap-retro-desktop-icon--about .ap-retro-desktop-glyph {
-  border-color: #8dbfee;
-  background: linear-gradient(180deg, #dff0ff 0 26%, #70a9dd 26% 100%);
-}
-
-body.mode-retro .ap-retro-desktop-icon--about .ap-retro-desktop-glyph::before {
-  content: "";
-  position: absolute;
-  left: 0.72rem;
-  top: 0.28rem;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 999px;
-  background: #f8fcff;
-}
-
-body.mode-retro .ap-retro-desktop-icon--about .ap-retro-desktop-glyph::after {
-  content: "";
-  position: absolute;
-  left: 0.5rem;
-  right: 0.5rem;
-  bottom: 0.24rem;
-  height: 0.6rem;
-  border-radius: 999px 999px 2px 2px;
-  background: #f4faff;
+  background-image: url("/assets/xp-icons/about.svg");
 }
 
 body.mode-retro .ap-retro-desktop-icon--shop .ap-retro-desktop-glyph {
-  border-color: #97c7ef;
-  background: linear-gradient(180deg, #f7fcff 0 25%, #75ade0 25% 100%);
-}
-
-body.mode-retro .ap-retro-desktop-icon--shop .ap-retro-desktop-glyph::before {
-  content: "";
-  position: absolute;
-  left: 0.44rem;
-  right: 0.44rem;
-  top: 0.48rem;
-  bottom: 0.24rem;
-  border: 1px solid #2c649f;
-  background: linear-gradient(180deg, #f8fdff, #9fc8ed);
-}
-
-body.mode-retro .ap-retro-desktop-icon--shop .ap-retro-desktop-glyph::after {
-  content: "";
-  position: absolute;
-  left: 0.66rem;
-  right: 0.66rem;
-  top: 0.3rem;
-  height: 0.25rem;
-  border: 1px solid #2f689f;
-  border-bottom: 0;
-  border-radius: 8px 8px 0 0;
+  background-image: url("/assets/xp-icons/shop.svg");
 }
 
 body.mode-retro .ap-retro-desktop-icon--newsletter .ap-retro-desktop-glyph {
-  border-color: #95c5ef;
-  background: linear-gradient(180deg, #f8fcff 0 24%, #77afe0 24% 100%);
-}
-
-body.mode-retro .ap-retro-desktop-icon--newsletter .ap-retro-desktop-glyph::before {
-  content: "";
-  position: absolute;
-  left: 0.32rem;
-  right: 0.32rem;
-  top: 0.45rem;
-  bottom: 0.34rem;
-  border: 1px solid #2e649d;
-  background: #edf7ff;
-}
-
-body.mode-retro .ap-retro-desktop-icon--newsletter .ap-retro-desktop-glyph::after {
-  content: "";
-  position: absolute;
-  left: 0.34rem;
-  right: 0.34rem;
-  top: 0.47rem;
-  height: 0.46rem;
-  border-left: 1px solid #2e649d;
-  border-right: 1px solid #2e649d;
-  transform: skewY(-22deg);
+  background-image: url("/assets/xp-icons/newsletter.svg");
 }
 
 body.mode-retro .ap-retro-taskbar {
@@ -1358,9 +1149,9 @@ body.mode-retro .ap-retro-start-link:focus {
 body.mode-retro .ap-retro-start-link-icon {
   width: 1.15rem;
   height: 1.04rem;
-  border: 1px solid #8ab8ea;
-  border-radius: 3px;
-  background: linear-gradient(180deg, #ffffff, #8fbeeb);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 body.mode-retro .ap-retro-start-link-label {
@@ -1369,10 +1160,13 @@ body.mode-retro .ap-retro-start-link-label {
   line-height: 1.2;
 }
 
-body.mode-retro .ap-retro-start-link--podcast .ap-retro-start-link-icon,
-body.mode-retro .ap-retro-start-link--links .ap-retro-start-link-icon {
-  border-radius: 999px;
-}
+body.mode-retro .ap-retro-start-link--home .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/computer.svg"); }
+body.mode-retro .ap-retro-start-link--writing .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/documents.svg"); }
+body.mode-retro .ap-retro-start-link--links .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/internet.svg"); }
+body.mode-retro .ap-retro-start-link--podcast .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/podcast.svg"); }
+body.mode-retro .ap-retro-start-link--about .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/about.svg"); }
+body.mode-retro .ap-retro-start-link--shop .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/shop.svg"); }
+body.mode-retro .ap-retro-start-link--newsletter .ap-retro-start-link-icon { background-image: url("/assets/xp-icons/newsletter.svg"); }
 
 body.mode-retro .typeset {
   font-size: 1.01rem;
@@ -1397,17 +1191,21 @@ body.mode-retro .ap-retro-ql-icon {
   height: 1.2rem;
   border: 1px solid rgba(255, 255, 255, 0.52);
   border-radius: 3px;
+  display: inline-flex;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 90% 90%;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) inset;
 }
 
 body.mode-retro .ap-retro-ql-icon--ie {
-  background:
-    radial-gradient(circle at 34% 36%, #ffffff 0 16%, #4fa7ff 38%, #1f5ca6 100%);
+  background-image: url("/assets/xp-icons/internet.svg");
+  background-color: #d7eafb;
 }
 
 body.mode-retro .ap-retro-ql-icon--mail {
-  background:
-    linear-gradient(180deg, #f8fbff 0 45%, #9ac4ef 45% 100%);
+  background-image: url("/assets/xp-icons/newsletter.svg");
+  background-color: #d7eafb;
 }
 
 body.mode-retro .ap-retro-task-pill {
@@ -1421,6 +1219,7 @@ body.mode-retro .ap-retro-task-pill {
   background: linear-gradient(180deg, #8ebcf0, #5d95d7);
   color: #ffffff;
   font-size: 0.73rem;
+  text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1563,69 +1362,122 @@ body.mode-retro.layout-home {
 }
 
 body.mode-retro.layout-home .main {
-  padding-top: 6.55rem;
+  padding-top: 6.9rem;
 }
 
-body.mode-retro.layout-home .main > .article.article--page.content {
-  position: relative;
-  overflow: hidden;
+body.mode-retro.layout-home .article.article--page.content {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+body.mode-retro.layout-home .ap-home-window {
   border: 1px solid #4a7fbe !important;
-  border-radius: 9px !important;
-  background: linear-gradient(180deg, #fbfdff, #ebf4ff) !important;
-  box-shadow: 0 18px 30px rgba(11, 58, 116, 0.2) !important;
-  padding: 2.9rem 1rem 1.05rem !important;
-  max-height: calc(100vh - 9.7rem);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff, #eef6ff);
+  box-shadow: 0 18px 30px rgba(11, 58, 116, 0.25);
+  overflow: hidden;
+}
+
+body.mode-retro.layout-home .ap-home-window-head {
+  min-height: 1.96rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.2rem 0.35rem 0.2rem 0.78rem;
+  border-bottom: 1px solid #2b67ad;
+  background: linear-gradient(180deg, #3d92ec, #1f5eb3);
+}
+
+body.mode-retro.layout-home .ap-home-window-title {
+  color: #ffffff;
+  font-size: 0.79rem;
+  font-weight: 700;
+  text-shadow: 0 1px 0 #153c72;
+}
+
+body.mode-retro.layout-home .ap-home-window-controls {
+  display: inline-flex;
+  gap: 0.14rem;
+}
+
+body.mode-retro.layout-home .ap-home-window-btn {
+  position: relative;
+  width: 1.1rem;
+  height: 1.02rem;
+  border: 1px solid #cce5ff;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #9ac6f5, #4f85c8);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.42) inset;
+}
+
+body.mode-retro.layout-home .ap-home-window-btn--min::before {
+  content: "";
+  position: absolute;
+  left: 0.24rem;
+  right: 0.24rem;
+  bottom: 0.2rem;
+  height: 1px;
+  background: #113d74;
+}
+
+body.mode-retro.layout-home .ap-home-window-btn--max::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  right: 0.25rem;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  border: 1px solid #113d74;
+}
+
+body.mode-retro.layout-home .ap-home-window-btn--close {
+  border-color: #f3b0b0;
+  background: linear-gradient(180deg, #f58080, #cc3732);
+}
+
+body.mode-retro.layout-home .ap-home-window-btn--close::before,
+body.mode-retro.layout-home .ap-home-window-btn--close::after {
+  content: "";
+  position: absolute;
+  left: 0.28rem;
+  right: 0.28rem;
+  top: 0.45rem;
+  height: 1px;
+  background: #ffffff;
+}
+
+body.mode-retro.layout-home .ap-home-window-btn--close::before {
+  transform: rotate(45deg);
+}
+
+body.mode-retro.layout-home .ap-home-window-btn--close::after {
+  transform: rotate(-45deg);
+}
+
+body.mode-retro.layout-home .ap-home-window-body {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  max-height: calc(100vh - 11rem);
   overflow-y: auto;
   scrollbar-gutter: stable;
   scrollbar-width: auto;
   scrollbar-color: #7ea9d6 #dfedfc;
 }
 
-body.mode-retro.layout-home .main > .article.article--page.content::before {
-  content: "AndrewPla Desktop - Home";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  min-height: 1.92rem;
-  padding: 0.2rem 0.92rem;
-  border-bottom: 1px solid #2f67ab;
-  background: linear-gradient(180deg, #3f91ea, #1f5fb6);
-  color: #ffffff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  text-shadow: 0 1px 0 #124384;
-}
-
-body.mode-retro.layout-home .main > .article.article--page.content::after {
-  content: "\2212 \25A1 \00D7";
-  position: absolute;
-  right: 0.52rem;
-  top: 0.23rem;
-  min-height: 1.12rem;
-  padding: 0.02rem 0.18rem 0.02rem 0.28rem;
-  border: 1px solid #cde4ff;
-  border-radius: 3px;
-  background: linear-gradient(180deg, #9cc6f2, #4f87c9);
-  color: #ffffff;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.15rem;
-  line-height: 1.1rem;
-  text-shadow: 0 1px 0 #1f518e;
-}
-
-body.mode-retro.layout-home .main > .article.article--page.content::-webkit-scrollbar {
+body.mode-retro.layout-home .ap-home-window-body::-webkit-scrollbar {
   width: 14px;
 }
 
-body.mode-retro.layout-home .main > .article.article--page.content::-webkit-scrollbar-track {
+body.mode-retro.layout-home .ap-home-window-body::-webkit-scrollbar-track {
   border-left: 1px solid #9fc1e6;
   background: linear-gradient(180deg, #eef6ff, #d6e7f9);
 }
 
-body.mode-retro.layout-home .main > .article.article--page.content::-webkit-scrollbar-thumb {
+body.mode-retro.layout-home .ap-home-window-body::-webkit-scrollbar-thumb {
   border: 1px solid #5f8fc3;
   border-radius: 8px;
   background: linear-gradient(180deg, #b8d3f0, #77a6d4);
@@ -1737,8 +1589,8 @@ body.mode-retro.layout-home .ap-posts li {
     padding-top: 7.25rem;
   }
 
-  body.mode-retro.layout-home .main > .article.article--page.content {
-    max-height: calc(100vh - 10.55rem);
+  body.mode-retro.layout-home .ap-home-window-body {
+    max-height: calc(100vh - 12.25rem);
   }
 }
 
@@ -1751,8 +1603,8 @@ body.mode-retro.layout-home .ap-posts li {
     padding-top: 8.58rem;
   }
 
-  body.mode-retro.layout-home .main > .article.article--page.content {
-    max-height: calc(100vh - 12.05rem);
+  body.mode-retro.layout-home .ap-home-window-body {
+    max-height: calc(100vh - 14.8rem);
   }
 
   body.mode-retro.layout-home .ap-quick-links {
