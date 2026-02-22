@@ -11,15 +11,54 @@
     var retroStartMenu = null;
     var retroStartHandlers = [];
     var desktopShortcuts = [
-      {% for item in site.navigation_header %}
-        {% if item.url contains '://' %}
-          {% assign desktop_url = item.url %}
-        {% else %}
-          {% assign desktop_url = item.url | relative_url %}
-        {% endif %}
-        { title: {{ item.title | jsonify }}, url: {{ desktop_url | jsonify }}, slug: {{ item.title | slugify | jsonify }} }{% unless forloop.last %},{% endunless %}
-      {% endfor %},
-      { title: "Newsletter", url: {{ "/links/#updates" | relative_url | jsonify }}, slug: "newsletter" }
+      {
+        desktopTitle: "My Computer",
+        startTitle: "Home",
+        url: {{ "/" | relative_url | jsonify }},
+        slug: "home"
+      },
+      {
+        desktopTitle: "My Documents",
+        startTitle: "Writing",
+        url: {{ "/writing/" | relative_url | jsonify }},
+        slug: "writing"
+      },
+      {
+        desktopTitle: "Internet Explorer",
+        startTitle: "Links",
+        url: {{ "/links/" | relative_url | jsonify }},
+        slug: "links"
+      },
+      {
+        desktopTitle: "Windows Media Player",
+        startTitle: "Podcast",
+        url: {{ "/podcast/" | relative_url | jsonify }},
+        slug: "podcast"
+      },
+      {
+        desktopTitle: "Control Panel",
+        startTitle: "About",
+        url: {{ "/about/" | relative_url | jsonify }},
+        slug: "about"
+      },
+      {
+        desktopTitle: "My Store",
+        startTitle: "Shop",
+        url: {{ "/shop/" | relative_url | jsonify }},
+        slug: "shop"
+      },
+      {
+        desktopTitle: "Outlook Express",
+        startTitle: "Newsletter",
+        url: {{ "/links/#updates" | relative_url | jsonify }},
+        slug: "newsletter"
+      },
+      {
+        desktopTitle: "Help and Support",
+        startTitle: "Contact",
+        url: {{ "/contact/" | relative_url | jsonify }},
+        slug: "contact"
+      }
     ];
 
     try {
@@ -64,7 +103,7 @@
             "'>" +
             "<span class='ap-retro-desktop-glyph' aria-hidden='true'></span>" +
             "<span class='ap-retro-desktop-label'>" +
-            escapeHtml(item.title) +
+            escapeHtml(item.desktopTitle) +
             "</span>" +
             "</a>"
           );
@@ -86,7 +125,7 @@
               "'>" +
               "<span class='ap-retro-start-link-icon' aria-hidden='true'></span>" +
               "<span class='ap-retro-start-link-label'>" +
-              escapeHtml(item.title) +
+              escapeHtml(item.startTitle) +
               "</span>" +
               "</a>"
             );
@@ -171,6 +210,10 @@
         "<a class='ap-retro-task-pill ap-retro-task-pill--active' href='" + window.location.pathname + "'>" + escapeHtml(windowLabel) + "</a>" +
         "</div>" +
         "<div class='ap-retro-tray'>" +
+        "<span class='ap-retro-tray-icons' aria-hidden='true'>" +
+        "<span class='ap-retro-tray-icon ap-retro-tray-icon--net'></span>" +
+        "<span class='ap-retro-tray-icon ap-retro-tray-icon--audio'></span>" +
+        "</span>" +
         "<span class='ap-retro-visit'>Visits <strong id='apRetroCounter'>000001</strong></span>" +
         "<span class='ap-retro-clock' id='apRetroClock'>--:--</span>" +
         "</div>" +
