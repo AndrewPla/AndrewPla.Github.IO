@@ -30,18 +30,28 @@ permalink: /
   </p>
 </section>
 
-<section class="ap-latest">
+<section class="ap-latest ap-landing-links">
   <div class="ap-section-head">
-    <h2>Latest writing</h2>
-    <a href="/writing/">View all posts →</a>
+    <h2>Where to next</h2>
+    <a href="/links/">Open all links →</a>
   </div>
 
-  <ul class="ap-posts">
-  {% for post in site.posts limit: 4 %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %Y" }}</time>
-    </li>
-  {% endfor %}
-  </ul>
+  <div class="ap-landing-grid" role="list">
+    <a class="ap-landing-card" href="/podcast/" role="listitem">
+      <strong>Podcast</strong>
+      <small>Listen, watch, and browse episode highlights.</small>
+    </a>
+    <a class="ap-landing-card" href="/writing/" role="listitem">
+      <strong>Writing</strong>
+      <small>Browse practical automation posts and tutorials.</small>
+    </a>
+    <a class="ap-landing-card" href="/links/" role="listitem">
+      <strong>Links</strong>
+      <small>Social profiles, newsletter updates, and all channels.</small>
+    </a>
+    <a class="ap-landing-card" href="/contact/" role="listitem">
+      <strong>Contact</strong>
+      <small>Reach out for collaboration, speaking, or questions.</small>
+    </a>
+  </div>
 </section>

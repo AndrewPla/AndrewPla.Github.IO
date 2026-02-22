@@ -7,6 +7,9 @@
     var retroCounter = null;
     var retroClock = null;
     var retroClockTimer = 0;
+    var retroStartBtn = null;
+    var retroStartMenu = null;
+    var retroStartHandlers = [];
     var desktopShortcuts = [
       {% for item in site.navigation_header %}
         {% if item.url contains '://' %}
@@ -67,6 +70,30 @@
           );
         })
         .join("");
+    }
+
+    function renderStartMenu() {
+      return (
+        "<div class='ap-retro-start-menu-head'>Programs</div>" +
+        "<nav class='ap-retro-start-menu-nav'>" +
+        desktopShortcuts
+          .map(function (item) {
+            return (
+              "<a class='ap-retro-start-link ap-retro-start-link--" +
+              item.slug +
+              "' href='" +
+              item.url +
+              "'>" +
+              "<span class='ap-retro-start-link-icon' aria-hidden='true'></span>" +
+              "<span class='ap-retro-start-link-label'>" +
+              escapeHtml(item.title) +
+              "</span>" +
+              "</a>"
+            );
+          })
+          .join("") +
+        "</nav>"
+      );
     }
 
     function apply(nextMode) {
@@ -131,10 +158,10 @@
         "<div class='ap-retro-taskbar'>" +
         "<div class='ap-retro-taskbar-inner'>" +
         "<div class='ap-retro-task-left'>" +
-        "<span class='ap-retro-start'>" +
+        "<button type='button' class='ap-retro-start' id='apRetroStartBtn' aria-haspopup='menu' aria-expanded='false'>" +
         "<span class='ap-retro-win-flag' aria-hidden='true'><i></i><i></i><i></i><i></i></span>" +
         "<span class='ap-retro-start-label'>start</span>" +
-        "</span>" +
+        "</button>" +
         "<span class='ap-retro-quicklaunch' aria-hidden='true'>" +
         "<span class='ap-retro-ql-icon ap-retro-ql-icon--ie'></span>" +
         "<span class='ap-retro-ql-icon ap-retro-ql-icon--mail'></span>" +
@@ -146,13 +173,60 @@
         "<span class='ap-retro-clock' id='apRetroClock'>--:--</span>" +
         "</div>" +
         "</div>" +
+        "<div class='ap-retro-start-menu' id='apRetroStartMenu' hidden>" +
+        renderStartMenu() +
+        "</div>" +
         "</div>";
       document.body.appendChild(retroChrome);
       retroCounter = document.getElementById("apRetroCounter");
       retroClock = document.getElementById("apRetroClock");
+      retroStartBtn = document.getElementById("apRetroStartBtn");
+      retroStartMenu = document.getElementById("apRetroStartMenu");
+      initStartMenu();
       incrementCounter();
       renderClock();
       retroClockTimer = window.setInterval(renderClock, 30000);
+    }
+
+    function initStartMenu() {
+      if (!retroStartBtn || !retroStartMenu) return;
+
+      function closeStartMenu() {
+        if (!retroStartMenu) return;
+        retroStartMenu.hidden = true;
+        if (retroStartBtn) {
+          retroStartBtn.setAttribute("aria-expanded", "false");
+        }
+      }
+
+      function toggleStartMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var nextIsOpen = retroStartMenu.hidden;
+        retroStartMenu.hidden = !nextIsOpen;
+        retroStartBtn.setAttribute("aria-expanded", nextIsOpen ? "true" : "false");
+      }
+
+      function handleDocClick(event) {
+        if (!retroStartMenu || retroStartMenu.hidden) return;
+        if (retroStartMenu.contains(event.target) || event.target === retroStartBtn) return;
+        closeStartMenu();
+      }
+
+      function handleEscape(event) {
+        if (event.key === "Escape") {
+          closeStartMenu();
+        }
+      }
+
+      retroStartBtn.addEventListener("click", toggleStartMenu);
+      document.addEventListener("click", handleDocClick);
+      document.addEventListener("keydown", handleEscape);
+      retroStartHandlers = [
+        { target: retroStartBtn, type: "click", handler: toggleStartMenu },
+        { target: document, type: "click", handler: handleDocClick },
+        { target: document, type: "keydown", handler: handleEscape }
+      ];
     }
 
     function incrementCounter() {
@@ -185,11 +259,19 @@
         window.clearInterval(retroClockTimer);
         retroClockTimer = 0;
       }
+      if (retroStartHandlers.length) {
+        retroStartHandlers.forEach(function (entry) {
+          entry.target.removeEventListener(entry.type, entry.handler);
+        });
+        retroStartHandlers = [];
+      }
       if (retroChrome) {
         retroChrome.remove();
         retroChrome = null;
         retroCounter = null;
         retroClock = null;
+        retroStartBtn = null;
+        retroStartMenu = null;
       }
     }
 
