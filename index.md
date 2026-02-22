@@ -6,7 +6,7 @@ permalink: /
 
 <section class="ap-home-window">
   <header class="ap-home-window-head" aria-hidden="true">
-    <span class="ap-home-window-title">AndrewPla Desktop - Home</span>
+    <span class="ap-home-window-title">Michaelsoft Binbows XP - AndrewPla Home</span>
     <span class="ap-home-window-controls">
       <span class="ap-home-window-btn ap-home-window-btn--min"></span>
       <span class="ap-home-window-btn ap-home-window-btn--max"></span>
