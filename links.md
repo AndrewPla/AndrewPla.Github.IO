@@ -28,7 +28,7 @@ permalink: /links/
     <a class="ap-priority-card ap-priority-card--linkedin" href="https://www.linkedin.com/in/andrewplatech/" target="_blank" rel="noopener noreferrer">
       <span class="ap-priority-icon">{% include icon.html id="linkedin" title="LinkedIn" width="22" height="22" %}</span>
       <strong>LinkedIn</strong>
-      <small>Main place for updates, practical posts, and new content drops.</small>
+      <small>Main place for updates on tech, community, speaking, and real-world lessons.</small>
     </a>
 
     <a class="ap-priority-card ap-priority-card--instagram" href="https://www.instagram.com/andrewplatech/" target="_blank" rel="noopener noreferrer">
@@ -53,7 +53,7 @@ permalink: /links/
             <span class="ap-link-icon">{% include icon.html id="linkedin" title="LinkedIn" width="18" height="18" %}</span>
             <span class="ap-link-copy">
               <strong>LinkedIn</strong>
-              <small>Main place for updates and professional posts</small>
+              <small>Updates across technology, community, speaking, and career growth</small>
             </span>
             <span class="ap-link-arrow">-></span>
           </a>

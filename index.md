@@ -16,12 +16,12 @@ permalink: /
 
   <div class="ap-home-window-body">
     <section class="ap-hero">
-      <p class="ap-eyebrow">Practical IT content, no fluff</p>
-      <h1>Subscribe for practical IT ideas you can apply immediately.</h1>
-      <p class="ap-lead">I am Andrew Pla, a sysadmin helping sysadmins. I share real-world tips on PowerShell, automation, and leveling up your IT career.</p>
+      <p class="ap-eyebrow">Tech, community, and growth</p>
+      <h1>Subscribe for practical ideas you can use right away.</h1>
+      <p class="ap-lead">I am Andrew Pla, an international speaker and Microsoft MVP. I share PowerShell and automation, community updates, and practical advice for leveling up your career.</p>
 
       <div class="ap-subscribe">
-        <p class="ap-subscribe-copy">Get occasional updates when I publish something useful. Newsletter is launching soon, and updates currently land via LinkedIn.</p>
+        <p class="ap-subscribe-copy">Get occasional updates on technical content, community projects, and lessons learned from the field. Newsletter is launching soon, and updates currently land via LinkedIn.</p>
         <a class="button ap-primary-cta" href="/links/#updates">Join the newsletter</a>
         <p class="ap-subscribe-note">No spam. Just useful updates.</p>
       </div>

@@ -900,18 +900,38 @@ body.mode-retro .ap-retro-desktop-icon {
 }
 
 body.mode-retro .ap-mode-toggle {
-  position: fixed;
+  position: static;
   top: auto;
-  right: 0.55rem;
-  bottom: 2.55rem;
-  z-index: 9999;
+  right: auto;
+  bottom: auto;
+  z-index: auto;
   float: none;
   margin-top: 0;
-  border: 1px solid #1f5ca2;
+  min-height: 1.55rem;
+  padding: 0.12rem 0.3rem;
+  border: 1px solid #1e5ca5;
   border-radius: 7px;
-  background: linear-gradient(180deg, #f8fcff, #b7d8fa);
+  background: linear-gradient(180deg, #f6fbff, #afd2f7);
   color: #0a356f;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.86) inset, 0 5px 14px rgba(0, 35, 79, 0.3);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+body.mode-retro .ap-mode-toggle__label {
+  font-size: 0.56rem;
+}
+
+body.mode-retro .ap-mode-toggle__track {
+  width: 2rem;
+  height: 1rem;
+}
+
+body.mode-retro .ap-mode-toggle__thumb {
+  width: 0.76rem;
+  height: 0.76rem;
+}
+
+body.mode-retro .ap-mode-toggle.is-retro .ap-mode-toggle__thumb {
+  transform: translateX(0.92rem);
 }
 
 body.mode-retro .ap-mode-toggle__track {
@@ -1125,6 +1145,14 @@ body.mode-retro .ap-retro-task-left {
   min-width: 0;
 }
 
+body.mode-retro .ap-retro-mode-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 0 0.14rem;
+}
+
 body.mode-retro .ap-retro-start {
   appearance: none;
   pointer-events: auto;
@@ -1273,6 +1301,9 @@ body.mode-retro .ap-retro-music-head {
   padding: 0.14rem 0.2rem 0.14rem 0.62rem;
   border-bottom: 1px solid #2a5da2;
   background: linear-gradient(180deg, #3c8ce8, #1f5eb2);
+  cursor: move;
+  cursor: url("/assets/xp-hand.svg") 3 1, move !important;
+  user-select: none;
 }
 
 body.mode-retro .ap-retro-music-title {
@@ -1319,6 +1350,42 @@ body.mode-retro .ap-retro-music-stations {
   gap: 0.3rem;
 }
 
+body.mode-retro .ap-retro-music-controls {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+body.mode-retro .ap-retro-music-volume-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #165089 !important;
+}
+
+body.mode-retro .ap-retro-music-volume {
+  width: 100%;
+  margin: 0;
+  accent-color: #2f73c9;
+}
+
+body.mode-retro .ap-retro-music-stop {
+  min-height: 1.46rem;
+  margin: 0 !important;
+  padding: 0.1rem 0.48rem !important;
+  border: 1px solid #2f6fbc !important;
+  border-radius: 4px !important;
+  background: linear-gradient(180deg, #ffffff, #cfe5fb) !important;
+  color: #104281 !important;
+  font-size: 0.66rem !important;
+  font-weight: 700;
+}
+
+body.mode-retro .ap-retro-music-stop:hover,
+body.mode-retro .ap-retro-music-stop:focus {
+  background: linear-gradient(180deg, #ffffff, #bbdbfa) !important;
+}
+
 body.mode-retro .ap-retro-music-station {
   appearance: none;
   min-height: 1.48rem;
@@ -1348,6 +1415,11 @@ body.mode-retro .ap-retro-music-station.is-active {
 body.mode-retro .ap-retro-music audio {
   width: 100%;
   min-height: 2rem;
+}
+
+body.mode-retro.ap-retro-music-dragging,
+body.mode-retro.ap-retro-music-dragging * {
+  cursor: url("/assets/xp-hand.svg") 3 1, move !important;
 }
 
 body.mode-retro .typeset {
@@ -1581,7 +1653,7 @@ body.mode-retro .typeset li a:not(.button) {
   background-image: none;
 }
 
-body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station),
+body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station):not(.ap-retro-music-stop),
 body.mode-retro .button:not(.button--nav),
 body.mode-retro input[type="submit"] {
   border: 1px solid #2b5fa5 !important;
@@ -1594,8 +1666,8 @@ body.mode-retro input[type="submit"] {
   letter-spacing: 0;
 }
 
-body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station):hover,
-body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station):focus,
+body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station):not(.ap-retro-music-stop):hover,
+body.mode-retro button:not(.button--nav):not(.ap-retro-start):not(.ap-retro-music-close):not(.ap-retro-music-station):not(.ap-retro-music-stop):focus,
 body.mode-retro .button:not(.button--nav):hover,
 body.mode-retro .button:not(.button--nav):focus,
 body.mode-retro input[type="submit"]:hover,

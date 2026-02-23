@@ -13,6 +13,8 @@
     var retroMusicAudio = null;
     var retroMusicToggle = null;
     var retroMusicClose = null;
+    var retroMusicVolume = null;
+    var retroMusicStop = null;
     var retroMusicStationId = "groovesalad";
     var retroWindowDragCleanup = null;
     var retroStartHandlers = [];
@@ -207,7 +209,12 @@
     function mountToggle(nextMode) {
       if (!toggleBtn) return;
       if (nextMode === "retro") {
-        if (toggleBtn.parentNode !== document.body) {
+        var retroSlot = document.querySelector(".ap-retro-mode-slot");
+        if (retroSlot) {
+          if (toggleBtn.parentNode !== retroSlot) {
+            retroSlot.appendChild(toggleBtn);
+          }
+        } else if (toggleBtn.parentNode !== document.body) {
           document.body.appendChild(toggleBtn);
         }
         return;
@@ -253,6 +260,7 @@
         "</span>" +
         "<a class='ap-retro-task-pill ap-retro-task-pill--active' href='" + window.location.pathname + "'>" + escapeHtml(windowLabel) + "</a>" +
         "</div>" +
+        "<div class='ap-retro-mode-slot' id='apRetroModeSlot'></div>" +
         "<div class='ap-retro-tray'>" +
         "<span class='ap-retro-tray-icons' aria-hidden='true'>" +
         "<span class='ap-retro-tray-icon ap-retro-tray-icon--net'></span>" +
@@ -275,6 +283,11 @@
         "<div class='ap-retro-music-stations'>" +
         renderMusicStations() +
         "</div>" +
+        "<div class='ap-retro-music-controls'>" +
+        "<label class='ap-retro-music-volume-label' for='apRetroMusicVolume'>Volume</label>" +
+        "<input id='apRetroMusicVolume' class='ap-retro-music-volume' type='range' min='0' max='100' value='55'>" +
+        "<button type='button' class='ap-retro-music-stop' id='apRetroMusicStop'>Stop</button>" +
+        "</div>" +
         "<audio id='apRetroMusicAudio' controls preload='none'>" +
         "<source src='" + retroMusicStations[0].stream + "' type='audio/mpeg'>" +
         "</audio>" +
@@ -290,6 +303,9 @@
       retroMusicAudio = document.getElementById("apRetroMusicAudio");
       retroMusicToggle = document.getElementById("apRetroMusicToggle");
       retroMusicClose = document.getElementById("apRetroMusicClose");
+      retroMusicVolume = document.getElementById("apRetroMusicVolume");
+      retroMusicStop = document.getElementById("apRetroMusicStop");
+      mountToggle("retro");
       initStartMenu();
       initMusicPanel();
       incrementCounter();
@@ -402,6 +418,15 @@
       retroMusicPanel.hidden = true;
     }
 
+    function stopRetroMusic() {
+      if (!retroMusicAudio) return;
+      try {
+        retroMusicAudio.pause();
+        retroMusicAudio.currentTime = 0;
+      } catch (e) {}
+      retroMusicAudio.load();
+    }
+
     function openMusicPanel() {
       if (!retroMusicPanel) return;
       retroMusicPanel.hidden = false;
@@ -410,6 +435,10 @@
 
     function initMusicPanel() {
       if (!retroMusicPanel || !retroMusicAudio || !retroMusicToggle) return;
+
+      if (retroMusicVolume) {
+        retroMusicAudio.volume = (Number(retroMusicVolume.value) || 55) / 100;
+      }
 
       function toggleMusicPanel(event) {
         event.preventDefault();
@@ -436,6 +465,11 @@
         setMusicStation(stationButton.dataset.stationId, true);
       }
 
+      function handleVolumeInput() {
+        if (!retroMusicVolume || !retroMusicAudio) return;
+        retroMusicAudio.volume = (Number(retroMusicVolume.value) || 55) / 100;
+      }
+
       retroMusicToggle.addEventListener("click", toggleMusicPanel);
       retroMusicPanel.addEventListener("click", handleStationClick);
       retroStartHandlers.push(
@@ -443,14 +477,88 @@
         { target: retroMusicPanel, type: "click", handler: handleStationClick }
       );
 
+      if (retroMusicVolume) {
+        retroMusicVolume.addEventListener("input", handleVolumeInput);
+        retroStartHandlers.push({ target: retroMusicVolume, type: "input", handler: handleVolumeInput });
+      }
+
+      if (retroMusicStop) {
+        var stopHandler = function (event) {
+          event.preventDefault();
+          stopRetroMusic();
+        };
+        retroMusicStop.addEventListener("click", stopHandler);
+        retroStartHandlers.push({ target: retroMusicStop, type: "click", handler: stopHandler });
+      }
+
       if (retroMusicClose) {
         var closeHandler = function (event) {
           event.preventDefault();
+          stopRetroMusic();
           closeMusicPanel();
         };
         retroMusicClose.addEventListener("click", closeHandler);
         retroStartHandlers.push({ target: retroMusicClose, type: "click", handler: closeHandler });
       }
+
+      var musicDragStartX = 0;
+      var musicDragStartY = 0;
+      var musicDragBaseX = 0;
+      var musicDragBaseY = 0;
+      var isMusicDragging = false;
+      var musicDragHandle = retroMusicPanel.querySelector(".ap-retro-music-head");
+
+      function readMusicPosition() {
+        return {
+          x: Number(retroMusicPanel.dataset.dragX || "0"),
+          y: Number(retroMusicPanel.dataset.dragY || "0")
+        };
+      }
+
+      function applyMusicPosition(nextX, nextY) {
+        retroMusicPanel.dataset.dragX = String(nextX);
+        retroMusicPanel.dataset.dragY = String(nextY);
+        retroMusicPanel.style.transform = "translate(" + nextX + "px, " + nextY + "px)";
+      }
+
+      function onMusicMove(event) {
+        if (!isMusicDragging) return;
+        var nextX = musicDragBaseX + (event.clientX - musicDragStartX);
+        var nextY = musicDragBaseY + (event.clientY - musicDragStartY);
+        applyMusicPosition(nextX, nextY);
+      }
+
+      function onMusicUp() {
+        if (!isMusicDragging) return;
+        isMusicDragging = false;
+        document.body.classList.remove("ap-retro-music-dragging");
+        window.removeEventListener("mousemove", onMusicMove);
+        window.removeEventListener("mouseup", onMusicUp);
+      }
+
+      function onMusicDown(event) {
+        if (event.button !== 0) return;
+        if (event.target && event.target.closest && event.target.closest(".ap-retro-music-close")) return;
+        event.preventDefault();
+        var position = readMusicPosition();
+        musicDragStartX = event.clientX;
+        musicDragStartY = event.clientY;
+        musicDragBaseX = position.x;
+        musicDragBaseY = position.y;
+        isMusicDragging = true;
+        document.body.classList.add("ap-retro-music-dragging");
+        window.addEventListener("mousemove", onMusicMove);
+        window.addEventListener("mouseup", onMusicUp);
+      }
+
+      if (musicDragHandle) {
+        musicDragHandle.addEventListener("mousedown", onMusicDown);
+        retroStartHandlers.push({ target: musicDragHandle, type: "mousedown", handler: onMusicDown });
+      }
+      retroStartHandlers.push(
+        { target: window, type: "mousemove", handler: onMusicMove },
+        { target: window, type: "mouseup", handler: onMusicUp }
+      );
     }
 
     function findRetroWindowElement() {
@@ -607,6 +715,8 @@
         retroMusicAudio = null;
         retroMusicToggle = null;
         retroMusicClose = null;
+        retroMusicVolume = null;
+        retroMusicStop = null;
       }
     }
 
