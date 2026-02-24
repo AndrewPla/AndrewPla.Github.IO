@@ -2,6 +2,9 @@
 layout: page
 title: Links
 permalink: /links/
+feature_text: |
+  <h1>Links</h1>
+  <p>A single page with my most useful links -- socials, projects, community spaces, content, and ways to stay connected.</p>
 ---
 
 <link rel="stylesheet" href="{{ '/assets/links.css?v=20260222b' | relative_url }}">

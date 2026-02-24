@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 feature_text: |
   <h1>About</h1>
-  <p>International speaker, Microsoft MVP, and community-focused sysadmin.</p>
+  <p>Who I am, what I do, and why I care so much about helping people grow in tech and feel at home in the community.</p>
 ---
 
 Hi, I'm Andrew Pla.

@@ -4,7 +4,7 @@ title: Shop
 permalink: /shop/
 feature_text: |
   <h1>Shop</h1>
-  <p>Stickers, small gear, and fun community stuff. Yes, it will be slightly overpriced on purpose.</p>
+  <p>Merch, fun ideas, and community-inspired things I'm experimenting with (because tech should be useful and fun).</p>
 ---
 
 <a class="button" href="https://your-storefront-url-here">Visit the shop</a>

@@ -16,14 +16,14 @@ permalink: /
 
   <div class="ap-home-window-body">
     <section class="ap-hero">
-      <p class="ap-eyebrow">Tech, community, and growth</p>
-      <h1>Subscribe for practical ideas you can use right away.</h1>
-      <p class="ap-lead">I am Andrew Pla, an international speaker and Microsoft MVP. I share PowerShell and automation, community updates, and practical advice for leveling up your career.</p>
+      <p class="ap-eyebrow">Tech. Community. Growth. That's the work.</p>
+      <h1>Stay in the Loop</h1>
+      <p class="ap-lead">I'm Andrew Pla -- a Microsoft MVP, speaker, and community leader focused on PowerShell, automation, security, and helping people build meaningful careers in tech.</p>
 
       <div class="ap-subscribe">
-        <p class="ap-subscribe-copy">Get occasional updates on technical content, community projects, and lessons learned from the field. Newsletter is launching soon, and updates currently land via LinkedIn.</p>
-        <a class="button ap-primary-cta" href="/links/#updates">Join the newsletter</a>
-        <p class="ap-subscribe-note">No spam. Just useful updates.</p>
+        <p class="ap-subscribe-copy">Subscribe for occasional updates, community projects, and practical resources worth your time.</p>
+        <a class="button ap-primary-cta" href="/links/#updates">Stay in the Loop</a>
+        <p class="ap-subscribe-note">No spam. No filler. Just the good stuff.</p>
       </div>
 
       <p class="ap-quick-links">
@@ -48,21 +48,29 @@ permalink: /
       </div>
 
       <div class="ap-landing-grid" role="list">
-        <a class="ap-landing-card" href="/podcast/" role="listitem">
-          <strong>Podcast</strong>
-          <small>Listen, watch, and browse episode highlights.</small>
-        </a>
         <a class="ap-landing-card" href="/writing/" role="listitem">
-          <strong>Writing</strong>
-          <small>Browse practical automation posts and tutorials.</small>
+          <strong>Blog</strong>
+          <small>Thoughts, lessons, and practical write-ups on PowerShell, automation, career growth, and the occasional rabbit hole worth sharing.</small>
+        </a>
+        <a class="ap-landing-card" href="/podcast/" role="listitem">
+          <strong>PowerShell Podcast</strong>
+          <small>Conversations with people across the PowerShell and IT community -- from technical deep dives to career stories and lessons learned.</small>
         </a>
         <a class="ap-landing-card" href="/links/" role="listitem">
           <strong>Links</strong>
-          <small>Social profiles, newsletter updates, and all channels.</small>
+          <small>A single page with my most useful links -- socials, projects, community spaces, content, and ways to stay connected.</small>
+        </a>
+        <a class="ap-landing-card" href="/about/" role="listitem">
+          <strong>About</strong>
+          <small>Who I am, what I do, and why I care so much about helping people grow in tech and feel at home in the community.</small>
+        </a>
+        <a class="ap-landing-card" href="/shop/" role="listitem">
+          <strong>Shop</strong>
+          <small>Merch, fun ideas, and community-inspired things I'm experimenting with (because tech should be useful and fun).</small>
         </a>
         <a class="ap-landing-card" href="/contact/" role="listitem">
           <strong>Contact</strong>
-          <small>Reach out for collaboration, speaking, or questions.</small>
+          <small>Reach out for speaking, collaboration, podcast invites, community opportunities, or just to say hey.</small>
         </a>
       </div>
     </section>

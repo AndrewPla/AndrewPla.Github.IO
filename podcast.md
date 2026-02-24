@@ -3,8 +3,8 @@ layout: page
 title: Podcast
 permalink: /podcast/
 feature_text: |
-  <h1>Podcast Pointer</h1>
-  <p>Start here for the player, PDQ hub, YouTube playlist, and my favorite episodes.</p>
+  <h1>PowerShell Podcast</h1>
+  <p>Conversations with people across the PowerShell and IT community -- from technical deep dives to career stories and lessons learned.</p>
 ---
 
 <section class="ap-podcast-page ap-podcast-page--pointer">
@@ -15,6 +15,7 @@ feature_text: |
     <p class="ap-podcast-actions">
       <a class="button ap-podcast-btn" href="https://www.pdq.com/resources/the-powershell-podcast/">PDQ Podcast Hub</a>
       <a class="button ap-podcast-btn" href="https://www.youtube.com/playlist?list=PL1mL90yFExsjUS8DRkzfLUcHds7vlxqgM" target="_blank" rel="noopener noreferrer">PDQ YouTube Playlist</a>
+      <a class="button ap-podcast-btn" href="https://www.powershellgallery.com/packages/PSPodcast" target="_blank" rel="noopener noreferrer">PSPodcast Module (Jeff Hicks)</a>
       <a class="button ap-podcast-btn ap-podcast-btn--ghost" href="https://powershellpodcast.podbean.com/">Podbean Archive</a>
       <a class="button ap-podcast-btn ap-podcast-btn--ghost" href="https://feed.podbean.com/powershellpodcast/feed.xml">RSS feed</a>
     </p>
@@ -24,7 +25,7 @@ feature_text: |
     <header class="ap-podcast-block-head">
       <p class="ap-podcast-block-kicker">Where To Start</p>
       <h3>Pick your preferred way to follow the show</h3>
-      <p>These are the three fastest ways to keep up with new episodes and revisit older ones.</p>
+      <p>These are the fastest ways to keep up with new episodes, revisit older ones, and work with the podcast from PowerShell.</p>
     </header>
     <div class="ap-podcast-link-grid">
       <a class="ap-podcast-link-card" href="https://www.pdq.com/resources/the-powershell-podcast/">
@@ -46,6 +47,13 @@ feature_text: |
         <h4>Podbean Episode Archive</h4>
         <p>Browse the complete audio archive and episode notes directly from Podbean.</p>
         <p class="ap-podcast-arrow">Open Podbean -></p>
+      </a>
+
+      <a class="ap-podcast-link-card" href="https://www.powershellgallery.com/packages/PSPodcast" target="_blank" rel="noopener noreferrer">
+        <p class="ap-podcast-pill">Module</p>
+        <h4>PSPodcast Module by Jeff Hicks</h4>
+        <p>Use Jeff Hicks' module to explore podcast content directly from PowerShell.</p>
+        <p class="ap-podcast-arrow">Open PowerShell Gallery -></p>
       </a>
     </div>
   </section>
