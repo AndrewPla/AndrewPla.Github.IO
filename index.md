@@ -26,19 +26,6 @@ permalink: /
         <p class="ap-subscribe-note">No spam. Unsubscribe whenever.</p>
       </div>
 
-      <p class="ap-quick-links">
-        <a href="/writing/">Read the blog</a>
-        <span aria-hidden="true">/</span>
-        <a href="/podcast/">Listen to the podcast</a>
-        <span aria-hidden="true">/</span>
-        <a href="/links/">All links</a>
-        <span aria-hidden="true">/</span>
-        <a href="/about/">About Andrew</a>
-        <span aria-hidden="true">/</span>
-        <a href="/shop/">Shop</a>
-        <span aria-hidden="true">/</span>
-        <a href="/contact/">Contact Andrew</a>
-      </p>
     </section>
 
     <section class="ap-latest ap-landing-links">
