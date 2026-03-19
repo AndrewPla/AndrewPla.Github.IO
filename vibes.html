@@ -1,0 +1,120 @@
+---
+layout: vibes
+title: Shell Room
+permalink: /shell-room/
+indexing: false
+sitemap: false
+---
+
+<link rel="stylesheet" href="{{ '/assets/vibes.css?v=20260222b' | relative_url }}">
+
+<div class="shell-root" id="shellRoot">
+  <canvas id="shellCanvas" aria-hidden="true"></canvas>
+  <div class="shell-noise" aria-hidden="true"></div>
+
+  <a class="shell-exit" href="{{ '/' | relative_url }}">Return to Surface</a>
+
+  <main class="shell-stage">
+    <section class="shell-window">
+      <header class="shell-titlebar">
+        <span>PowerShell // Secret Study Room</span>
+        <span class="shell-dots" aria-hidden="true">● ● ●</span>
+      </header>
+
+      <div class="shell-body">
+        <p class="shell-kicker">Hidden page for people who build things</p>
+        <h1>Welcome to Shell Room</h1>
+        <p class="shell-copy">
+          If you found this page, you are my kind of person.
+          This room is for focus, learning PowerShell, and staying connected.
+          Want to say hi? <a href="{{ '/contact/' | relative_url }}">Message Andrew</a>.
+        </p>
+
+        <section class="shell-panel" aria-label="Pomodoro">
+          <h2>Pomodoro + Task</h2>
+
+          <div class="shell-task-row">
+            <label for="taskInput">Task</label>
+            <input id="taskInput" type="text" maxlength="120" placeholder="What are you working on? (example: Write a function with tests)">
+          </div>
+
+          <div class="shell-config">
+            <div>
+              <label for="focusMinutes">Focus (min)</label>
+              <input id="focusMinutes" type="number" min="1" max="120" value="25">
+            </div>
+            <div>
+              <label for="breakMinutes">Break (min)</label>
+              <input id="breakMinutes" type="number" min="1" max="60" value="5">
+            </div>
+            <div class="shell-check">
+              <input id="autoStartBreak" type="checkbox" checked>
+              <label for="autoStartBreak">Auto-start next session</label>
+            </div>
+          </div>
+
+          <div class="shell-timer" id="timerDisplay">25:00</div>
+          <p class="shell-status" id="timerStatus">Focus session ready.</p>
+
+          <div class="shell-controls">
+            <button class="shell-btn" id="startPauseBtn" type="button">Start</button>
+            <button class="shell-btn alt" id="resetBtn" type="button">Reset</button>
+            <button class="shell-btn alt" id="skipBtn" type="button">Skip</button>
+          </div>
+        </section>
+
+        <section class="shell-panel" aria-label="Music">
+          <h2>Focus Audio</h2>
+          <div class="shell-audio-grid">
+            <label for="stationSelect">SomaFM station</label>
+            <select id="stationSelect">
+              <option value="https://ice1.somafm.com/groovesalad-128-mp3">Groove Salad</option>
+              <option value="https://ice1.somafm.com/dronezone-128-mp3">Drone Zone</option>
+              <option value="https://ice1.somafm.com/deepspaceone-128-mp3">Deep Space One</option>
+              <option value="https://ice1.somafm.com/spacestation-128-mp3">Space Station</option>
+            </select>
+
+            <label for="volumeRange">Volume</label>
+            <input id="volumeRange" type="range" min="0" max="100" value="55">
+          </div>
+
+          <div class="shell-controls">
+            <button class="shell-btn" id="playBtn" type="button">Play</button>
+            <button class="shell-btn alt" id="alarmTestBtn" type="button">Test Alarm</button>
+            <button class="shell-btn warn" id="alarmStopBtn" type="button">Stop Alarm</button>
+          </div>
+          <p class="shell-status" id="audioStatus">Pick a station and press Play.</p>
+
+          <audio id="focusAudio" preload="none">
+            <source src="https://ice1.somafm.com/groovesalad-128-mp3" type="audio/mpeg">
+          </audio>
+        </section>
+
+        <section class="shell-panel" aria-label="PowerShell drill">
+          <h2>PowerShell Drill</h2>
+          <p class="shell-drill" id="drillText">Get-Process | Sort-Object CPU -Descending | Select-Object -First 10</p>
+          <div class="shell-controls">
+            <button class="shell-btn alt" id="nextDrillBtn" type="button">Next Drill</button>
+          </div>
+        </section>
+
+        <section class="shell-panel" aria-label="Music For Programming">
+          <h2>musicforprogramming.net</h2>
+          <iframe
+            class="shell-portal"
+            src="https://musicforprogramming.net/latest/"
+            title="musicforprogramming.net"
+            loading="lazy"
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+          <p class="shell-copy">
+            If the embed is blocked, open
+            <a href="https://musicforprogramming.net/" target="_blank" rel="noopener noreferrer">musicforprogramming.net</a>.
+          </p>
+        </section>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="{{ '/assets/vibes.js?v=20260222b' | relative_url }}"></script>

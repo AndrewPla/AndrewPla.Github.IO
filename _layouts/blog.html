@@ -1,6 +1,5 @@
 ---
 layout: default
-feature_image: "assets/blogsandblurbs.png"
 ---
 
 {% include site-header.html %}
@@ -20,9 +19,7 @@ feature_image: "assets/blogsandblurbs.png"
         <h1>{{ page.title }}</h1>
         {{ content }}
 
-        {% if page.feature_image %}
-        <img src="{{ page.feature_image | relative_url }}" alt="Image Alt Text">
-        {% endif %}
+
       {% endif %}
 
     </article>

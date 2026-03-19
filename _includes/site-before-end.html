@@ -1,1 +1,745 @@
-<!-- Overwrite this file with code you want before the closing body tag -->
+<script>
+  (function () {
+    var key = "ap-site-mode";
+    var mode = "normal";
+    var toggleBtn = null;
+    var retroChrome = null;
+    var retroCounter = null;
+    var retroClock = null;
+    var retroClockTimer = 0;
+    var retroStartBtn = null;
+    var retroStartMenu = null;
+    var retroMusicPanel = null;
+    var retroMusicAudio = null;
+    var retroMusicToggle = null;
+    var retroMusicClose = null;
+    var retroMusicVolume = null;
+    var retroMusicStop = null;
+    var retroMusicStationId = "groovesalad";
+    var retroWindowDragCleanup = null;
+    var retroStartHandlers = [];
+    var retroMusicStations = [
+      {
+        id: "groovesalad",
+        label: "Groove Salad",
+        stream: "https://ice1.somafm.com/groovesalad-128-mp3"
+      },
+      {
+        id: "dronezone",
+        label: "Drone Zone",
+        stream: "https://ice1.somafm.com/dronezone-128-mp3"
+      },
+      {
+        id: "lush",
+        label: "Lush",
+        stream: "https://ice1.somafm.com/lush-128-mp3"
+      }
+    ];
+    var desktopShortcuts = [
+      {
+        desktopTitle: "My Computer",
+        startTitle: "Home",
+        url: {{ "/" | relative_url | jsonify }},
+        slug: "home"
+      },
+      {
+        desktopTitle: "My Documents",
+        startTitle: "Writing",
+        url: {{ "/writing/" | relative_url | jsonify }},
+        slug: "writing"
+      },
+      {
+        desktopTitle: "Andrewnet Explorer",
+        startTitle: "Links",
+        url: {{ "/links/" | relative_url | jsonify }},
+        slug: "links"
+      },
+      {
+        desktopTitle: "Windows Media Player",
+        startTitle: "Podcast",
+        url: {{ "/podcast/" | relative_url | jsonify }},
+        slug: "podcast"
+      },
+      {
+        desktopTitle: "Control Panel",
+        startTitle: "About",
+        url: {{ "/about/" | relative_url | jsonify }},
+        slug: "about"
+      },
+      {
+        desktopTitle: "My Store",
+        startTitle: "Shop",
+        url: {{ "/shop/" | relative_url | jsonify }},
+        slug: "shop"
+      },
+      {
+        desktopTitle: "Outlook Express",
+        startTitle: "Newsletter",
+        url: {{ "/links/#updates" | relative_url | jsonify }},
+        slug: "newsletter"
+      },
+      {
+        desktopTitle: "Help and Support",
+        startTitle: "Contact",
+        url: {{ "/contact/" | relative_url | jsonify }},
+        slug: "contact"
+      }
+    ];
+
+    try {
+      mode = localStorage.getItem(key) || "normal";
+    } catch (e) {
+      mode = "normal";
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function normalizePath(url) {
+      try {
+        var parsed = new URL(url, window.location.origin);
+        var path = parsed.pathname.replace(/\/+$/, "");
+        return path || "/";
+      } catch (e) {
+        return "/";
+      }
+    }
+
+    function isCurrentUrl(url) {
+      return normalizePath(window.location.pathname) === normalizePath(url);
+    }
+
+    function renderDesktopIcons() {
+      return desktopShortcuts
+        .map(function (item) {
+          var currentClass = isCurrentUrl(item.url) ? " is-current" : "";
+          return (
+            "<a class='ap-retro-desktop-icon ap-retro-desktop-icon--" +
+            item.slug +
+            currentClass +
+            "' href='" +
+            item.url +
+            "'>" +
+            "<span class='ap-retro-desktop-glyph' aria-hidden='true'></span>" +
+            "<span class='ap-retro-desktop-label'>" +
+            escapeHtml(item.desktopTitle) +
+            "</span>" +
+            "</a>"
+          );
+        })
+        .join("");
+    }
+
+    function renderStartMenu() {
+      return (
+        "<div class='ap-retro-start-menu-head'>Michaelsoft Binbows XP</div>" +
+        "<nav class='ap-retro-start-menu-nav'>" +
+        desktopShortcuts
+          .map(function (item) {
+            return (
+              "<a class='ap-retro-start-link ap-retro-start-link--" +
+              item.slug +
+              "' href='" +
+              item.url +
+              "'>" +
+              "<span class='ap-retro-start-link-icon' aria-hidden='true'></span>" +
+              "<span class='ap-retro-start-link-label'>" +
+              escapeHtml(item.startTitle) +
+              "</span>" +
+              "</a>"
+            );
+          })
+          .join("") +
+        "<a class='ap-retro-start-link ap-retro-start-link--music' href='#' data-retro-action='music'>" +
+        "<span class='ap-retro-start-link-icon' aria-hidden='true'></span>" +
+        "<span class='ap-retro-start-link-label'>Coding Music</span>" +
+        "</a>" +
+        "</nav>"
+      );
+    }
+
+    function renderMusicStations() {
+      return retroMusicStations
+        .map(function (station, index) {
+          return (
+            "<button type='button' class='ap-retro-music-station" +
+            (index === 0 ? " is-active" : "") +
+            "' data-station-id='" +
+            station.id +
+            "'>" +
+            escapeHtml(station.label) +
+            "</button>"
+          );
+        })
+        .join("");
+    }
+
+    function currentWindowLabel() {
+      var title = document.title || "Home";
+      title = title.replace(/\s*\|\s*Andrew\s*Pla.*$/i, "").trim();
+      return title || "Home";
+    }
+
+    function apply(nextMode) {
+      var body = document.body;
+      if (!body) return;
+      body.classList.toggle("mode-retro", nextMode === "retro");
+      body.dataset.siteMode = nextMode;
+      mountToggle(nextMode);
+
+      if (toggleBtn) {
+        toggleBtn.classList.toggle("is-retro", nextMode === "retro");
+        toggleBtn.setAttribute("aria-checked", nextMode === "retro" ? "true" : "false");
+        toggleBtn.title = nextMode === "retro" ? "Switch to normal mode" : "Switch to retro mode";
+      }
+
+      if (nextMode === "retro") {
+        enableRetro();
+      } else {
+        disableRetro();
+      }
+    }
+
+    function mountToggle(nextMode) {
+      if (!toggleBtn) return;
+      if (nextMode === "retro") {
+        var retroSlot = document.querySelector(".ap-retro-mode-slot");
+        if (retroSlot) {
+          if (toggleBtn.parentNode !== retroSlot) {
+            retroSlot.appendChild(toggleBtn);
+          }
+        } else if (toggleBtn.parentNode !== document.body) {
+          document.body.appendChild(toggleBtn);
+        }
+        return;
+      }
+      var footerHost = document.querySelector(".footer .container");
+      if (footerHost) {
+        if (toggleBtn.parentNode !== footerHost) {
+          footerHost.appendChild(toggleBtn);
+        }
+      } else if (toggleBtn.parentNode !== document.body) {
+        document.body.appendChild(toggleBtn);
+      }
+    }
+
+    function createRetroChrome() {
+      if (retroChrome) return;
+      var windowLabel = currentWindowLabel();
+      retroChrome = document.createElement("div");
+      retroChrome.className = "ap-retro-chrome";
+      retroChrome.innerHTML =
+        "<div class='ap-retro-titlebar'>" +
+        "<div class='ap-retro-titlebar-inner'>" +
+        "<span class='ap-retro-title'>" +
+        "<span class='ap-retro-ms-logo' aria-hidden='true'><i></i><i></i><i></i><i></i></span>" +
+        "Michaelsoft Binbows XP" +
+        "</span>" +
+        "</div>" +
+        "</div>" +
+        "<nav class='ap-retro-desktop-nav' aria-label='Desktop shortcuts'>" +
+        renderDesktopIcons() +
+        "</nav>" +
+        "<div class='ap-retro-taskbar'>" +
+        "<div class='ap-retro-taskbar-inner'>" +
+        "<div class='ap-retro-task-left'>" +
+        "<button type='button' class='ap-retro-start' id='apRetroStartBtn' aria-haspopup='menu' aria-expanded='false'>" +
+        "<span class='ap-retro-win-flag' aria-hidden='true'><i></i><i></i><i></i><i></i></span>" +
+        "<span class='ap-retro-start-label'>start</span>" +
+        "</button>" +
+        "<span class='ap-retro-quicklaunch'>" +
+        "<a class='ap-retro-ql-icon ap-retro-ql-icon--ie' href='{{ '/' | relative_url }}' aria-label='Open home'></a>" +
+        "<a class='ap-retro-ql-icon ap-retro-ql-icon--mail' href='{{ '/links/#updates' | relative_url }}' aria-label='Open newsletter links'></a>" +
+        "<a class='ap-retro-ql-icon ap-retro-ql-icon--music' id='apRetroMusicToggle' href='#' aria-label='Open coding music'></a>" +
+        "</span>" +
+        "<a class='ap-retro-task-pill ap-retro-task-pill--active' href='" + window.location.pathname + "'>" + escapeHtml(windowLabel) + "</a>" +
+        "</div>" +
+        "<div class='ap-retro-mode-slot' id='apRetroModeSlot'></div>" +
+        "<div class='ap-retro-tray'>" +
+        "<span class='ap-retro-tray-icons' aria-hidden='true'>" +
+        "<span class='ap-retro-tray-icon ap-retro-tray-icon--net'></span>" +
+        "<span class='ap-retro-tray-icon ap-retro-tray-icon--audio'></span>" +
+        "</span>" +
+        "<span class='ap-retro-visit'>Visits <strong id='apRetroCounter'>000001</strong></span>" +
+        "<span class='ap-retro-clock' id='apRetroClock'>--:--</span>" +
+        "</div>" +
+        "</div>" +
+        "<div class='ap-retro-start-menu' id='apRetroStartMenu' hidden>" +
+        renderStartMenu() +
+        "</div>" +
+        "<section class='ap-retro-music' id='apRetroMusicPanel' hidden aria-label='Coding music player'>" +
+        "<header class='ap-retro-music-head'>" +
+        "<span class='ap-retro-music-title'>Windows Media Player - Coding Mix</span>" +
+        "<button type='button' class='ap-retro-music-close' id='apRetroMusicClose' aria-label='Close coding music'>x</button>" +
+        "</header>" +
+        "<div class='ap-retro-music-body'>" +
+        "<p class='ap-retro-music-note'>Pick a stream and press play.</p>" +
+        "<div class='ap-retro-music-stations'>" +
+        renderMusicStations() +
+        "</div>" +
+        "<div class='ap-retro-music-controls'>" +
+        "<label class='ap-retro-music-volume-label' for='apRetroMusicVolume'>Volume</label>" +
+        "<input id='apRetroMusicVolume' class='ap-retro-music-volume' type='range' min='0' max='100' value='55'>" +
+        "<button type='button' class='ap-retro-music-stop' id='apRetroMusicStop'>Stop</button>" +
+        "</div>" +
+        "<audio id='apRetroMusicAudio' controls preload='none'>" +
+        "<source src='" + retroMusicStations[0].stream + "' type='audio/mpeg'>" +
+        "</audio>" +
+        "</div>" +
+        "</section>" +
+        "</div>";
+      document.body.appendChild(retroChrome);
+      retroCounter = document.getElementById("apRetroCounter");
+      retroClock = document.getElementById("apRetroClock");
+      retroStartBtn = document.getElementById("apRetroStartBtn");
+      retroStartMenu = document.getElementById("apRetroStartMenu");
+      retroMusicPanel = document.getElementById("apRetroMusicPanel");
+      retroMusicAudio = document.getElementById("apRetroMusicAudio");
+      retroMusicToggle = document.getElementById("apRetroMusicToggle");
+      retroMusicClose = document.getElementById("apRetroMusicClose");
+      retroMusicVolume = document.getElementById("apRetroMusicVolume");
+      retroMusicStop = document.getElementById("apRetroMusicStop");
+      mountToggle("retro");
+      initStartMenu();
+      initMusicPanel();
+      incrementCounter();
+      renderClock();
+      retroClockTimer = window.setInterval(renderClock, 30000);
+    }
+
+    function initStartMenu() {
+      if (!retroStartBtn || !retroStartMenu) return;
+
+      function closeStartMenu() {
+        if (!retroStartMenu) return;
+        retroStartMenu.hidden = true;
+        if (retroStartBtn) {
+          retroStartBtn.setAttribute("aria-expanded", "false");
+        }
+      }
+
+      function openStartMenu() {
+        if (!retroStartMenu) return;
+        retroStartMenu.hidden = false;
+        if (retroStartBtn) {
+          retroStartBtn.setAttribute("aria-expanded", "true");
+        }
+      }
+
+      function toggleStartMenu(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (retroStartMenu.hidden) {
+          openStartMenu();
+        } else {
+          closeStartMenu();
+        }
+      }
+
+      function handleDocClick(event) {
+        if (!retroStartMenu || retroStartMenu.hidden) return;
+        if (retroStartMenu.contains(event.target)) return;
+        if (retroStartBtn && retroStartBtn.contains(event.target)) return;
+        closeStartMenu();
+      }
+
+      function handleMenuClick(event) {
+        var target = event.target;
+        var actionLink = target && target.closest ? target.closest("[data-retro-action='music']") : null;
+        if (actionLink) {
+          event.preventDefault();
+          openMusicPanel();
+          closeStartMenu();
+          return;
+        }
+        if (target && target.closest && target.closest(".ap-retro-start-link")) {
+          closeStartMenu();
+        }
+      }
+
+      function handleEscape(event) {
+        if (event.key === "Escape") {
+          closeStartMenu();
+        }
+      }
+
+      retroStartBtn.addEventListener("click", toggleStartMenu);
+      retroStartMenu.addEventListener("click", handleMenuClick);
+      document.addEventListener("click", handleDocClick);
+      document.addEventListener("keydown", handleEscape);
+      retroStartHandlers = [
+        { target: retroStartBtn, type: "click", handler: toggleStartMenu },
+        { target: retroStartMenu, type: "click", handler: handleMenuClick },
+        { target: document, type: "click", handler: handleDocClick },
+        { target: document, type: "keydown", handler: handleEscape }
+      ];
+    }
+
+    function setMusicStation(stationId, shouldPlay) {
+      if (!retroMusicAudio) return;
+      var station = retroMusicStations.find(function (entry) {
+        return entry.id === stationId;
+      });
+      if (!station) return;
+
+      var source = retroMusicAudio.querySelector("source");
+      if (!source) return;
+      if (source.src !== station.stream) {
+        source.src = station.stream;
+        retroMusicAudio.load();
+      }
+      retroMusicStationId = station.id;
+
+      if (retroMusicPanel) {
+        var stationButtons = retroMusicPanel.querySelectorAll(".ap-retro-music-station");
+        stationButtons.forEach(function (button) {
+          button.classList.toggle("is-active", button.dataset.stationId === station.id);
+        });
+      }
+
+      if (shouldPlay) {
+        try {
+          var playPromise = retroMusicAudio.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function () {});
+          }
+        } catch (e) {}
+      }
+    }
+
+    function closeMusicPanel() {
+      if (!retroMusicPanel) return;
+      retroMusicPanel.hidden = true;
+    }
+
+    function stopRetroMusic() {
+      if (!retroMusicAudio) return;
+      try {
+        retroMusicAudio.pause();
+        retroMusicAudio.currentTime = 0;
+      } catch (e) {}
+      retroMusicAudio.load();
+    }
+
+    function openMusicPanel() {
+      if (!retroMusicPanel) return;
+      retroMusicPanel.hidden = false;
+      setMusicStation(retroMusicStationId, false);
+    }
+
+    function initMusicPanel() {
+      if (!retroMusicPanel || !retroMusicAudio || !retroMusicToggle) return;
+
+      if (retroMusicVolume) {
+        retroMusicAudio.volume = (Number(retroMusicVolume.value) || 55) / 100;
+      }
+
+      function toggleMusicPanel(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        if (retroMusicPanel.hidden) {
+          if (retroStartMenu && !retroStartMenu.hidden) {
+            retroStartMenu.hidden = true;
+            if (retroStartBtn) {
+              retroStartBtn.setAttribute("aria-expanded", "false");
+            }
+          }
+          openMusicPanel();
+        } else {
+          closeMusicPanel();
+        }
+      }
+
+      function handleStationClick(event) {
+        var stationButton = event.target && event.target.closest
+          ? event.target.closest(".ap-retro-music-station")
+          : null;
+        if (!stationButton) return;
+        event.preventDefault();
+        setMusicStation(stationButton.dataset.stationId, true);
+      }
+
+      function handleVolumeInput() {
+        if (!retroMusicVolume || !retroMusicAudio) return;
+        retroMusicAudio.volume = (Number(retroMusicVolume.value) || 55) / 100;
+      }
+
+      retroMusicToggle.addEventListener("click", toggleMusicPanel);
+      retroMusicPanel.addEventListener("click", handleStationClick);
+      retroStartHandlers.push(
+        { target: retroMusicToggle, type: "click", handler: toggleMusicPanel },
+        { target: retroMusicPanel, type: "click", handler: handleStationClick }
+      );
+
+      if (retroMusicVolume) {
+        retroMusicVolume.addEventListener("input", handleVolumeInput);
+        retroStartHandlers.push({ target: retroMusicVolume, type: "input", handler: handleVolumeInput });
+      }
+
+      if (retroMusicStop) {
+        var stopHandler = function (event) {
+          event.preventDefault();
+          stopRetroMusic();
+        };
+        retroMusicStop.addEventListener("click", stopHandler);
+        retroStartHandlers.push({ target: retroMusicStop, type: "click", handler: stopHandler });
+      }
+
+      if (retroMusicClose) {
+        var closeHandler = function (event) {
+          event.preventDefault();
+          stopRetroMusic();
+          closeMusicPanel();
+        };
+        retroMusicClose.addEventListener("click", closeHandler);
+        retroStartHandlers.push({ target: retroMusicClose, type: "click", handler: closeHandler });
+      }
+
+      var musicDragStartX = 0;
+      var musicDragStartY = 0;
+      var musicDragBaseX = 0;
+      var musicDragBaseY = 0;
+      var isMusicDragging = false;
+      var musicDragHandle = retroMusicPanel.querySelector(".ap-retro-music-head");
+
+      function readMusicPosition() {
+        return {
+          x: Number(retroMusicPanel.dataset.dragX || "0"),
+          y: Number(retroMusicPanel.dataset.dragY || "0")
+        };
+      }
+
+      function applyMusicPosition(nextX, nextY) {
+        retroMusicPanel.dataset.dragX = String(nextX);
+        retroMusicPanel.dataset.dragY = String(nextY);
+        retroMusicPanel.style.transform = "translate(" + nextX + "px, " + nextY + "px)";
+      }
+
+      function onMusicMove(event) {
+        if (!isMusicDragging) return;
+        var nextX = musicDragBaseX + (event.clientX - musicDragStartX);
+        var nextY = musicDragBaseY + (event.clientY - musicDragStartY);
+        applyMusicPosition(nextX, nextY);
+      }
+
+      function onMusicUp() {
+        if (!isMusicDragging) return;
+        isMusicDragging = false;
+        document.body.classList.remove("ap-retro-music-dragging");
+        window.removeEventListener("mousemove", onMusicMove);
+        window.removeEventListener("mouseup", onMusicUp);
+      }
+
+      function onMusicDown(event) {
+        if (event.button !== 0) return;
+        if (event.target && event.target.closest && event.target.closest(".ap-retro-music-close")) return;
+        event.preventDefault();
+        var position = readMusicPosition();
+        musicDragStartX = event.clientX;
+        musicDragStartY = event.clientY;
+        musicDragBaseX = position.x;
+        musicDragBaseY = position.y;
+        isMusicDragging = true;
+        document.body.classList.add("ap-retro-music-dragging");
+        window.addEventListener("mousemove", onMusicMove);
+        window.addEventListener("mouseup", onMusicUp);
+      }
+
+      if (musicDragHandle) {
+        musicDragHandle.addEventListener("mousedown", onMusicDown);
+        retroStartHandlers.push({ target: musicDragHandle, type: "mousedown", handler: onMusicDown });
+      }
+      retroStartHandlers.push(
+        { target: window, type: "mousemove", handler: onMusicMove },
+        { target: window, type: "mouseup", handler: onMusicUp }
+      );
+    }
+
+    function findRetroWindowElement() {
+      if (document.body.classList.contains("layout-home")) {
+        return document.querySelector(".ap-home-window");
+      }
+      return (
+        document.querySelector(".main > .article.article--page.content") ||
+        document.querySelector(".main > .article.article--post.content") ||
+        document.querySelector(".main > .content")
+      );
+    }
+
+    function initRetroWindowDrag() {
+      if (retroWindowDragCleanup) {
+        retroWindowDragCleanup();
+        retroWindowDragCleanup = null;
+      }
+
+      var windowElement = findRetroWindowElement();
+      if (!windowElement) return;
+
+      windowElement.classList.add("ap-retro-draggable-window");
+
+      var isHomeLayout = document.body.classList.contains("layout-home");
+      var dragHandle = isHomeLayout ? windowElement.querySelector(".ap-home-window-head") : null;
+      var insertedHandle = false;
+
+      if (!dragHandle) {
+        dragHandle = document.createElement("div");
+        dragHandle.className = "ap-retro-window-drag-handle";
+        dragHandle.setAttribute("aria-hidden", "true");
+        windowElement.insertBefore(dragHandle, windowElement.firstChild);
+        insertedHandle = true;
+      }
+
+      var startX = 0;
+      var startY = 0;
+      var baseX = 0;
+      var baseY = 0;
+      var dragging = false;
+
+      function applyPosition(nextX, nextY) {
+        windowElement.dataset.dragX = String(nextX);
+        windowElement.dataset.dragY = String(nextY);
+        windowElement.style.transform = "translate(" + nextX + "px, " + nextY + "px)";
+      }
+
+      function readPosition() {
+        return {
+          x: Number(windowElement.dataset.dragX || "0"),
+          y: Number(windowElement.dataset.dragY || "0")
+        };
+      }
+
+      function onMove(event) {
+        if (!dragging) return;
+        var nextX = baseX + (event.clientX - startX);
+        var nextY = baseY + (event.clientY - startY);
+        applyPosition(nextX, nextY);
+      }
+
+      function onUp() {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("ap-retro-dragging");
+        window.removeEventListener("mousemove", onMove);
+        window.removeEventListener("mouseup", onUp);
+      }
+
+      function onDown(event) {
+        if (event.button !== 0) return;
+        event.preventDefault();
+        var position = readPosition();
+        startX = event.clientX;
+        startY = event.clientY;
+        baseX = position.x;
+        baseY = position.y;
+        dragging = true;
+        document.body.classList.add("ap-retro-dragging");
+        window.addEventListener("mousemove", onMove);
+        window.addEventListener("mouseup", onUp);
+      }
+
+      dragHandle.addEventListener("mousedown", onDown);
+
+      retroWindowDragCleanup = function () {
+        dragHandle.removeEventListener("mousedown", onDown);
+        window.removeEventListener("mousemove", onMove);
+        window.removeEventListener("mouseup", onUp);
+        document.body.classList.remove("ap-retro-dragging");
+        if (insertedHandle && dragHandle.parentNode) {
+          dragHandle.parentNode.removeChild(dragHandle);
+        }
+        windowElement.classList.remove("ap-retro-draggable-window");
+        windowElement.style.removeProperty("transform");
+        delete windowElement.dataset.dragX;
+        delete windowElement.dataset.dragY;
+      };
+    }
+
+    function incrementCounter() {
+      var counterKey = "ap-retro-counter";
+      var value = 1;
+      try {
+        value = Number(localStorage.getItem(counterKey) || "0") + 1;
+        localStorage.setItem(counterKey, String(value));
+      } catch (e) {
+        value = 1;
+      }
+      if (retroCounter) {
+        retroCounter.textContent = String(value).padStart(6, "0");
+      }
+    }
+
+    function renderClock() {
+      if (!retroClock) return;
+      var now = new Date();
+      var timeDisplay = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      var dayDisplay = now.toLocaleDateString([], { weekday: "short" });
+      retroClock.innerHTML =
+        "<span class='ap-retro-clock-time'>" + escapeHtml(timeDisplay) + "</span>" +
+        "<span class='ap-retro-clock-day'>" + escapeHtml(dayDisplay) + "</span>";
+    }
+
+    function enableRetro() {
+      createRetroChrome();
+      initRetroWindowDrag();
+    }
+
+    function disableRetro() {
+      if (retroWindowDragCleanup) {
+        retroWindowDragCleanup();
+        retroWindowDragCleanup = null;
+      }
+      if (retroClockTimer) {
+        window.clearInterval(retroClockTimer);
+        retroClockTimer = 0;
+      }
+      if (retroStartHandlers.length) {
+        retroStartHandlers.forEach(function (entry) {
+          entry.target.removeEventListener(entry.type, entry.handler);
+        });
+        retroStartHandlers = [];
+      }
+      if (retroChrome) {
+        retroChrome.remove();
+        retroChrome = null;
+        retroCounter = null;
+        retroClock = null;
+        retroStartBtn = null;
+        retroStartMenu = null;
+        retroMusicPanel = null;
+        retroMusicAudio = null;
+        retroMusicToggle = null;
+        retroMusicClose = null;
+        retroMusicVolume = null;
+        retroMusicStop = null;
+      }
+    }
+
+    toggleBtn = document.createElement("button");
+    toggleBtn.type = "button";
+    toggleBtn.className = "ap-mode-toggle";
+    toggleBtn.setAttribute("role", "switch");
+    toggleBtn.setAttribute("aria-checked", "false");
+    toggleBtn.setAttribute("aria-label", "Toggle between normal and retro mode");
+    toggleBtn.innerHTML =
+      "<span class='ap-mode-toggle__label ap-mode-toggle__label--normal'>Normal</span>" +
+      "<span class='ap-mode-toggle__track'><span class='ap-mode-toggle__thumb'></span></span>" +
+      "<span class='ap-mode-toggle__label ap-mode-toggle__label--retro'>Binbows</span>";
+    toggleBtn.addEventListener("click", function () {
+      mode = mode === "retro" ? "normal" : "retro";
+      try {
+        localStorage.setItem(key, mode);
+      } catch (e) {}
+      apply(mode);
+    });
+    document.body.appendChild(toggleBtn);
+
+    apply(mode);
+  })();
+</script>
+<script src="{{ '/assets/scripts/ticker.js?v=20260221a' | relative_url }}"></script>
