@@ -302,11 +302,34 @@ input[type="submit"]:focus {
   border: 1px solid var(--ap-border);
   border-radius: 14px;
   background: #fcfcfc;
-  padding: 0.95rem;
+  overflow: hidden;
+}
+
+.ap-social-proof {
+  margin: 0.85rem 0 0;
+  max-width: 66ch;
+  color: var(--ap-muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.ap-section-intro {
+  margin: 0.4rem 0 0;
+  color: var(--ap-muted);
+  font-size: 0.97rem;
+}
+
+.ap-subscribe-label {
+  margin: 0.95rem 0.95rem 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ap-text);
 }
 
 .ap-subscribe-copy {
-  margin: 0;
+  margin: 0 0.95rem 0;
   color: var(--ap-muted);
 }
 
@@ -332,10 +355,11 @@ input[type="submit"]:focus {
   background: #222222 !important;
 }
 
-.ap-subscribe-note {
-  margin: 0.55rem 0 0;
-  color: #666666;
-  font-size: 0.9rem;
+.ap-subscribe .beehiiv-embed {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0.75rem 0 0 !important;
 }
 
 .ap-quick-links {
