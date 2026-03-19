@@ -1,7 +1,7 @@
 ---
 title: "New Blog on PDQ.com: PowerShell, VS Code, and a Raspberry Pi - Oh My!"
 excerpt: "Even a teeny tiny device, like a Raspberry Pi, can run PowerShell. Heck yes!"
-tags:
+categories:
 - External Blog
 - PowerShell
 ---

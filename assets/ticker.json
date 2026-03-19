@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "id": "pswednesday-live",
+      "priority": 90,
+      "text": "Live every Wednesday at 2:00 PM ET: PowerShell study stream.",
+      "link": "/podcast/",
+      "link_text": "Watch details",
+      "active": {
+        "type": "weekly",
+        "day": "wednesday",
+        "start": "00:00",
+        "end": "23:59",
+        "timezone": "America/New_York"
+      }
+    }
+  ]
+}

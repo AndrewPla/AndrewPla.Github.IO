@@ -1,7 +1,7 @@
 ---
 classes: wide
 title: Input Object Subproperty Tip - Get the value without accepting the whole object!
-tags:
+categories:
 - PowerShell
 ---
 

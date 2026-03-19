@@ -1,0 +1,343 @@
+:root {
+  --shell-bg: #030706;
+  --shell-bg-soft: #081311;
+  --shell-panel: rgba(6, 20, 17, 0.85);
+  --shell-border: rgba(86, 255, 190, 0.42);
+  --shell-text: #c6ffea;
+  --shell-muted: #87d7bb;
+  --shell-accent: #56ffbe;
+  --shell-accent-2: #39d4ff;
+  --shell-warn: #ffef8d;
+}
+
+.vibes-shell {
+  margin: 0;
+  padding: 0;
+}
+
+.shell-root {
+  position: relative;
+  min-height: 100vh;
+  color: var(--shell-text);
+  background: radial-gradient(1300px 700px at 50% 20%, #0a1412 0%, var(--shell-bg) 60%);
+  overflow: hidden;
+  font-family: "Courier New", Courier, monospace;
+  transition: background-color 0.2s ease;
+}
+
+.shell-root::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.shell-root.alarm-active::after {
+  opacity: 0.8;
+  animation: shellAlarmFlash 0.45s steps(2, end) infinite;
+}
+
+#shellCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shell-noise {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(90deg, rgba(0, 255, 190, 0.04), rgba(0, 255, 190, 0.04) 1px, transparent 1px, transparent 5px);
+  mix-blend-mode: screen;
+}
+
+.shell-exit {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 8;
+  text-decoration: none;
+  color: #03100b;
+  background: var(--shell-warn);
+  border: 2px outset #fff6bc;
+  min-height: 2rem;
+  padding: 0.26rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.shell-exit:hover,
+.shell-exit:focus {
+  border-style: inset;
+}
+
+.shell-stage {
+  position: relative;
+  z-index: 5;
+  width: min(96vw, 1040px);
+  margin: 0 auto;
+  padding: 1rem 0.2rem 1.6rem;
+}
+
+.shell-window {
+  border: 1px solid var(--shell-border);
+  background: linear-gradient(180deg, rgba(10, 33, 27, 0.8), rgba(6, 18, 15, 0.9));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.52);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.shell-titlebar {
+  min-height: 2rem;
+  padding: 0.35rem 0.72rem;
+  border-bottom: 1px solid var(--shell-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  color: #8fffd0;
+  background: linear-gradient(90deg, rgba(8, 25, 20, 0.96), rgba(6, 20, 33, 0.94));
+  font-size: 0.82rem;
+}
+
+.shell-dots {
+  color: #41f6ff;
+}
+
+.shell-body {
+  padding: 0.9rem;
+}
+
+.shell-kicker {
+  margin: 0;
+  color: var(--shell-accent-2);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.shell-body h1 {
+  margin: 0.35rem 0 0;
+  color: #bcffe6;
+  font-size: clamp(1.5rem, 3.9vw, 2.7rem);
+  line-height: 1.04;
+}
+
+.shell-copy {
+  margin-top: 0.6rem;
+  color: var(--shell-muted);
+  line-height: 1.52;
+}
+
+.shell-copy a {
+  color: #bfffea;
+  text-decoration: underline;
+}
+
+.shell-panel {
+  margin-top: 0.85rem;
+  border: 1px solid var(--shell-border);
+  background: var(--shell-panel);
+  padding: 0.75rem;
+}
+
+.shell-panel h2 {
+  margin: 0;
+  color: var(--shell-accent);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.shell-task-row {
+  margin-top: 0.52rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.shell-config {
+  margin-top: 0.55rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.shell-check {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.shell-panel label {
+  color: #b7ffe2;
+  font-size: 0.84rem;
+}
+
+.shell-panel input[type="text"],
+.shell-panel input[type="number"],
+.shell-panel select {
+  min-height: 2rem;
+  width: 100%;
+  border: 1px solid rgba(122, 255, 201, 0.52);
+  background: #021410;
+  color: #d4ffef;
+  font-family: "Courier New", Courier, monospace;
+  padding: 0.22rem 0.45rem;
+}
+
+.shell-panel input[type="range"] {
+  width: 100%;
+  accent-color: var(--shell-accent);
+}
+
+.shell-timer {
+  margin-top: 0.7rem;
+  font-size: clamp(2rem, 7vw, 4rem);
+  line-height: 1;
+  font-weight: 700;
+  color: #d9fff2;
+  text-shadow: 0 0 12px rgba(86, 255, 190, 0.45);
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.shell-status {
+  margin: 0.45rem 0 0;
+  color: #a6f4d9;
+  min-height: 1.2rem;
+}
+
+.shell-controls {
+  margin-top: 0.58rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.shell-btn {
+  min-height: 2rem;
+  border: 1px solid #a0ffe0 !important;
+  border-radius: 0 !important;
+  background: #033025 !important;
+  color: #cbffed !important;
+  padding: 0.2rem 0.65rem !important;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.shell-btn.alt {
+  background: #062b3f !important;
+  border-color: #7ed8ff !important;
+  color: #cef2ff !important;
+}
+
+.shell-btn.warn {
+  background: #4a100c !important;
+  border-color: #ff9f8b !important;
+  color: #ffd7cc !important;
+}
+
+.shell-btn.warn:disabled,
+.shell-btn.warn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shell-btn:hover,
+.shell-btn:focus {
+  background: #074033 !important;
+  transform: none !important;
+}
+
+.shell-audio-grid {
+  margin-top: 0.5rem;
+  display: grid;
+  gap: 0.22rem;
+}
+
+.shell-drill {
+  margin-top: 0.55rem;
+  padding: 0.5rem;
+  border: 1px dashed rgba(107, 255, 201, 0.58);
+  background: rgba(2, 12, 10, 0.45);
+  color: #ddfff3;
+  line-height: 1.45;
+}
+
+.shell-portal {
+  margin-top: 0.5rem;
+  width: 100%;
+  min-height: 250px;
+  border: 1px solid rgba(98, 219, 179, 0.62);
+  background: #fff;
+}
+
+.shell-root.alarm-active {
+  background: radial-gradient(1400px 760px at 50% 20%, #261303 0%, #0c0402 60%);
+}
+
+.shell-root.alarm-active .shell-window {
+  border-color: #ffd97e;
+  box-shadow: 0 0 0 2px rgba(255, 217, 126, 0.28), 0 24px 70px rgba(255, 80, 0, 0.38);
+}
+
+.shell-root.alarm-active .shell-titlebar {
+  color: #fff2b6;
+  background: linear-gradient(90deg, rgba(65, 15, 5, 0.96), rgba(92, 37, 5, 0.94));
+}
+
+.shell-root.alarm-active .shell-timer {
+  color: #fff7ba;
+  text-shadow: 0 0 16px rgba(255, 228, 126, 0.8);
+  animation: shellAlarmPulse 0.45s ease-in-out infinite;
+}
+
+.shell-root.alarm-active .shell-status {
+  color: #ffe9b0;
+}
+
+@keyframes shellAlarmFlash {
+  0% {
+    background: rgba(255, 60, 60, 0.2);
+  }
+  50% {
+    background: rgba(255, 220, 80, 0.2);
+  }
+  100% {
+    background: rgba(80, 210, 255, 0.2);
+  }
+}
+
+@keyframes shellAlarmPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 760px) {
+  .shell-config {
+    grid-template-columns: 1fr;
+  }
+
+  .shell-check {
+    grid-column: span 1;
+  }
+
+  .shell-body {
+    padding: 0.72rem;
+  }
+}

@@ -1,7 +1,7 @@
 ---
 title: Writing a PoshBot Plugin to Display TOPdesk Tickets and Assets
 excerpt: "Lets go through the process of writing a PoshBot plugin together."
-tags:
+categories:
 - PowerShell
 - PoshBot
 - TOPdesk

@@ -2,7 +2,7 @@
 classes: wide
 image: "/assets/tomatoman.jpg"
 thumbnail: "/assets/tomatoman.jpg"
-tags:
+categories:
 - PowerShell
 header:
   teaser: "/assets/tomatoman.jpg"

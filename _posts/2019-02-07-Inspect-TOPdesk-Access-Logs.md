@@ -1,6 +1,6 @@
 ---
 title: Parse TOPdesk Access Logs with PowerShell
-tags:
+categories:
 - PowerShell
 - Access Logs
 - TOPdesk

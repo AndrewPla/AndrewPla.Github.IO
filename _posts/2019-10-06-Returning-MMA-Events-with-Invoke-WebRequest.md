@@ -1,7 +1,7 @@
 ---
 title: Using Invoke-WebRequest to Return Upcoming MMA Events
 excerpt: "Let's look at a simple example of using Invoke-WebRequest to return upcoming MMA events from whenarethefights.com"
-tags:
+categories:
 - PowerShell
 - Invoke-WebRequest
 classes: wide
