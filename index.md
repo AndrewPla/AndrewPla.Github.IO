@@ -16,14 +16,14 @@ permalink: /
 
   <div class="ap-home-window-body">
     <section class="ap-hero">
-      <p class="ap-eyebrow">Tech. Community. Growth. That's the work.</p>
-      <h1>Stay in the Loop</h1>
-      <p class="ap-lead">I'm Andrew Pla -- a Microsoft MVP, speaker, and community leader focused on PowerShell, automation, security, and helping people build meaningful careers in tech.</p>
+      <h1>Hi, I'm Andrew Pla. I teach PowerShell and IT the way I wish someone had taught me.</h1>
+      <p class="ap-lead">I know what it feels like to have no idea what you're doing and still bet on yourself anyway.</p>
+      <p class="ap-social-proof">Over the years I've interviewed some of the biggest names in PowerShell and IT — people I used to learn from before I ever thought I'd get to talk to them. Microsoft MVP. Conference speaker. Podcast host. Author. But honestly? I'm just someone who kept showing up.</p>
 
       <div class="ap-subscribe">
-        <p class="ap-subscribe-copy">Subscribe for occasional updates, community projects, and practical resources worth your time.</p>
-        <a class="button ap-primary-cta" href="/links/#updates">Stay in the Loop</a>
-        <p class="ap-subscribe-note">No spam. No filler. Just the good stuff.</p>
+        <p class="ap-subscribe-copy">No schedule, no fluff. Just whatever I'm learning, building, or thinking about — straight to your inbox.</p>
+        <a class="button ap-primary-cta" href="/links/#updates">I'm in</a>
+        <p class="ap-subscribe-note">No spam. Unsubscribe whenever.</p>
       </div>
 
       <p class="ap-quick-links">
@@ -43,34 +43,34 @@ permalink: /
 
     <section class="ap-latest ap-landing-links">
       <div class="ap-section-head">
-        <h2>Where to next</h2>
+        <h2>I Help IT People Find Their Next Level</h2>
         <a href="/links/">Open all links →</a>
       </div>
 
       <div class="ap-landing-grid" role="list">
         <a class="ap-landing-card" href="/writing/" role="listitem">
           <strong>Blog</strong>
-          <small>Thoughts, lessons, and practical write-ups on PowerShell, automation, career growth, and the occasional rabbit hole worth sharing.</small>
+          <small>Real talk, real lessons. PowerShell, automation, career growth, and whatever I'm figuring out — written the way I wish someone had explained it to me.</small>
         </a>
         <a class="ap-landing-card" href="/podcast/" role="listitem">
           <strong>PowerShell Podcast</strong>
-          <small>Conversations with people across the PowerShell and IT community -- from technical deep dives to career stories and lessons learned.</small>
+          <small>Hundreds of hours of conversations with the people shaping the PowerShell and DevOps world. New episode every Monday.</small>
         </a>
         <a class="ap-landing-card" href="/links/" role="listitem">
           <strong>Links</strong>
-          <small>A single page with my most useful links -- socials, projects, community spaces, content, and ways to stay connected.</small>
+          <small>Everything in one place — courses, community, socials, and ways to stay connected. Start here if you're not sure where to go.</small>
         </a>
         <a class="ap-landing-card" href="/about/" role="listitem">
           <strong>About</strong>
-          <small>Who I am, what I do, and why I care so much about helping people grow in tech and feel at home in the community.</small>
+          <small>Who I am and how I got here. Spoiler: it didn't start with a plan — it started with a reason.</small>
         </a>
         <a class="ap-landing-card" href="/shop/" role="listitem">
           <strong>Shop</strong>
-          <small>Merch, fun ideas, and community-inspired things I'm experimenting with (because tech should be useful and fun).</small>
+          <small>Merch and community-inspired stuff. Because tech should be useful and occasionally a little fun.</small>
         </a>
         <a class="ap-landing-card" href="/contact/" role="listitem">
           <strong>Contact</strong>
-          <small>Reach out for speaking, collaboration, podcast invites, community opportunities, or just to say hey.</small>
+          <small>Reach out for speaking, podcast invites, collaboration, or just to say hey. Seriously — hey.</small>
         </a>
       </div>
     </section>
