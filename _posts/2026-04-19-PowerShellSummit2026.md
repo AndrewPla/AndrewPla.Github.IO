@@ -10,7 +10,7 @@ toc: true
 
 # PowerShell Summit 2026: Eight Years In
 
-![Summit 2026](../assets/andrew-wideshot-summit26.jpeg)
+![Summit 2026](/assets/andrew-wideshot-summit26.jpeg)
 
 In 2017 I wrote a scholarship application to attend my first PowerShell Summit. I wrote it as a PowerShell script.
 
@@ -34,7 +34,7 @@ That scholarship covered the flight, the hotel, and the ticket. It was 2018. And
 
 I've been back every year since.
 
-![Summit 2018](../assets/postdinner-min.jpg)
+![Summit 2018](/assets/postdinner-min.jpg)
 
 Every time I come to this conference it works as an annual checkpoint. A lot of the people here I only see once a year, and seeing them is how I measure where I am. Not against them, but against who I was the last time I stood in that room. It's one of the only places in my life where I get that kind of long-range view of my own growth.
 
@@ -46,7 +46,7 @@ This year was different (this sounds AI, but it seriously was)
 
 At the end of last year I was invited to serve as Community Director for PowerShell Summit. It was a brand new role for me and I was new to volunteering in this capacity. I genuinely did not know what to expect.
 
-![Me Speaking](../assets/andrew-speaking26.jpeg)
+![Me Speaking](/assets/andrew-speaking26.jpeg)
 
 What I didn't anticipate was doing all three things at once: organizing, speaking, and being a sponsor. If I'm being real, it was a lot. Mind-bending, even. But stepping back and looking at the week as a whole, it was one of the most humbling experiences I've had in a long time.
 
@@ -60,22 +60,22 @@ I use that word intentionally.
 
 The number of messages I got this week. The people who walked up and said they were here because they heard about Summit on the podcast. First-time conference attendees who paid their own way to be in that room. And scholarship recipients, people in the exact same position I was in back in 2018, whose lives are about to shift in ways they can't fully see yet.
 
-![Group dinner #1](../assets/group-photo-summit26.jpeg)
+![Group dinner #1](/assets/group-photo-summit26.jpeg)
 
 Every dinner I went to this week was 20 plus people. I got to finally meet folks I've known for years through the PDQ Discord. Watched people I've been following for a long time walk into that room for the first time. Took photos with people I'd never met in person before but felt like I already knew.
 
-![Seastar](../assets/seastar-summit26.jpeg)
+![Seastar](/assets/seastar-summit26.jpeg)
 
 I don't know of another conference that offers scholarships covering the flight, hotel, and ticket. It's genuinely exceptional. And if you're reading this wondering if you should apply, the answer is yes.
 
-![Melting Pot](../assets/melting-pot-summit26.jpeg)
+![Melting Pot](/assets/melting-pot-summit26.jpeg)
 
 ---
 
 ## The Journey Is the Point
 
 
-![Paddy Coynes Dinner](../assets/paddy-coynes-summit26.jpeg)
+![Paddy Coynes Dinner](/assets/paddy-coynes-summit26.jpeg)
 
 Here's something I want to say plainly: PowerShell changed my career in ways that are hard to overstate.
 
@@ -97,7 +97,7 @@ One of the things I wanted to create this year was a special moment for the peop
 
 I shared my PowerShell journey, and then it turned into a live podcast with Jeffrey Snover, the creator of PowerShell.
 
-![Andrew and Jeffrey on stage](../assets/andrew-snover-summit26.png)
+![Andrew and Jeffrey on stage](/assets/andrew-snover-summit26.png)
 
 It was intimate. It was unscripted. There were funny moments and there were heavy ones. The audience asked questions. I asked questions.
 
@@ -105,7 +105,7 @@ I did a lot of crying in the days leading up to that session as I reflected on m
 
 Looking back through old photos will do that to you. I came across one that stuck with me. It's a photo of me sitting at my desk with my son in my lap. What the photo doesn't show is the full picture. We were living in an apartment that belonged to someone who had passed away. It was going to be returned to the bank, but the legal process takes time. We lived there during that window, for free, and borrowed WiFi from the coffee shop nearby.
 
-![Me and Caden](../assets/andrew-caden.jpeg)
+![Me and Caden](/assets/andrew-caden.jpeg)
 
 I'm not sharing this for sympathy. I'm sharing it because that photo and that moment on stage are the same story. One is the before. One is the after. And the distance between them is just time, consistency, and people who believed in you before you believed in yourself.
 
@@ -117,7 +117,7 @@ Getting to share that in a room with Jeffrey Snover and the people who have been
 
 One of the things I'm most proud of this week has nothing to do with me.
 
-![PDQ discord friends](../assets/discord-photo.jpeg)
+![PDQ discord friends](/assets/discord-photo.jpeg)
 
 I know folks who were painfully shy not that long ago. Taking their first steps, unsure if they belonged. I got to watch them thrive this week. I got to see mentees I've been working with show up having earned scholarships, standing in the same place I once stood, with that same look on their face.
 
@@ -155,6 +155,6 @@ We aren't selfless. We are wise. We understand that when the community is health
 
 We are better together.
 
-![Me, Josh, and Blake in the Delta lounge OTW home](../assets/me-josh-blake-summit26.jpeg)
+![Me, Josh, and Blake in the Delta lounge OTW home](/assets/me-josh-blake-summit26.jpeg)
 
 See you next year.
