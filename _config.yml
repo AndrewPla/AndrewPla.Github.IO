@@ -71,7 +71,7 @@ collections:
     description: "My thoughts, ideas, and lessons learned" # The post list page content
     feature_text: |
       Blogs + blurbss
-    feature_image: "assets/blogsandblurbs.png"
+    feature_image: "assets/OG-image.jpg"
 
 # 6. Jekyll collections settings
 defaults:
@@ -79,7 +79,7 @@ defaults:
     scope:
       path: ""
     values:
-      image: "assets/blogsandblurbs.png" # Default image for sharing
+      image: "assets/OG-image.jpg" # Default image for sharing
   -
     scope:
       path: ""
